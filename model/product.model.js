@@ -137,10 +137,12 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    tag: {
-      type: String,
-      require: true,
-    },
+    tag: [
+      {
+        type: String,
+        require: true,
+      }
+    ],
   },
   { timestamps: true }
 );
