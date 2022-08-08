@@ -1,7 +1,7 @@
-// const jwt = require("jsonwebtoken");
-// const { decrypt } = require("../helper/encrypt-decrypt");
-// const path = require("path");
-// require("dotenv").config({ path: path.join(__dirname, "../config/.env") });
+const jwt = require("jsonwebtoken");
+const { decrypt } = require("../helper/encrypt-decrypt");
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "../config/.env") });
 
 // function verifyUserToken(req, res, next) {
 //   let token = req.headers["authorization"];
@@ -82,29 +82,29 @@
 //   });
 // }
 
-// function verifyAdminToken(req, res, next) {
-//   let token = req.headers["authorization"];
-//   if (!token) {
-//     res.status(403).json({ success: false, message: "token missing" });
-//   } else {
-//     token = token.split(" ")[1];
-//     jwt.verify(token, process.env.ADMIN_ACCESS_TOKEN, (err, payload) => {
-//       if (err) {
-//         res.status(403).json({ success: false, message: "unauthorized token" });
-//       } else {
-//         req.adminId = decrypt(
-//           payload.admin_id,
-//           process.env.ADMIN_ENCRYPTION_KEY
-//         );
-//         req.password = decrypt(
-//           payload.password,
-//           process.env.ADMIN_ENCRYPTION_KEY
-//         );
-//         next();
-//       }
-//     });
-//   }
-// }
+function verifyAdminToken(req, res, next) {
+  let token = req.headers["authorization"];
+  if (!token) {
+    res.status(403).json({ success: false, message: "token missing" });
+  } else {
+    token = token.split(" ")[1];
+    jwt.verify(token, process.env.ADMIN_ACCESS_TOKEN, (err, payload) => {
+      if (err) {
+        res.status(403).json({ success: false, message: "unauthorized token" });
+      } else {
+        req.adminId = decrypt(
+          payload.admin_id,
+          process.env.ADMIN_ENCRYPTION_KEY
+        );
+        req.password = decrypt(
+          payload.password,
+          process.env.ADMIN_ENCRYPTION_KEY
+        );
+        next();
+      }
+    });
+  }
+}
 
 // function verifyOtpToken(token) {
 //   return new Promise(async (resolve, reject) => {
@@ -150,13 +150,13 @@
 //   });
 // }
 
-// module.exports = {
-//   verifyOtpToken,
-//   verifyUserEmailToken,
-//   verifyCpToken,
-//   verifyAdminEmailToken,
-//   verifyUserToken,
-//   verifyAdminToken,
-//   verifyToken,
-//   optionalUserToken,
-// };
+module.exports = {
+  //   verifyOtpToken,
+  //   verifyUserEmailToken,
+  //   verifyCpToken,
+  //   verifyAdminEmailToken,
+  //   verifyUserToken,
+  verifyAdminToken,
+  //   verifyToken,
+  //   optionalUserToken,
+};
