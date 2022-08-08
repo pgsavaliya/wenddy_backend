@@ -3,27 +3,27 @@ const { decrypt } = require("../helper/encrypt-decrypt");
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "../config/.env") });
 
-// function verifyUserToken(req, res, next) {
-//   let token = req.headers["authorization"];
-//   if (!token) {
-//     res.status(403).json({ success: false, message: "token missing" });
-//   } else {
-//     token = token.split(" ")[1];
-//     jwt.verify(token, process.env.USER_ACCESS_TOKEN, (err, payload) => {
-//       if (err) {
-//         res.status(403).json({ success: false, message: "unauthorized token" });
-//       } else {
-//         req.userId = decrypt(payload.user_id, process.env.USER_ENCRYPTION_KEY);
-//         req.password = decrypt(
-//           payload.password,
-//           process.env.USER_ENCRYPTION_KEY
-//         );
+function verifyUserToken(req, res, next) {
+  let token = req.headers["authorization"];
+  if (!token) {
+    res.status(403).json({ success: false, message: "token missing" });
+  } else {
+    token = token.split(" ")[1];
+    jwt.verify(token, process.env.USER_ACCESS_TOKEN, (err, payload) => {
+      if (err) {
+        res.status(403).json({ success: false, message: "unauthorized token" });
+      } else {
+        req.userId = decrypt(payload.user_id, process.env.USER_ENCRYPTION_KEY);
+        req.password = decrypt(
+          payload.password,
+          process.env.USER_ENCRYPTION_KEY
+        );
 
-//         next();
-//       }
-//     });
-//   }
-// }
+        next();
+      }
+    });
+  }
+}
 
 // function verifyUserEmailToken(token) {
 //   return new Promise(async (resolve, reject) => {
@@ -155,7 +155,7 @@ module.exports = {
   //   verifyUserEmailToken,
   //   verifyCpToken,
   //   verifyAdminEmailToken,
-  //   verifyUserToken,
+  verifyUserToken,
   verifyAdminToken,
   //   verifyToken,
   //   optionalUserToken,
