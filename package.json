@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index",
+    "dev": "nodemon index"
   },
   "repository": {
     "type": "git",
@@ -12,7 +14,8 @@
   },
   "keywords": [
     "wendy",
-    "jewelry"
+    "jewelry",
+    "Node-js"
   ],
   "author": "itcodehelp",
   "license": "ISC",
@@ -22,6 +25,7 @@
   "homepage": "https://github.com/ITCODEHELP/wendy-backend#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
