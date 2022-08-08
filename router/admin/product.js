@@ -1,17 +1,18 @@
 const productController = require("../../controller/admin/product");
 
 const { Router } = require("express");
+const { verifyAdminToken } = require("../../middleware/verifyToken");
 const productRoute = Router();
 
 productRoute.get("/", (req, res) => {
-    res.send({ status: 200, message: "product route is working" });
+  res.send({ status: 200, message: "product route is working" });
 });
 
-productRoute.post("/add", productController.add);
-productRoute.put("/update/:_id", productController.update);
-productRoute.get("/getAll", productController.getAll);
-productRoute.get("/byId/:_id", productController.byId);
-productRoute.delete("/delete/:_id", productController.delete);
+productRoute.post("/add", verifyAdminToken, productController.add);
+productRoute.put("/update/:_id", verifyAdminToken, productController.update);
+productRoute.get("/getAll", verifyAdminToken, productController.getAll);
+productRoute.get("/byId/:_id", verifyAdminToken, productController.byId);
+productRoute.delete("/delete/:_id", verifyAdminToken, productController.delete);
 // productRoute.get("/exportData", productController.exportData);
 
 module.exports = productRoute;
