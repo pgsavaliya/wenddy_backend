@@ -64,7 +64,7 @@ const productSchema = new Schema(
       {
         sku: {
           type: String,
-          required: true,
+          //required: true,
         },
         variations: [
           {
@@ -82,25 +82,25 @@ const productSchema = new Schema(
         ],
         qty: {
           type: Number,
-          required: true,
+          //required: true,
         },
         price: {
-          type: String,
-          required: true,
+          type: Number,
+          // //required: true,
         },
         uniqueImg: {
           type: String,
         },
         is_visible: {
           type: Boolean,
-          required: true,
+          //required: true,
           default: true,
         },
       },
     ],
     admin_id: {
       type: Schema.Types.ObjectId,
-      required: true,
+      //required: true,
       ref: "vendor",
     },
     category: {
@@ -135,12 +135,14 @@ const productSchema = new Schema(
     },
     videourl: {
       type: String,
-      required: true,
+      //required: true,
     },
     tag: [
       {
-        type: String,
-        require: true,
+        type: {
+          type: String,
+          require: true,
+        }
       }
     ],
   },
