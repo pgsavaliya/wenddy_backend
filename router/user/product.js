@@ -13,7 +13,7 @@ productRoute.get("/", (req, res) => {
 });
 
 productRoute.get("/getAll", verifyUserToken, productController.getAll);
-// productRoute.get("/byId/:_id", verifyUserToken, productController.byId);
+productRoute.get("/byId/:_id", verifyUserToken, productController.byId);
 // productRoute.get("/:urlName", verifyUserToken, productController.getByName);
 
 module.exports = productRoute;

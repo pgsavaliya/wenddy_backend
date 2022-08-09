@@ -136,55 +136,58 @@ module.exports = {
     });
   },
 
-  byId: (_id) => {
+  byId: (id) => {
     return new Promise(async (res, rej) => {
       try {
-        let getData = await productModel.findById(_id);
-
-        let propertyId = mongoose.Types.ObjectId(getData._id);
-        let existData = await transactionModel.find({
-          idOfCompanyProperty: mongoose.Types.ObjectId(getData._id),
-        });
-        console.log("existData ......", existData.length);
-        if (existData.length > 0) {
-          let trasactionData = await transactionModel.aggregate([
-            { $match: { idOfCompanyProperty: propertyId } },
-            {
-              $group: {
-                _id: "$customerId",
-                totalInvestment: { $sum: "$totalAmount" },
-              },
+        // let getData = await productModel.find({
+        //   admin_id: id
+        // });
+        // let propertyId = mongoose.Types.ObjectId(getData._id);
+        // let existData = await transactionModel.find({
+        //   idOfCompanyProperty: mongoose.Types.ObjectId(getData._id),
+        // });
+        // console.log("existData ......", existData.length);
+        // if (existData.length > 0) {
+        console.log(id);
+        let Data = await productModel.aggregate([
+          { $match: { admin_id: mongoose.Types.ObjectId(id) } },
+          // let trasactionData = await productModel.aggregate([
+          //   { $match: { admin_id: id } },
+          // {
+          //   $group: {
+          //     _id: "$admin_id",
+          //     total: { $sum: "$totalAmount" },
+          //   },
+          // },
+          // {
+          //   $group: {
+          //     _id: null,
+          //     totalInvestment: { $sum: "$totalInvestment" },
+          //     totalInvestors: { $sum: 1 },
+          //   },
+          // },
+        ]);
+        console.log("Data ..........", Data);
+        // let funded =
+        //   (trasactionData[0].totalInvestment / getData.totalAmount) * 100;
+        // console.log("funded ........", funded);
+        if (Data) {
+          res({
+            status: 200,
+            data: {
+              // totalInvestedAmountByUser: trasactionData[0].totalInvestment || 0,
+              // uniqueUser: trasactionData[0].totalInvestors,
+              // fundedByUser: funded,
+              // balance: balance,
+              result: Data,
             },
-            {
-              $group: {
-                _id: null,
-                totalInvestment: { $sum: "$totalInvestment" },
-                totalInvestors: { $sum: 1 },
-              },
-            },
-          ]);
-          console.log("trasactionData ..........", trasactionData);
-          let funded =
-            (trasactionData[0].totalInvestment / getData.totalAmount) * 100;
-          console.log("funded ........", funded);
-          if (getData) {
-            res({
-              status: 200,
-              data: {
-                totalInvestedAmountByUser:
-                  trasactionData[0].totalInvestment || 0,
-                uniqueUser: trasactionData[0].totalInvestors,
-                fundedByUser: funded,
-                // balance: balance,
-                result: getData,
-              },
-            });
-          } else {
-            rej({ status: 404, message: "Property Not Found", error: {} });
-          }
+          });
         } else {
-          res({ status: 200, data: { result: getData } });
+          rej({ status: 404, message: "Property Not Found", error: {} });
         }
+        // } else {
+        //   res({ status: 200, data: { result: getData } });
+        // }
         rej({
           status: 404,
           message: "Property Not Found, Invalid id!!",

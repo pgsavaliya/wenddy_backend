@@ -11,7 +11,7 @@ productRoute.get("/", (req, res) => {
 productRoute.post("/add", verifyAdminToken, productController.add);
 productRoute.put("/update/:_id", verifyAdminToken, productController.update);
 productRoute.get("/getAll", verifyAdminToken, productController.getAll);
-productRoute.get("/byId/:_id", verifyAdminToken, productController.byId);
+productRoute.get("/byadminId", verifyAdminToken, productController.byId);
 productRoute.delete("/delete/:_id", verifyAdminToken, productController.delete);
 // productRoute.get("/exportData", productController.exportData);
 

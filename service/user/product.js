@@ -118,21 +118,21 @@ module.exports = {
     });
   },
 
-  //     byId: (_id) => {
-  //         return new Promise(async (res, rej) => {
-  //             try {
-  //                 let getData = await productModel.findById(_id);
-  //                 if (getData) {
-  //                     res({ status: 200, data: getData });
-  //                 } else {
-  //                     rej({ status: 404, message: "Invalid id!!" });
-  //                 }
-  //             } catch (err) {
-  //                 console.log(err);
-  //                 rej({ status: 500, error: err, message: "something went wrong!!" });
-  //             }
-  //         });
-  //     },
+  byId: (_id) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let getData = await productModel.findById(_id);
+        if (getData) {
+          res({ status: 200, data: getData });
+        } else {
+          rej({ status: 404, message: "Invalid id!!" });
+        }
+      } catch (err) {
+        console.log(err);
+        rej({ status: 500, error: err, message: "something went wrong!!" });
+      }
+    });
+  },
 
   //     getByName: ({ urlName, userId }) => {
   //         return new Promise(async (res, rej) => {
