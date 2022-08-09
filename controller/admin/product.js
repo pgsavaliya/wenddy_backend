@@ -16,6 +16,7 @@ exports.add = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
+    // console.log(req.body.confirmPassword);
     if (req.body.password || req.body.confirmPassword) {
       return response(
         "Cannot update password and confirmPassword!!",
@@ -59,7 +60,7 @@ exports.getAll = async (req, res) => {
 
 exports.byId = async (req, res) => {
   try {
-    let resp = await productService.byId(req.params._id);
+    let resp = await productService.byId(req.adminId);
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {
