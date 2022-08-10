@@ -1,7 +1,7 @@
 const productModel = require("../../model/product.model");
 
 module.exports = {
-  getAll: ({ page, limit, str, startDate, endDate, userId, category, ring_type, diamond_shape, metal,min,max,tag }) => {
+  getAll: ({ page, limit, str, startDate, endDate, userId, category, ring_type, diamond_shape, metal, min, max, tag }) => {
     return new Promise(async (res, rej) => {
       try {
         let qry = {};
@@ -41,27 +41,10 @@ module.exports = {
             $lte: parseInt(max)
           };
         }
-        // qry = { 'propertyTransactionData.typeOfTransaction': "Real Estate" };
-        // let watchlistOfUser = [];
         console.log("userId: ", userId);
-
-        // if (userId)
-        //   watchlistOfUser =
-        //     (await watchlistModel.findOne({ userId }, { properties: 1 }))
-        //       ?.properties || [];
-        // console.log("isFav: ", watchlistOfUser);
         console.log("qry ...........", qry);
         let getData = await productModel.aggregate([
           { $match: qry },
-          //   {
-          //     $lookup: {
-          //       from: "transactions",
-          //       localField: "_id",
-          //       foreignField: "idOfCompanyProperty",
-          //       as: "propertyTransactionData",
-          //     },
-          //   },
-          // { $unwind: "$propertyTransactionData" },
           {
             $facet: {
               total_count: [
@@ -73,17 +56,10 @@ module.exports = {
                 },
               ],
               result: [
-                // {
-                //   $addFields: {
-                //     is_fav: { $in: ["$_id", watchlistOfUser] },
-                //   },
-                // },
                 {
                   $project: {
                     __v: 0,
                   },
-
-                  //   },
                 },
                 { $sort: { createdAt: -1 } },
                 { $skip: (page - 1) * limit },
@@ -93,25 +69,13 @@ module.exports = {
           },
         ]);
         getData = getData[0];
-        // console.log("getData.total_count[0] ...........", getData.total_count);
-        // console.log("getData ...........", getData);
         if (getData.result.length > 0) {
-          //   getData.result = getData.result.map((item, index) => {
-          //     let uniqueUser = [
-          //       ...new Set(
-          //         item.toatlInvestedData.map((i) => i.customerId.toString())
-          //       ),
-          //     ].length;
-
-          // //     delete item.toatlInvestedData;
-          //     return {
-          //       ...item,
-          //       uniqueUser,
-          //       fundedByUser:
-          //         (item.totalInvestedAmountByUser / item.totalAmount) * 100 || 0,
-          //       index: getData.total_count[0].count - index,
-          // };
-          //   });
+          getData.result = getData.result.map((item, index) => {
+            return {
+              ...item,
+              index: getData.total_count[0].count - index
+            }
+          })
           res({
             status: 200,
             data: {
