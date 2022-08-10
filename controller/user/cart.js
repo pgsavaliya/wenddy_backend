@@ -1,4 +1,4 @@
-const addtocartService = require("../../service/user/addtocart");
+const addtocartService = require("../../service/user/cart");
 const { response } = require("../../middleware/response");
 
 exports.addtocart = async (req, res) => {
@@ -19,7 +19,7 @@ exports.getcart = async (req, res) => {
     req.body.user_id = req.user_id;
     let resp = await addtocartService.getcart(req.body);
     if (resp) {
-      return response(resp, resp.data, 200, res);
+      return response("SUCCESS..!!", resp.data, 200, res);
     } else {
       return response("Something went wrong!!", {}, 500, res);
     }

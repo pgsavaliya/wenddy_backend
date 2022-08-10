@@ -1,9 +1,4 @@
 const productModel = require("../../model/product.model");
-// const userModel = require("../../model/user.model");
-const mongoose = require("mongoose");
-// const watchlistModel = require("../../model/watchlist.model");
-// const transactionModel = require("../../model/transaction.model");
-// const walletService = require("./wallet");
 
 module.exports = {
   getAll: ({ page, limit, str, startDate, endDate, userId, category, ring_type, diamond_shape, metal,min,max,tag }) => {
@@ -32,8 +27,6 @@ module.exports = {
         if (str) {
           qry["$or"] = [
             { product_title: { $regex: str, $options: "i" } },
-            // { propertyManagerName: { $regex: str, $options: "i" } },
-            // { tenantName: { $regex: str, $options: "i" } },
           ];
         }
         if (metal) qry["metal"] = metal;
