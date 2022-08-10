@@ -158,12 +158,16 @@ const productSchema = new Schema(
         type: String,
       }
     ],
-    ring_size: {
-      type: String,
-    },
-    metal: {
-      type: String,
-    },
+    ring_size: [
+      {
+        type: String,
+      }
+    ],
+    metal: [
+      {
+        type: String,
+      }
+    ],
     offerImage: {
       type: String,
     },
