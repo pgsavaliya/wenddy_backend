@@ -13,7 +13,7 @@ function verifyUserToken(req, res, next) {
       if (err) {
         res.status(403).json({ success: false, message: "unauthorized token" });
       } else {
-        req.userId = decrypt(payload.user_id, process.env.USER_ENCRYPTION_KEY);
+        req.user_id = decrypt(payload.user_id, process.env.USER_ENCRYPTION_KEY);
         req.password = decrypt(
           payload.password,
           process.env.USER_ENCRYPTION_KEY
@@ -92,7 +92,7 @@ function verifyAdminToken(req, res, next) {
       if (err) {
         res.status(403).json({ success: false, message: "unauthorized token" });
       } else {
-        req.adminId = decrypt(
+        req.admin_id = decrypt(
           payload.admin_id,
           process.env.ADMIN_ENCRYPTION_KEY
         );

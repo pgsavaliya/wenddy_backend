@@ -3,13 +3,13 @@ const { mongoose } = require("mongoose");
 
 const addtocartSchema = new Schema(
   {
-    userId: {
+    user_id: {
       type: mongoose.Schema.Types.ObjectId,
       require: true,
     },
     product: [
       {
-        productId: {
+        product_id: {
           type: mongoose.Schema.Types.ObjectId,
           require: true,
         },

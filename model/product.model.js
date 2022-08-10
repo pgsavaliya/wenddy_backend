@@ -5,25 +5,25 @@ const productSchema = new Schema(
   {
     product_images: [
       {
-        uniqueImg: {
+        unique_img: {
           type: String,
         },
         original: {
           type: String,
         },
-        originalURL: {
+        original_url: {
           type: String,
         },
         reduce: {
           type: String,
         },
-        reduceURL: {
+        reduce_url: {
           type: String,
         },
         medium: {
           type: String,
         },
-        mediumURL: {
+        medium_url: {
           type: String,
         },
         is_primary: {
@@ -33,7 +33,7 @@ const productSchema = new Schema(
         small: {
           type: String,
         },
-        smallURL: {
+        small_url: {
           type: String,
         },
       },
@@ -88,7 +88,7 @@ const productSchema = new Schema(
           type: Number,
           // //required: true,
         },
-        uniqueImg: {
+        unique_img: {
           type: String,
         },
         is_visible: {
@@ -125,15 +125,15 @@ const productSchema = new Schema(
       type: Boolean,
       default: true,
     },
-    totalview: {
+    total_view: {
       type: Number,
       default: 0,
     },
-    totalsale: {
+    total_sale: {
       type: Number,
       default: 0,
     },
-    videourl: {
+    video_url: {
       type: String,
       //required: true,
     },
@@ -142,8 +142,8 @@ const productSchema = new Schema(
         type: {
           type: String,
           require: true,
-        }
-      }
+        },
+      },
     ],
   },
   { timestamps: true }

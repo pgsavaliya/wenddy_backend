@@ -27,10 +27,10 @@ module.exports = {
   getcart: (data) => {
     return new Promise(async (res, rej) => {
       try {
-        let newAddtocartModel = new addtocartModel(data);
-        let saveData = await newAddtocartModel.save();
-        if (saveData) {
-          res({ status: 200, data: "product added Successfully!!" });
+        let newViewcartModel = new addtocartModel(data);
+        let getData = await newViewcartModel.find({ userId: data.userId });
+        if (getData) {
+          res({ status: 200, data: getData });
         } else {
           rej({ status: 404, message: "something went wrong!!" });
         }
