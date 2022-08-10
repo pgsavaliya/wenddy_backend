@@ -64,4 +64,42 @@ module.exports = {
       }
     });
   },
+
+  update: async (_id, data) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let productId = await addtocartModel.findById(_id);
+        let productData = await productModel.findById(productId.product_id);
+        // console.log("pavan", productData);
+        data["product_amount"] = productData.mrp;
+        data["total_price"] = data.quantity * data.product_amount;
+        let getData = await addtocartModel.findByIdAndUpdate(_id, data, {
+          new: true,
+        });
+        if (getData) {
+          res({ status: 200, data: "update" });
+        } else {
+          rej({ status: 404, message: "Invalid id!!" });
+        }
+      } catch (err) {
+        console.log("err", err);
+        rej({ status: 500, error: err, message: "something went wrong!!" });
+      }
+    });
+  },
+  delete: (_id) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let deleteData = await addtocartModel.findByIdAndDelete(_id);
+        if (deleteData) {
+          res({ status: 200, data: "Data Deleted!!" });
+        } else {
+          rej({ status: 500, message: "Invalid id!!" });
+        }
+      } catch (err) {
+        console.log(err);
+        rej({ status: 500, error: err, message: "something went wrong!!" });
+      }
+    });
+  },
 };
