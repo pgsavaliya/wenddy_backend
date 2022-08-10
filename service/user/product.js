@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 // const walletService = require("./wallet");
 
 module.exports = {
-  getAll: ({ page, limit, str, startDate, endDate, userId }) => {
+  getAll: ({ page, limit, str, startDate, endDate, userId, category, ring_type, diamond_shape, metal,min,max,tag }) => {
     return new Promise(async (res, rej) => {
       try {
         let qry = {};
@@ -21,16 +21,33 @@ module.exports = {
             { createdAt: { $lt: endDate } },
           ];
         }
+        let categoryArray;
+        if (category) categoryArray = category.split(",");
+        let ring_type_array;
+        if (ring_type) ring_type_array = ring_type.split(",");
+        let diamond_shape_array;
+        if (diamond_shape) diamond_shape_array = diamond_shape.split(",");
+        let tag_array;
+        if (tag) tag_array = tag.split(",");
         if (str) {
           qry["$or"] = [
-            { name: { $regex: str, $options: "i" } },
-            { propertyManagerName: { $regex: str, $options: "i" } },
-            { tenantName: { $regex: str, $options: "i" } },
+            { product_title: { $regex: str, $options: "i" } },
+            // { propertyManagerName: { $regex: str, $options: "i" } },
+            // { tenantName: { $regex: str, $options: "i" } },
           ];
         }
-        // if (status) {
-        //   qry["status"] = status;
-        // }
+        if (metal) qry["metal"] = metal;
+        if (category) qry["category"] = { $in: categoryArray };
+        if (ring_type) qry["ring_type"] = { $in: ring_type_array };
+        if (diamond_shape) qry["diamond_shape"] = { $in: diamond_shape_array };
+        if (tag) qry["tag"] = { $in: tag_array };
+        if (min && max) {
+          qry["mrp"] =
+          {
+            $gte: parseInt(min),
+            $lte: parseInt(max)
+          };
+        }
         // qry = { 'propertyTransactionData.typeOfTransaction': "Real Estate" };
         // let watchlistOfUser = [];
         console.log("userId: ", userId);
@@ -40,6 +57,7 @@ module.exports = {
         //     (await watchlistModel.findOne({ userId }, { properties: 1 }))
         //       ?.properties || [];
         // console.log("isFav: ", watchlistOfUser);
+        console.log("qry ...........", qry);
         let getData = await productModel.aggregate([
           { $match: qry },
           //   {

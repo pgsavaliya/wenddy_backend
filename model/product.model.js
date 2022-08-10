@@ -103,9 +103,9 @@ const productSchema = new Schema(
       //required: true,
       ref: "vendor",
     },
-    category: {
-      type: String,
-    },
+    // category: {
+    //   type: String,
+    // },
     category_id: {
       type: Schema.Types.ObjectId,
       ref: "category",
@@ -139,12 +139,34 @@ const productSchema = new Schema(
     },
     tag: [
       {
-        type: {
-          type: String,
-          require: true,
-        },
+        type: String,
+        require: true,
       },
     ],
+    category: [
+      {
+        type: String,
+      }
+    ],
+    ring_type: [
+      {
+        type: String,
+      }
+    ],
+    diamond_shape: [
+      {
+        type: String,
+      }
+    ],
+    ring_size: {
+      type: String,
+    },
+    metal: {
+      type: String,
+    },
+    offerImage: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
