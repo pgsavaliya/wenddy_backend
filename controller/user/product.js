@@ -4,18 +4,25 @@ const { response } = require("../../middleware/response");
 
 exports.getAll = async (req, res) => {
   try {
+    console.log("req.userID ............", req.user_id);
     if (!req.query.page || !req.query.limit) {
       return response("pagination is require for pagination..!!", {}, 404, res);
     } else {
       //   console.log("userId: ", req.userId);
       let resp = await productService.getAll({
-        userId: req.userId,
+        userId: req.user_id,
         page: req.query.page,
         limit: req.query.limit,
         str: req.query.str,
         startDate: req.query.startDate,
         endDate: req.query.endDate,
-        // status: req.query.status,
+        ring_type: req.query.ring_type,
+        diamond_shape: req.query.diamond_shape,
+        metal: req.query.metal,
+        min:req.query.min,
+        max:req.query.max,
+        tag: req.query.tag,
+        category: req.query.category,
       });
       //   let userStatus;
       //   if (req.userId) {
