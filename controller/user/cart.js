@@ -4,6 +4,7 @@ const { response } = require("../../middleware/response");
 exports.addtocart = async (req, res) => {
   try {
     req.body.user_id = req.user_id;
+    console.log(req.body);
     let resp = await addtocartService.addtocart(req.body);
     if (resp) {
       return response("Added successfully..!!", resp.data, 200, res);
