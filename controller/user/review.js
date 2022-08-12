@@ -1,11 +1,11 @@
 const { response } = require("../../middleware/response");
-const review = require("../../service/user/review");
+const reviewService = require("../../service/user/review");
 
 exports.addreview = async (req, res) => {
   try {
     req.body.user_id = req.user_id;
     console.log(req.body);
-    let resp = await review.addreview(req.body);
+    let resp = await reviewService.addreview(req.body);
     if (resp) {
       return response("Added successfully..!!", resp.data, 200, res);
     } else {
@@ -15,19 +15,21 @@ exports.addreview = async (req, res) => {
     return response(err.message, err?.error, err.status, res);
   }
 };
-// exports.getcart = async (req, res) => {
-//   try {
-//     req.body.user_id = req.user_id;
-//     let resp = await addtocartService.getcart(req.body);
-//     if (resp) {
-//       return response("SUCCESS..!!", resp.data, 200, res);
-//     } else {
-//       return response("Something went wrong!!", {}, 500, res);
-//     }
-//   } catch (err) {
-//     return response(err.message, err?.error, err.status, res);
-//   }
-// };
+exports.getreview = async (req, res) => {
+  try {
+    // console.log(req.query.product_id);
+
+    req.body.product_id = req.query.product_id;
+    let resp = await reviewService.getreview(req.body);
+    if (resp) {
+      return response("SUCCESS..!!", resp.data, 200, res);
+    } else {
+      return response("Something went wrong!!", {}, 500, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};
 
 // exports.update = async (req, res) => {
 //   try {

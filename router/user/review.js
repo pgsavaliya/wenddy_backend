@@ -9,7 +9,7 @@ reviewRoute.get("/", (req, res) => {
 });
 
 reviewRoute.post("/addreview", reviewcontroller.addreview);
-// cartRoute.get("/getcart", addtocartcontroller.getcart);
+reviewRoute.get("/getreview", reviewcontroller.getreview);
 // cartRoute.put("/update/:_id", addtocartcontroller.update);
 // cartRoute.delete("/delete/:_id", addtocartcontroller.delete);
 
