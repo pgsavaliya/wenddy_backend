@@ -62,24 +62,27 @@ const productSchema = new Schema(
     },
     product_variation: [
       {
+        metal: {
+          type: String,
+        },
         sku: {
           type: String,
           //required: true,
         },
-        variations: [
-          {
-            variation_id: {
-              type: Schema.Types.ObjectId,
-              ref: "variation",
-            },
-            variation_name: {
-              type: String,
-            },
-            variation_value: {
-              type: String,
-            },
-          },
-        ],
+        // variations: [
+        //   {
+        //     variation_id: {
+        //       type: Schema.Types.ObjectId,
+        //       ref: "variation",
+        //     },
+        //     variation_name: {
+        //       type: String,
+        //     },
+        //     variation_value: {
+        //       type: String,
+        //     },
+        //   },
+        // ],
         qty: {
           type: Number,
           //required: true,
@@ -146,27 +149,22 @@ const productSchema = new Schema(
     category: [
       {
         type: String,
-      }
+      },
     ],
     ring_type: [
       {
         type: String,
-      }
+      },
     ],
     diamond_shape: [
       {
         type: String,
-      }
+      },
     ],
     ring_size: [
       {
         type: String,
-      }
-    ],
-    metal: [
-      {
-        type: String,
-      }
+      },
     ],
     offerImage: {
       type: String,

@@ -1,6 +1,8 @@
 const productModel = require("../../model/product.model");
+
 // const transactionModel = require("../../model/transaction.model");
 const mongoose = require("mongoose");
+const metalModel = require("../../model/metal.model ");
 
 module.exports = {
   add: (data) => {
@@ -8,9 +10,21 @@ module.exports = {
       try {
         // console.log("remainingPeriod.slice(0,10) .........", data.remainingPeriod.toString().slice(0, 10));
         // data['remainingPeriod'] = new Date(`${data.remainingPeriod.toString().slice(0, 10)}` + 'T00:00:00.000+00:00');
+        // console.log(data);
+
         let newProductModel = new productModel(data);
         let saveData = await newProductModel.save();
         if (saveData) {
+          // if (data.product_type == "variation") {
+          //   for (const element of data.metal_v) {
+          //     element.product_id = saveData._id;
+          //     let newMetalModel = new metalModel(element);
+          //     let saveData1 = await newMetalModel.save();
+          //     if (!saveData1) {
+          //       rej({ status: 404, message: "someting went wrong!!" });
+          //     }
+          //   }
+          // }
           res({ status: 200, data: {} });
         } else {
           rej({ status: 404, message: "someting went wrong!!" });
