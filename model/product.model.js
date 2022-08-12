@@ -62,24 +62,27 @@ const productSchema = new Schema(
     },
     product_variation: [
       {
+        metal: {
+          type: String,
+        },
         sku: {
           type: String,
           //required: true,
         },
-        variations: [
-          {
-            variation_id: {
-              type: Schema.Types.ObjectId,
-              ref: "variation",
-            },
-            variation_name: {
-              type: String,
-            },
-            variation_value: {
-              type: String,
-            },
-          },
-        ],
+        // variations: [
+        //   {
+        //     variation_id: {
+        //       type: Schema.Types.ObjectId,
+        //       ref: "variation",
+        //     },
+        //     variation_name: {
+        //       type: String,
+        //     },
+        //     variation_value: {
+        //       type: String,
+        //     },
+        //   },
+        // ],
         qty: {
           type: Number,
           //required: true,
@@ -159,11 +162,6 @@ const productSchema = new Schema(
       },
     ],
     ring_size: [
-      {
-        type: String,
-      },
-    ],
-    metal: [
       {
         type: String,
       },
