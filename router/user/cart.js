@@ -1,5 +1,3 @@
-const cartController = require("../../controller/user/cart");
-
 const { Router } = require("express");
 const addtocartcontroller = require("../../controller/user/cart");
 
