@@ -146,27 +146,27 @@ const productSchema = new Schema(
     category: [
       {
         type: String,
-      }
+      },
     ],
     ring_type: [
       {
         type: String,
-      }
+      },
     ],
     diamond_shape: [
       {
         type: String,
-      }
+      },
     ],
     ring_size: [
       {
         type: String,
-      }
+      },
     ],
     metal: [
       {
         type: String,
-      }
+      },
     ],
     offerImage: {
       type: String,
