@@ -75,6 +75,10 @@ const reviewproductSchema = new Schema(
       type: String,
       require: true,
     },
+    adminreplay: {
+      type: String,
+      require: true,
+    },
   },
 
   { timestamps: true }
