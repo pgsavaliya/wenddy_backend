@@ -69,12 +69,9 @@ module.exports = {
             { createdAt: { $lt: endDate } },
           ];
         }
+        // console.log(str);
         if (str) {
-          qry["$or"] = [
-            { name: { $regex: str, $options: "i" } },
-            { propertyManagerName: { $regex: str, $options: "i" } },
-            { tenantName: { $regex: str, $options: "i" } },
-          ];
+          qry["$or"] = [{ product_title: { $regex: str, $options: "i" } }];
         }
         // if (status) {
         //     qry["status"] = status;
