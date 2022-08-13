@@ -65,6 +65,9 @@ const productSchema = new Schema(
         metal: {
           type: String,
         },
+        diamond_type: {
+          type: String,
+        },
         sku: {
           type: String,
           //required: true,
@@ -87,10 +90,13 @@ const productSchema = new Schema(
           type: Number,
           //required: true,
         },
-        price: {
+        real_price: {
           type: Number,
-          // //required: true,
         },
+        mrp: {
+          type: Number,
+        },
+
         unique_img: {
           type: String,
         },

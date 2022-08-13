@@ -7,6 +7,7 @@ const authRoute = require("./auth");
 const productRoute = require("./product");
 const cartRoute = require("./cart");
 const reviewRoute = require("./review");
+const profileRoute = require("./profile");
 
 userRoute.get("/", (req, res) => {
   res.status(200).json({ message: "user route is working" });
@@ -16,4 +17,5 @@ userRoute.use("/auth", authRoute);
 userRoute.use("/product", verifyUserToken, productRoute);
 userRoute.use("/cart", verifyUserToken, cartRoute);
 userRoute.use("/review", verifyUserToken, reviewRoute);
+userRoute.use("/profile", verifyUserToken, profileRoute);
 module.exports = userRoute;
