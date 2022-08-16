@@ -42,19 +42,19 @@ module.exports = {
       }
     });
   },
-  // delete: (_id) => {
-  //   return new Promise(async (res, rej) => {
-  //     try {
-  //       let deleteData = await addtocartModel.findByIdAndDelete(_id);
-  //       if (deleteData) {
-  //         res({ status: 200, data: "Data Deleted!!" });
-  //       } else {
-  //         rej({ status: 500, message: "Invalid id!!" });
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //       rej({ status: 500, error: err, message: "something went wrong!!" });
-  //     }
-  //   });
-  // },
+  delete: (_id) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let deleteData = await userModel.findByIdAndDelete(_id);
+        if (deleteData) {
+          res({ status: 200, data: "Data Deleted!!" });
+        } else {
+          rej({ status: 500, message: "Invalid id!!" });
+        }
+      } catch (err) {
+        console.log(err);
+        rej({ status: 500, error: err, message: "something went wrong!!" });
+      }
+    });
+  },
 };
