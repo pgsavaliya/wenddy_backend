@@ -9,6 +9,6 @@ profileRoute.get("/", (req, res) => {
 
 profileRoute.get("/getprofile", profilecontroller.getprofile);
 profileRoute.put("/update/:_id", profilecontroller.update);
-// cartRoute.delete("/delete/:_id", addtocartcontroller.delete);
+profileRoute.delete("/delete/:_id", profilecontroller.delete);
 
 module.exports = profileRoute;

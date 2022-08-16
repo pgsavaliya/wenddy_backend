@@ -16,26 +16,35 @@ exports.getprofile = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    let resp = await profileService.update(req.params._id, req.body);
-    if (resp) {
-      return response("data updated successfully!!", {}, 200, res);
+    if (req.body.password || req.body.confirmPassword) {
+      return response(
+        "Cannot update password and confirmPassword!!",
+        {},
+        400,
+        res
+      );
     } else {
-      return response("something went wrong!!", {}, 500, res);
+      let resp = await profileService.update(req.params._id, req.body);
+      if (resp) {
+        return response("data updated successfully!!", {}, 200, res);
+      } else {
+        return response("something went wrong!!", {}, 500, res);
+      }
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);
   }
 };
 
-// exports.delete = async (req, res) => {
-//   try {
-//     let resp = await addtocartService.delete(req.params._id);
-//     if (resp) {
-//       return response("Deleted successfully!!", resp.data, 200, res);
-//     } else {
-//       return response("Error..!!", err.error, err.status, res);
-//     }
-//   } catch (err) {
-//     return response(err.message, err?.error, err.status, res);
-//   }
-// };
+exports.delete = async (req, res) => {
+  try {
+    let resp = await profileService.delete(req.params._id);
+    if (resp) {
+      return response("Deleted successfully!!", resp.data, 200, res);
+    } else {
+      return response("Error..!!", err.error, err.status, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};
