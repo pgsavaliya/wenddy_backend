@@ -97,9 +97,9 @@ const productSchema = new Schema(
           type: Number,
         },
 
-        unique_img: {
-          type: String,
-        },
+        // unique_img: {
+        //   type: String,
+        // },
         is_visible: {
           type: Boolean,
           //required: true,
