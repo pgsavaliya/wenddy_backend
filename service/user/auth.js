@@ -29,7 +29,7 @@ module.exports = {
     return new Promise(async (res, rej) => {
       try {
         let loginData = await userModel.findOne({ email });
-        console.log("loginData ......", loginData);
+        // console.log("loginData ......", loginData);
         if (loginData) {
           const isMatch = await bcryptjs.compare(password, loginData.password);
           if (isMatch) {
@@ -43,10 +43,16 @@ module.exports = {
             );
             res({ status: 200, data: token });
           } else {
-            rej({ status: 404, message: "something went wrong!!" });
+            rej({
+              status: 404,
+              message: "Email or password is incorrect!!",
+            });
           }
         } else {
-          rej({ status: 404, message: "Email or password is incorrect!!" });
+          rej({
+            status: 404,
+            message: "Email or password is incorrect!!",
+          });
         }
       } catch (err) {
         console.log("err ...", err);

@@ -35,6 +35,18 @@ exports.update = async (req, res) => {
     return response(err.message, err?.error, err.status, res);
   }
 };
+exports.resetpss = async (req, res) => {
+  try {
+    let resp = await profileService.resetpss(req.user_id, req.body);
+    if (resp) {
+      return response("password reset successfully!!", {}, 200, res);
+    } else {
+      return response("something went wrong!!", {}, 500, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};
 
 exports.delete = async (req, res) => {
   try {
