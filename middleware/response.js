@@ -1,6 +1,6 @@
 exports.response = (msg, data, code, res) => {
-    let obj = {};
-    obj["data"] = data;
-    obj["message"] = msg;
-    return res.status(code).json(obj);
+  let obj = {};
+  obj["message"] = msg;
+  obj["data"] = data;
+  return res.status(code).json(obj);
 };

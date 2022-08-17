@@ -36,8 +36,14 @@ module.exports = {
             let key1 = process.env.USER_ENCRYPTION_KEY;
             let encryptUser = encrypt(loginData._id, key1);
             let encryptPass = encrypt(loginData.password, key1);
+            let encryptEmail = encrypt(loginData.email, key1);
+            console.log(encryptEmail);
             let token = jwt.sign(
-              { user_id: encryptUser, password: encryptPass },
+              {
+                user_id: encryptUser,
+                password: encryptPass,
+                email: encryptEmail,
+              },
               process.env.USER_ACCESS_TOKEN,
               { expiresIn: process.env.USER_ACCESS_TIME }
             );

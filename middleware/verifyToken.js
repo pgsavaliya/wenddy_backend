@@ -18,7 +18,8 @@ function verifyUserToken(req, res, next) {
           payload.password,
           process.env.USER_ENCRYPTION_KEY
         );
-
+        req.email = decrypt(payload.email, process.env.USER_ENCRYPTION_KEY);
+        // console.log(req.email);
         next();
       }
     });
