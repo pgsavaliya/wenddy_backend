@@ -1,5 +1,6 @@
 const productService = require("../../service/user/product");
 const { response } = require("../../middleware/response");
+const RequestIp = require("@supercharge/request-ip");
 
 exports.getAll = async (req, res) => {
   try {
@@ -23,7 +24,17 @@ exports.getAll = async (req, res) => {
         category: req.query.category,
       });
       if (resp) {
-        return response("SUCCESS..!!", resp.data, 200, res);
+        // req.ip = RequestIp.getClientIp(req);
+        // console.log(req.ip);
+        let ip = req.socket.localAddress;
+        let ip1 = req.ip;
+        let resp1 = await productService.addip(ip);
+        if (resp1) {
+          return response(resp1, resp.data, 200, res);
+        } else {
+          return response("something went wrong123!!", {}, 500, res);
+        }
+        // console.log("iopdfs", ip1);
       } else {
         return response("something went wrong!!", {}, 500, res);
       }

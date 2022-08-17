@@ -10,7 +10,7 @@ cartRoute.get("/", (req, res) => {
 cartRoute.post("/addtocart", addtocartcontroller.addtocart);
 cartRoute.get("/getcart", addtocartcontroller.getcart);
 cartRoute.put("/update/:_id", addtocartcontroller.update);
-cartRoute.delete("/delete/:_id", addtocartcontroller.delete);
+// cartRoute.delete("/delete/:_id", addtocartcontroller.delete);
 // productRoute.delete("/delete/:_id", verifyAdminToken, productController.delete);
 
 // productRoute.put("/update/:_id", verifyAdminToken, productController.update);

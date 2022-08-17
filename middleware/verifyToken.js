@@ -19,7 +19,7 @@ function verifyUserToken(req, res, next) {
           process.env.USER_ENCRYPTION_KEY
         );
         req.email = decrypt(payload.email, process.env.USER_ENCRYPTION_KEY);
-        console.log(req.email);
+        // console.log(req.email);
         next();
       }
     });

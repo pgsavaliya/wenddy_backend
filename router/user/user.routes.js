@@ -14,7 +14,7 @@ userRoute.get("/", (req, res) => {
 });
 
 userRoute.use("/auth", authRoute);
-userRoute.use("/product", verifyUserToken, productRoute);
+userRoute.use("/product", productRoute);
 userRoute.use("/cart", verifyUserToken, cartRoute);
 userRoute.use("/review", verifyUserToken, reviewRoute);
 userRoute.use("/profile", verifyUserToken, profileRoute);

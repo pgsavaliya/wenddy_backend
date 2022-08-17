@@ -1,7 +1,22 @@
 const productModel = require("../../model/product.model");
+const ipModel = require("../../model/ip.model");
 
 module.exports = {
-  getAll: ({ page, limit, str, startDate, endDate, userId, category, ring_type, diamond_shape, metal, min, max, tag }) => {
+  getAll: ({
+    page,
+    limit,
+    str,
+    startDate,
+    endDate,
+    userId,
+    category,
+    ring_type,
+    diamond_shape,
+    metal,
+    min,
+    max,
+    tag,
+  }) => {
     return new Promise(async (res, rej) => {
       try {
         let qry = {};
@@ -25,9 +40,7 @@ module.exports = {
         let tag_array;
         if (tag) tag_array = tag.split(",");
         if (str) {
-          qry["$or"] = [
-            { product_title: { $regex: str, $options: "i" } },
-          ];
+          qry["$or"] = [{ product_title: { $regex: str, $options: "i" } }];
         }
         if (metal) qry["metal"] = metal;
         if (category) qry["category"] = { $in: categoryArray };
@@ -35,14 +48,13 @@ module.exports = {
         if (diamond_shape) qry["diamond_shape"] = { $in: diamond_shape_array };
         if (tag) qry["tag"] = { $in: tag_array };
         if (min && max) {
-          qry["mrp"] =
-          {
+          qry["mrp"] = {
             $gte: parseInt(min),
-            $lte: parseInt(max)
+            $lte: parseInt(max),
           };
         }
-        console.log("userId: ", userId);
-        console.log("qry ...........", qry);
+        // console.log("userId: ", userId);
+        // console.log("qry ...........", qry);
         let getData = await productModel.aggregate([
           { $match: qry },
           {
@@ -73,9 +85,9 @@ module.exports = {
           getData.result = getData.result.map((item, index) => {
             return {
               ...item,
-              index: getData.total_count[0].count - index
-            }
-          })
+              index: getData.total_count[0].count - index,
+            };
+          });
           res({
             status: 200,
             data: {
@@ -93,6 +105,32 @@ module.exports = {
     });
   },
 
+  addip: (ip) => {
+    return new Promise(async (res, rej) => {
+      try {
+        // console.log("data ........", data);
+        let ipData = await ipModel.find({ ip_address: ip });
+        if (ipData != "") {
+          console.log("product find", ipData);
+          res({ status: 200, data: ipData });
+        } else {
+          let newipModel = new ipModel({ ip_address: ip });
+          let ipData1 = await newipModel.save();
+          if (ipData1) {
+            console.log("data save", ipData1);
+            res({ status: 200, data: ipData1 });
+          }
+        }
+      } catch (err) {
+        console.log("err ...", err);
+        rej({
+          status: err?.status || 500,
+          error: err,
+          message: err?.message || "Something Went Wrong!!!",
+        });
+      }
+    });
+  },
   byId: (_id) => {
     return new Promise(async (res, rej) => {
       try {
