@@ -199,9 +199,9 @@ module.exports = {
         // });
         // console.log("existData ......", existData.length);
         // if (existData.length > 0) {
-        console.log(id);
+        // console.log(id);
         let Data = await productModel.aggregate([
-          { $match: { admin_id: mongoose.Types.ObjectId(id) } },
+          { $match: { _id: mongoose.Types.ObjectId(id) } },
           // let trasactionData = await productModel.aggregate([
           //   { $match: { admin_id: id } },
           // {
@@ -218,7 +218,7 @@ module.exports = {
           //   },
           // },
         ]);
-        console.log("Data ..........", Data);
+        // console.log("Data ..........", Data);
         // let funded =
         //   (trasactionData[0].totalInvestment / getData.totalAmount) * 100;
         // console.log("funded ........", funded);
@@ -234,7 +234,7 @@ module.exports = {
             },
           });
         } else {
-          rej({ status: 404, message: "Property Not Found", error: {} });
+          rej({ status: 404, message: "Data Not Found", error: {} });
         }
         // } else {
         //   res({ status: 200, data: { result: getData } });
