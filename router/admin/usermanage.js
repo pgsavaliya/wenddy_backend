@@ -11,5 +11,6 @@ usermanageRoute.put("/update/:_id", usermanageController.update);
 usermanageRoute.get("/getAll", usermanageController.getAll);
 usermanageRoute.get("/byId/:_id", usermanageController.byId);
 usermanageRoute.delete("/delete/:_id", usermanageController.delete);
+usermanageRoute.put("/updatestatus/:_id", usermanageController.updatestatus);
 
 module.exports = usermanageRoute;

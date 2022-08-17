@@ -23,7 +23,23 @@ exports.update = async (req, res) => {
     return response(err.message, err?.error, err.status, res);
   }
 };
+exports.updatestatus = async (req, res) => {
+  try {
+    // console.log(req.body.confirmPassword);
 
+    let resp = await usermanageService.userstatus(
+      req.params._id,
+      req.body.user_status
+    );
+    if (resp) {
+      return response("data updated successfully!!", {}, 200, res);
+    } else {
+      return response("something went wrong!!", {}, 500, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};
 exports.getAll = async (req, res) => {
   try {
     if (!req.query.page || !req.query.limit) {
@@ -31,7 +47,8 @@ exports.getAll = async (req, res) => {
     } else {
       let resp = await usermanageService.getAll(
         req.query.page,
-        req.query.limit
+        req.query.limit,
+        req.query.str
       );
       if (resp) {
         return response("SUCCESS..!!", resp.data, 200, res);

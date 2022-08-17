@@ -37,6 +37,40 @@ exports.update = async (req, res) => {
   }
 };
 
+exports.updatestatus = async (req, res) => {
+  try {
+    // console.log(req.body.confirmPassword);
+
+    let resp = await productService.updatestatus(
+      req.params._id,
+      req.body.is_public
+    );
+    if (resp) {
+      return response("data updated successfully!!", {}, 200, res);
+    } else {
+      return response("something went wrong!!", {}, 500, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};
+exports.updateisfav = async (req, res) => {
+  try {
+    // console.log(req.body.confirmPassword);
+
+    let resp = await productService.updateisfav(
+      req.params._id,
+      req.body.is_fav
+    );
+    if (resp) {
+      return response("data updated successfully!!", {}, 200, res);
+    } else {
+      return response("something went wrong!!", {}, 500, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};
 exports.getAll = async (req, res) => {
   try {
     if (!req.query.page || !req.query.limit) {
