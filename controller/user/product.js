@@ -26,14 +26,14 @@ exports.getAll = async (req, res) => {
       if (resp) {
         // req.ip = RequestIp.getClientIp(req);
         // console.log(req.ip);
-        let ip = req.socket.localAddress;
-        let ip1 = req.ip;
-        let resp1 = await productService.addip(ip);
-        if (resp1) {
-          return response(resp1, resp.data, 200, res);
-        } else {
-          return response("something went wrong123!!", {}, 500, res);
-        }
+        // let ip = req.socket.localAddress;
+        // let ip1 = req.ip;
+        // let resp1 = await productService.addip(ip);
+        // if (resp1) {
+        return response("SUCESS..!!", resp.data, 200, res);
+        // } else {
+        //   return response("something went wrong123!!", {}, 500, res);
+        // }
         // console.log("iopdfs", ip1);
       } else {
         return response("something went wrong!!", {}, 500, res);
