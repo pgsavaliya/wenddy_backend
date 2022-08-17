@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const bcryptjs = require("bcryptjs");
+const { boolean } = require("joi");
 
 const userSchema = new Schema(
   {
@@ -22,6 +23,10 @@ const userSchema = new Schema(
     gender: {
       type: String,
       enum: ["male", "female"],
+    },
+    user_status: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true }

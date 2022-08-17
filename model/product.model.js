@@ -175,6 +175,10 @@ const productSchema = new Schema(
     offerImage: {
       type: String,
     },
+    is_fav: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

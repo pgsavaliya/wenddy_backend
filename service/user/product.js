@@ -22,6 +22,7 @@ module.exports = {
         let qry = {};
         page = parseInt(page);
         limit = parseInt(limit);
+        // console.log("limit ....", limit);
         if (startDate && endDate) {
           startDate = new Date(startDate);
           endDate = new Date(endDate);
@@ -55,8 +56,11 @@ module.exports = {
         }
         // console.log("userId: ", userId);
         // console.log("qry ...........", qry);
-        let getData = await productModel.aggregate([
+        let limit1 = parseInt(limit * 0.4);
+        let limit2 = limit - limit1;
+        let getData1 = await productModel.aggregate([
           { $match: qry },
+          { $match: { is_fav: true } },
           {
             $facet: {
               total_count: [
@@ -73,27 +77,53 @@ module.exports = {
                     __v: 0,
                   },
                 },
-                { $sort: { createdAt: -1 } },
-                { $skip: (page - 1) * limit },
-                { $limit: limit },
+                // { $sort: { createdAt: -1 } },
+                { $skip: (page - 1) * limit1 },
+                { $limit: limit1 },
               ],
             },
           },
         ]);
-        getData = getData[0];
-        if (getData.result.length > 0) {
-          getData.result = getData.result.map((item, index) => {
-            return {
-              ...item,
-              index: getData.total_count[0].count - index,
-            };
-          });
+        let getData2 = await productModel.aggregate([
+          { $match: qry },
+          { $match: { is_fav: false } },
+
+          {
+            $facet: {
+              total_count: [
+                {
+                  $group: {
+                    _id: null,
+                    count: { $sum: 1 },
+                  },
+                },
+              ],
+              result: [
+                {
+                  $project: {
+                    __v: 0,
+                  },
+                },
+                // { $sort: { createdAt: -1 } },
+                { $skip: (page - 1) * limit2 },
+                { $limit: limit2 },
+              ],
+            },
+          },
+        ]);
+        getData1 = getData1[0];
+        getData2 = getData2[0];
+        let getData = [];
+        let count =
+          getData1.total_count[0].count + getData2.total_count[0].count;
+        getData.push(getData1.result);
+        getData.push(getData2.result);
+        console.log(getData2);
+        // console.log("getData .......", getData);
+        if (getData.length > 0) {
           res({
             status: 200,
-            data: {
-              total_count: getData.total_count[0].count,
-              result: getData.result,
-            },
+            data: { count, getData },
           });
         } else {
           rej({ status: 404, message: "No Data found!!" });
