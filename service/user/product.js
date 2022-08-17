@@ -60,6 +60,11 @@ module.exports = {
         let limit2 = limit - limit1;
         let getData1 = await productModel.aggregate([
           { $match: qry },
+          {
+            $match: {
+              is_public: true,
+            },
+          },
           { $match: { is_fav: true } },
           {
             $facet: {

@@ -94,7 +94,8 @@ exports.getAll = async (req, res) => {
 
 exports.byId = async (req, res) => {
   try {
-    let resp = await productService.byId(req.adminId);
+    // console.log("id - ", req.params._id);
+    let resp = await productService.byId(req.params._id);
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {

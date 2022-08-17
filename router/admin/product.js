@@ -12,7 +12,7 @@ productRoute.put("/update/:_id", productController.update);
 productRoute.put("/updatestatus/:_id", productController.updatestatus);
 productRoute.put("/updateisfav/:_id", productController.updateisfav);
 productRoute.get("/getAll", productController.getAll);
-productRoute.get("/byadminId", productController.byId);
+productRoute.get("/byId/:_id", productController.byId);
 productRoute.delete("/delete/:_id", productController.delete);
 // productRoute.get("/exportData", productController.exportData);
 
