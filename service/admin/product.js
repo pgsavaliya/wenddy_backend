@@ -54,6 +54,46 @@ module.exports = {
     });
   },
 
+  updatestatus: async (_id, data) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let getData = await productModel.findByIdAndUpdate(
+          _id,
+          { is_public: data },
+          { new: true }
+        );
+        if (getData) {
+          res({ status: 200, data: "" });
+        } else {
+          rej({ status: 404, message: "Invalid id!!" });
+        }
+      } catch (err) {
+        console.log("err", err);
+        rej({ status: 500, error: err, message: "something went wrong!!" });
+      }
+    });
+  },
+
+  updateisfav: async (_id, data) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let getData = await productModel.findByIdAndUpdate(
+          _id,
+          { is_fav: data },
+          { new: true }
+        );
+        if (getData) {
+          res({ status: 200, data: "" });
+        } else {
+          rej({ status: 404, message: "Invalid id!!" });
+        }
+      } catch (err) {
+        console.log("err", err);
+        rej({ status: 500, error: err, message: "something went wrong!!" });
+      }
+    });
+  },
+
   getAll: (page, limit, str, startDate, endDate, status) => {
     return new Promise(async (res, rej) => {
       try {
