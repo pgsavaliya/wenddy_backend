@@ -90,7 +90,7 @@ module.exports = {
             if (deleteData) {
               res({ status: 200, data: "Data Deleted!!" });
             } else {
-              rej({ status: 500, message: "Invalid id!!" });
+              rej({ status: 404, message: "Invalid id!!" });
             }
           }
         } else {
