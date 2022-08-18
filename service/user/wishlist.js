@@ -110,7 +110,7 @@ module.exports = {
         if (deletedData) {
           res({ status: 200, data: "Data Deleted!!" });
         } else {
-          rej({ status: 500, message: "Invalid id!!" });
+          rej({ status: 404, message: "Invalid id!!" });
         }
       } catch (err) {
         console.log(err);
