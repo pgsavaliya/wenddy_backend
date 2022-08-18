@@ -27,7 +27,7 @@ exports.getAll = async (req, res) => {
         // req.ip = RequestIp.getClientIp(req);
         // console.log(req.ip);
         // let ip = req.socket.localAddress;
-        let ip = req.socket.remoteAddress;
+        let ip = req.socket.localAddress;
         // console.log("request", );
         let resp1 = await productService.addip(ip);
         if (resp1) {
