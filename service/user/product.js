@@ -123,7 +123,7 @@ module.exports = {
           getData1.total_count[0].count + getData2.total_count[0].count;
         getData.push(getData1.result);
         getData.push(getData2.result);
-        console.log(getData2);
+        // console.log(getData2);
         // console.log("getData .......", getData);
         if (getData.length > 0) {
           res({
@@ -146,7 +146,7 @@ module.exports = {
         // console.log("data ........", data);
         let ipData = await ipModel.find({ ip_address: ip });
         if (ipData != "") {
-          console.log("product find", ipData);
+          // console.log("product find", ipData);
           res({ status: 200, data: ipData });
         } else {
           let newipModel = new ipModel({ ip_address: ip });
