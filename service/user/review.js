@@ -1,5 +1,6 @@
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { default: mongoose } = require("mongoose");
 const { encrypt } = require("../../helper/encrypt-decrypt");
 const reviewproductModel = require("../../model/reviewproduct.model");
 
@@ -28,12 +29,43 @@ module.exports = {
   getreview: (data) => {
     return new Promise(async (res, rej) => {
       try {
+        page = parseInt(data.page);
+        limit = parseInt(data.limit);
+
         // let newViewcartModel = new addtocartModel(data);
-        let getData = await reviewproductModel
-          .find({
-            product_id: data.product_id,
-          })
-          .sort({ createdAt: -1 });
+        let getData = await reviewproductModel.aggregate([
+          {
+            $match: {
+              product_id: mongoose.Types.ObjectId(data.product_id),
+            },
+          },
+          {
+            $facet: {
+              total_count: [
+                {
+                  $group: {
+                    _id: null,
+                    count: { $sum: 1 },
+                  },
+                },
+              ],
+              result: [
+                {
+                  $project: {
+                    __v: 0,
+                  },
+                },
+                { $sort: { createdAt: -1 } },
+                { $skip: (page - 1) * limit },
+                { $limit: limit },
+              ],
+            },
+          },
+        ]);
+        // .find({
+        //   product_id: data.product_id,
+        // })
+        // .sort({ createdAt: -1 });
         // },
         // {
         //   $lookup: {

@@ -18,7 +18,8 @@ exports.addreview = async (req, res) => {
 exports.getreview = async (req, res) => {
   try {
     // console.log(req.query.product_id);
-
+    req.body.page = req.query.page;
+    req.body.limit = req.query.limit;
     req.body.product_id = req.query.product_id;
     let resp = await reviewService.getreview(req.body);
     if (resp) {
