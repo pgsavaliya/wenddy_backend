@@ -1,7 +1,6 @@
 const multer = require("multer");
 const path = require("path");
 
-console.log("in multer");
 let storageMulter = multer.diskStorage({
     destination: function (req, file, callback) {
         console.log("__dirname is: ", __dirname);
