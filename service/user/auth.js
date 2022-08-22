@@ -31,7 +31,7 @@ module.exports = {
         let loginData = await userModel.findOne({ email });
         // console.log("loginData ......", loginData);
         if (loginData) {
-          console.log(loginData.user_status);
+          // console.log(loginData.user_status);
           if (loginData.user_status == true) {
             const isMatch = await bcryptjs.compare(
               password,
