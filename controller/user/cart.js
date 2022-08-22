@@ -7,7 +7,7 @@ exports.addtocart = async (req, res) => {
     console.log(req.body);
     let resp = await addtocartService.addtocart(req.body);
     if (resp) {
-      return response("Added successfully..!!", resp.data, 200, res);
+      return response("SUCCESS..!!", resp.data, 200, res);
     } else {
       return response("Something went wrong!!", {}, 500, res);
     }

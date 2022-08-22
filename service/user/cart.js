@@ -9,16 +9,50 @@ module.exports = {
     return new Promise(async (res, rej) => {
       try {
         console.log("data ........", data);
-        let productData = await productModel.findById(data.product_id);
-        console.log("productData.mrp .......", productData.mrp);
-        data["product_amount"] = productData.mrp;
-        data["total_price"] = data.quantity * data.product_amount;
-        let newAddtocartModel = new addtocartModel(data);
-        let saveData = await newAddtocartModel.save();
-        if (saveData) {
-          res({ status: 200, data: "Added to Cart Successfully!!" });
+        let productId = await addtocartModel.findOne({
+          product_id: data.product_id,
+        });
+        console.log("productId", productId);
+        if (productId) {
+          if (data.quantity != 0) {
+            let productData = await productModel.findById(productId.product_id);
+            // console.log("pavan", productData);
+            data["product_amount"] = productData.mrp;
+            data["total_price"] = data.quantity * data.product_amount;
+            let getData = await addtocartModel.updateOne(
+              { product_id: productId.product_id },
+              data,
+              {
+                new: true,
+              }
+            );
+            if (getData) {
+              res({ status: 200, data: "update" });
+            } else {
+              rej({ status: 404, message: "Invalid id!!" });
+            }
+          } else {
+            let deleteData = await addtocartModel.deleteOne({
+              product_id: data.product_id,
+            });
+            if (deleteData) {
+              res({ status: 200, data: "Data Deleted!!" });
+            } else {
+              rej({ status: 404, message: "Invalid id!!" });
+            }
+          }
         } else {
-          rej({ status: 404, message: "something went wrong!!" });
+          let productData = await productModel.findById(data.product_id);
+          console.log("productData.mrp .......", productData.mrp);
+          data["product_amount"] = productData.mrp;
+          data["total_price"] = data.quantity * data.product_amount;
+          let newAddtocartModel = new addtocartModel(data);
+          let saveData = await newAddtocartModel.save();
+          if (saveData) {
+            res({ status: 200, data: "Added to Cart Successfully!!" });
+          } else {
+            rej({ status: 404, message: "something went wrong!!" });
+          }
         }
       } catch (err) {
         console.log("err ...", err);
@@ -49,8 +83,12 @@ module.exports = {
             },
           },
         ]);
+        let total = 0;
+        getData.map((item, index) => {
+          total = total + item.total_price;
+        });
         if (getData) {
-          res({ status: 200, data: getData });
+          res({ status: 200, data: { total: total, data: getData } });
         } else {
           rej({ status: 404, message: "Invalid id!!" });
         }
@@ -71,28 +109,6 @@ module.exports = {
         let productId = await addtocartModel.findById(_id);
         if (productId) {
           // console.log("ptoduct id =", productId);
-
-          if (data.quantity != 0) {
-            let productData = await productModel.findById(productId.product_id);
-            // console.log("pavan", productData);
-            data["product_amount"] = productData.mrp;
-            data["total_price"] = data.quantity * data.product_amount;
-            let getData = await addtocartModel.findByIdAndUpdate(_id, data, {
-              new: true,
-            });
-            if (getData) {
-              res({ status: 200, data: "update" });
-            } else {
-              rej({ status: 404, message: "Invalid id!!" });
-            }
-          } else {
-            let deleteData = await addtocartModel.findByIdAndDelete(_id);
-            if (deleteData) {
-              res({ status: 200, data: "Data Deleted!!" });
-            } else {
-              rej({ status: 404, message: "Invalid id!!" });
-            }
-          }
         } else {
           rej({ status: 404, message: "Invalid id!!" });
         }
