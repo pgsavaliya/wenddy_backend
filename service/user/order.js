@@ -19,8 +19,10 @@ module.exports = {
     return new Promise(async (res, rej) => {
       try {
         // console.log("data ........", data);
+        // let saveData1 = new Promise(async (res, rej) => {
         let neworderModel = new orderModel(data);
         let saveData = await neworderModel.save();
+        // res(saveData);
         if (saveData) {
           const create_payment_json = {
             intent: "sale",
@@ -60,8 +62,9 @@ module.exports = {
             } else {
               for (let i = 0; i < payment.links.length; i++) {
                 if (payment.links[i].rel === "approval_url") {
-                  console.log(payment.links);
-                  res.redirect(payment.links[i].href);
+                  // console.log(payment.links[i].href);
+                  // window.open(payment.links[i].href);
+                  res({ status: 200, data: payment.links[i].href });
                 }
               }
             }

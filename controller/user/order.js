@@ -8,7 +8,9 @@ exports.order = async (req, res) => {
     // console.log(req.body);
     let resp = await orderService.order(req.body);
     if (resp) {
-      return response("Added successfully..!!", resp.data, 200, res);
+      // console.log(resp.data);
+      res.redirect(resp.data);
+      // return response("Added successfully..!!", resp.data, 200, res);
     } else {
       return response("Something went wrong!!", {}, 500, res);
     }
