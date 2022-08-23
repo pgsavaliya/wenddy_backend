@@ -73,21 +73,21 @@ module.exports = {
         });
     },
 
-    // delete: async (file) => {
-    //     return new Promise(async (res, rej) => {
-    //         try {
-    //             const deleted = await bucket.file(file).delete();
-    //             if (deleted) {
-    //                 res({ status: 200, data: "File Deleted Successfully!!" });
-    //             } else {
-    //                 rej({ status: 404, error: err });
-    //             }
-    //         }
-    //         catch (err) {
-    //             console.log("err...", err);
-    //             rej({ status: 500, error: err, message: "something went wrong!!" });
-    //         }
-    //     });
-    // },
+    delete: async (file) => {
+        return new Promise(async (res, rej) => {
+            try {
+                const deleted = await bucket.file(file).delete();
+                if (deleted) {
+                    res({ status: 200, data: "File Deleted Successfully!!" });
+                } else {
+                    rej({ status: 404, error: err });
+                }
+            }
+            catch (err) {
+                console.log("err...", err);
+                rej({ status: 500, error: err, message: "something went wrong!!" });
+            }
+        });
+    },
 
 }
