@@ -33,7 +33,7 @@ exports.getAll = async (req, res) => {
         if (resp1) {
           return response("SUCESS..!!", resp.data, 200, res);
         } else {
-          return response("something went wrong123!!", {}, 500, res);
+          return response("something went wrong123!!", {}, 404, res);
         }
         // console.log("iopdfs", ip1);
       } else {
@@ -51,7 +51,19 @@ exports.byId = async (req, res) => {
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {
-      return response("Error..!!", {}, 500, res);
+      return response("Error..!!", {}, 404, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};
+exports.search = async (req, res) => {
+  try {
+    let resp = await productService.search(req.query.str);
+    if (resp) {
+      return response("SUCCESS..!!", resp.data, 200, res);
+    } else {
+      return response("Error..!!", {}, 404, res);
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);
