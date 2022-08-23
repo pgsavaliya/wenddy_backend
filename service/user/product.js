@@ -181,7 +181,58 @@ module.exports = {
       }
     });
   },
+  search: (str) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let qry = {};
+        if (str) {
+          qry["$or"] = [
+            {
+              product_title: { $regex: str, $options: "i" },
+            },
+            {
+              product_description: { $regex: str, $options: "i" },
+            },
+            {
+              metal: { $regex: str, $options: "i" },
+            },
+            {
+              diamond_type: { $regex: str, $options: "i" },
+            },
+            {
+              tag: { $regex: str, $options: "i" },
+            },
+            {
+              category: { $regex: str, $options: "i" },
+            },
+            {
+              ring_type: { $regex: str, $options: "i" },
+            },
+            {
+              diamond_shape: { $regex: str, $options: "i" },
+            },
+          ];
+        }
+        let getData = await productModel.aggregate([{ $match: qry }]);
+        console.log(getData);
+        if (getData) {
+          // getData = getData[0];
 
+          res({
+            status: 200,
+            data: {
+              result: getData,
+            },
+          });
+        } else {
+          rej({ status: 404, message: "No Data Found!!" });
+        }
+      } catch (err) {
+        console.log("err ....", err);
+        rej({ status: 500, error: err, message: "something went wrong!!" });
+      }
+    });
+  },
   //     getByName: ({ urlName, userId }) => {
   //         return new Promise(async (res, rej) => {
   //             try {
