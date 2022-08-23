@@ -1,4 +1,3 @@
-// const productModel = require("../../model/product.model");
 const wishlistModel = require("../../model/wishlist.model");
 const mongoose = require("mongoose");
 

@@ -166,6 +166,7 @@ module.exports = {
       }
     });
   },
+  
   byId: (_id) => {
     return new Promise(async (res, rej) => {
       try {
@@ -181,6 +182,7 @@ module.exports = {
       }
     });
   },
+
   search: (str) => {
     return new Promise(async (res, rej) => {
       try {
@@ -216,8 +218,6 @@ module.exports = {
         let getData = await productModel.aggregate([{ $match: qry }]);
         console.log(getData);
         if (getData) {
-          // getData = getData[0];
-
           res({
             status: 200,
             data: {
@@ -233,6 +233,9 @@ module.exports = {
       }
     });
   },
+
+};
+
   //     getByName: ({ urlName, userId }) => {
   //         return new Promise(async (res, rej) => {
   //             try {
@@ -305,4 +308,4 @@ module.exports = {
   //             }
   //         });
   //     },
-};
+

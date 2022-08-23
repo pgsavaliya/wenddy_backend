@@ -1,5 +1,4 @@
 const { Router } = require("express");
-const otpcontroller = require("../../controller/otp");
 const profilecontroller = require("../../controller/user/profile");
 const profileRoute = Router();
 

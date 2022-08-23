@@ -87,6 +87,7 @@ module.exports = {
   },
 
 };
+
   // update: async (_id, data) => {
   //   return new Promise(async (res, rej) => {
   //     try {

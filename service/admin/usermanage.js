@@ -1,4 +1,3 @@
-// const transactionModel = require("../../model/transaction.model");
 const mongoose = require("mongoose");
 const userModel = require("../../model/user.model");
 
@@ -20,6 +19,7 @@ module.exports = {
       }
     });
   },
+
   userstatus: async (_id, data) => {
     return new Promise(async (res, rej) => {
       try {
@@ -39,6 +39,7 @@ module.exports = {
       }
     });
   },
+
   getAll: (page, limit, str) => {
     return new Promise(async (res, rej) => {
       try {
@@ -136,4 +137,5 @@ module.exports = {
       }
     });
   },
+  
 };

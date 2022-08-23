@@ -23,7 +23,8 @@ module.exports = {
       }
     });
   },
-  getreview: (product_id,page, limit) => {
+  
+  getreview: (product_id, page, limit) => {
     return new Promise(async (res, rej) => {
       try {
         let qry = {};
@@ -48,7 +49,7 @@ module.exports = {
                     __v: 0,
                   },
                 },
-                { $sort: { createdAt: -1 } },
+                { $sort: { rating: 1 } },
                 { $skip: (page - 1) * limit },
                 { $limit: limit },
               ],
@@ -71,6 +72,8 @@ module.exports = {
       }
     });
   },
+
+};
 
   // update: async (_id, data) => {
   //   return new Promise(async (res, rej) => {
@@ -104,4 +107,3 @@ module.exports = {
   //     }
   //   });
   // },
-};

@@ -77,6 +77,8 @@ module.exports = {
     });
   },
 
+};
+
   // delete: (_id) => {
   //   return new Promise(async (res, rej) => {
   //     try {
@@ -93,7 +95,7 @@ module.exports = {
   //   });
   // },
 
-};
+
 
   // forgotepss: async (_id, data) => {
   //   return new Promise(async (res, rej) => {
