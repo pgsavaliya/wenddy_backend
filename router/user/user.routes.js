@@ -13,6 +13,7 @@ const reviewRoute = require("./review");
 const profileRoute = require("./profile");
 const wishlistRoute = require("./wishlist");
 const ordercontroller = require("../../controller/user/order");
+
 userRoute.get("/", (req, res) => {
   res.status(200).json({ message: "user route is working" });
 });
@@ -24,4 +25,5 @@ userRoute.post("/order", verifyUserToken, ordercontroller.order);
 userRoute.use("/wishlist", verifyUserToken, wishlistRoute);
 userRoute.use("/review", verifyUserToken, reviewRoute);
 userRoute.use("/profile", verifyUserToken, profileRoute);
+
 module.exports = userRoute;
