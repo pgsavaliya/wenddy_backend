@@ -3,9 +3,7 @@ const { response } = require("../../middleware/response");
 
 exports.addtocart = async (req, res) => {
   try {
-    req.body.user_id = req.user_id;
-    console.log(req.body);
-    let resp = await addtocartService.addtocart(req.body);
+    let resp = await addtocartService.addtocart(req.user_id, req.body);
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {
@@ -17,8 +15,7 @@ exports.addtocart = async (req, res) => {
 };
 exports.getcart = async (req, res) => {
   try {
-    req.body.user_id = req.user_id;
-    let resp = await addtocartService.getcart(req.body);
+    let resp = await addtocartService.getcart(req.user_id);
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {
@@ -29,20 +26,18 @@ exports.getcart = async (req, res) => {
   }
 };
 
-exports.update = async (req, res) => {
-  try {
-    // console.log("Pavan", req.body);
-
-    let resp = await addtocartService.update(req.params._id, req.body);
-    if (resp) {
-      return response("data updated successfully!!", {}, 200, res);
-    } else {
-      return response("something went wrong!!", {}, 500, res);
-    }
-  } catch (err) {
-    return response(err.message, err?.error, err.status, res);
-  }
-};
+// exports.update = async (req, res) => {
+//   try {
+//     let resp = await addtocartService.update(req.params._id, req.body);
+//     if (resp) {
+//       return response("data updated successfully!!", {}, 200, res);
+//     } else {
+//       return response("something went wrong!!", {}, 500, res);
+//     }
+//   } catch (err) {
+//     return response(err.message, err?.error, err.status, res);
+//   }
+// };
 
 // exports.delete = async (req, res) => {
 //   try {
