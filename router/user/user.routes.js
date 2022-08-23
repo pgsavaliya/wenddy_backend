@@ -21,6 +21,7 @@ userRoute.get("/", (req, res) => {
 userRoute.use("/auth", authRoute);
 userRoute.use("/product", productRoute);
 userRoute.use("/cart", verifyUserToken, cartRoute);
+userRoute.get("/paymant", ordercontroller.payment);
 userRoute.post("/order", verifyUserToken, ordercontroller.order);
 userRoute.use("/wishlist", verifyUserToken, wishlistRoute);
 userRoute.use("/review", verifyUserToken, reviewRoute);

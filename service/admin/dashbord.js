@@ -50,6 +50,7 @@ module.exports = {
           },
         ]);
         newproduct = newproduct[0];
+        let order = await orderModel.find();
         let lastmonthorder = await orderModel.aggregate([
           {
             $match: {
@@ -94,7 +95,27 @@ module.exports = {
           },
         ]);
         lastweekorder = lastweekorder[0];
-        let order = await orderModel.find();
+        let recentorder = await orderModel.aggregate([
+          {
+            $facet: {
+              result: [
+                {
+                  $project: {
+                    __v: 0,
+                  },
+                },
+                { $sort: { createdAt: -1 } },
+                // { $skip: (page - 1) * 10 },
+                { $limit: 10 },
+              ],
+            },
+          },
+        ]);
+        recentorder = recentorder[0];
+        let total_revenue = 0;
+        order.map((item, index) => {
+          total_revenue = total_revenue + item.total;
+        });
         let user = await userModel.find();
         let suspenduser = await userModel.find({ user_status: false });
         let newuser = await userModel.aggregate([
@@ -123,14 +144,16 @@ module.exports = {
           res({
             status: 200,
             data: {
-              total_product: product.total_count[0].count || 0,
-              new_product: newproduct.total_count[0].count || 0,
+              total_product: product.total_count[0]?.count || 0,
+              new_product: newproduct.total_count[0]?.count || 0,
               total_user: user.length || 0,
               total_suspend_user: suspenduser.length || 0,
-              new_user: newuser.total_count[0].count || 0,
-              total_order: order.length || 0,
-              total_order_lastmonth: lastmonthorder.total_count[0].count || 0,
-              total_order_lastweek: lastweekorder.total_count[0].count || 0,
+              new_user: newuser.total_count[0]?.count || 0,
+              total_revenue: parseInt(total_revenue),
+              total_order: order.lengtdh || 0,
+              total_order_lastmonth: lastmonthorder.total_count[0]?.count || 0,
+              total_order_lastweek: lastweekorder.total_count[0]?.count || 0,
+              recent_order: recentorder.result || 0,
             },
           });
         }

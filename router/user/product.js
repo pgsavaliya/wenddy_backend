@@ -10,5 +10,6 @@ productRoute.get("/", (req, res) => {
 
 productRoute.get("/getAll", productController.getAll);
 productRoute.get("/byId/:_id", productController.byId);
+productRoute.get("/search", productController.search);
 
 module.exports = productRoute;
