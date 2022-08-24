@@ -121,7 +121,9 @@ module.exports = {
         let getData = [];
         let countofgetdata1 = console.log(getData1);
         let count =
-          getData1.total_count[0]?.count + getData2.total_count[0]?.count || 0;
+          getData1.total_count[0]?.count ||
+          0 + getData2.total_count[0]?.count ||
+          0;
         getData.push(getData1.result);
         getData.push(getData2.result);
         // console.log(getData2);
