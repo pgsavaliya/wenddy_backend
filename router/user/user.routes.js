@@ -1,9 +1,7 @@
 const { Router } = require("express");
 const userRoute = Router();
 
-const {
-  verifyUserToken
-} = require("../../middleware/verifyToken");
+const { verifyUserToken } = require("../../middleware/verifyToken");
 
 const authRoute = require("./auth");
 const productRoute = require("./product");
@@ -13,6 +11,7 @@ const wishlistRoute = require("./wishlist");
 const reviewRoute = require("./review");
 const profileRoute = require("./profile");
 const addressRoute = require("./address");
+const countryRoute = require("./country");
 
 userRoute.get("/", (req, res) => {
   res.status(200).json({ message: "user route is working" });
@@ -26,5 +25,6 @@ userRoute.use("/wishlist", verifyUserToken, wishlistRoute);
 userRoute.use("/review", verifyUserToken, reviewRoute);
 userRoute.use("/profile", verifyUserToken, profileRoute);
 userRoute.use("/address", verifyUserToken, addressRoute);
+userRoute.use("/country", verifyUserToken, countryRoute);
 
 module.exports = userRoute;
