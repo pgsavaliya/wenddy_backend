@@ -6,16 +6,16 @@ const authRoute = require("./auth");
 const productRoute = require("./product");
 const reviewRoute = require("./review");
 const usermanageRoute = require("./usermanage");
-const dashbordController = require("../../controller/admin/dashbord");
+const dashBoardRoute = require("./dashboard");
 
 adminRoute.get("/", (req, res) => {
   res.status(200).json({ message: "admin Route is working" });
 });
 
 adminRoute.use("/auth", authRoute);
-adminRoute.get("/deshbord", verifyAdminToken, dashbordController.get);
 adminRoute.use("/product", verifyAdminToken, productRoute);
 adminRoute.use("/review", verifyAdminToken, reviewRoute);
 adminRoute.use("/usermanage", verifyAdminToken, usermanageRoute);
+adminRoute.use("/dashBoard", verifyAdminToken, dashBoardRoute);
 
 module.exports = adminRoute;

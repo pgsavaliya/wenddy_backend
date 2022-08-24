@@ -1,4 +1,4 @@
-const dashbordService = require("../../service/admin/dashbord");
+const dashbordService = require("../../service/admin/dashboard");
 const { response } = require("../../middleware/response");
 
 exports.get = async (req, res) => {
