@@ -9,18 +9,27 @@ module.exports = {
     return new Promise(async (res, rej) => {
       try {
         console.log("data ........", data);
-        let productId = await addtocartModel.findOne({
+        let getData1 = await addtocartModel.findOne({
           product_id: data.product_id,
+          price: data.price,
+          metal: data.metal,
+          dimand_type: data.dimand_type,
+          user_id: data.user_id,
+          ring_size: data.ring_size,
         });
-        console.log("productId", productId);
-        if (productId) {
+        console.log("getData", getData1);
+        if (getData1) {
           if (data.quantity != 0) {
-            let productData = await productModel.findById(productId.product_id);
-            // console.log("pavan", productData);
-            data["product_amount"] = productData.mrp;
-            data["total_price"] = data.quantity * data.product_amount;
+            data["total_price"] = data.quantity * data.price;
             let getData = await addtocartModel.updateOne(
-              { product_id: productId.product_id },
+              {
+                product_id: getData1.product_id,
+                price: getData1.price,
+                metal: getData1.metal,
+                dimand_type: getData1.dimand_type,
+                user_id: getData1.user_id,
+                ring_size: getData1.ring_size,
+              },
               data,
               {
                 new: true,
@@ -34,6 +43,11 @@ module.exports = {
           } else {
             let deleteData = await addtocartModel.deleteOne({
               product_id: data.product_id,
+              price: data.price,
+              metal: data.metal,
+              dimand_type: data.dimand_type,
+              user_id: data.user_id,
+              ring_size: data.ring_size,
             });
             if (deleteData) {
               res({ status: 200, data: "Data Deleted!!" });

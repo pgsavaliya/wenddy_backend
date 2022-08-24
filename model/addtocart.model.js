@@ -15,11 +15,20 @@ const addtocartSchema = new Schema(
       type: Number,
       require: true,
     },
-    product_amount:{
-      type:Number,
+    price: {
+      type: Number,
     },
-    total_price:{
-      type:Number,
+    total_price: {
+      type: Number,
+    },
+    metal: {
+      type: String,
+    },
+    dimand_type: {
+      type: String,
+    },
+    ring_size: {
+      type: Number,
     },
   },
   { timestamps: true }
