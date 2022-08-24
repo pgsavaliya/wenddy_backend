@@ -116,11 +116,12 @@ module.exports = {
             },
           },
         ]);
-        getData1 = getData1[0];
-        getData2 = getData2[0];
+        getData1 = getData1[0]; //|| { total_count: [0] };
+        getData2 = getData2[0]; //|| { total_count: [0] };
         let getData = [];
+        let countofgetdata1 = console.log(getData1);
         let count =
-          getData1.total_count[0].count + getData2.total_count[0].count;
+          getData1.total_count[0]?.count + getData2.total_count[0]?.count || 0;
         getData.push(getData1.result);
         getData.push(getData2.result);
         // console.log(getData2);
@@ -166,7 +167,7 @@ module.exports = {
       }
     });
   },
-  
+
   byId: (_id) => {
     return new Promise(async (res, rej) => {
       try {
@@ -269,79 +270,77 @@ module.exports = {
       }
     });
   },
-
 };
 
-  //     getByName: ({ urlName, userId }) => {
-  //         return new Promise(async (res, rej) => {
-  //             try {
-  //                 console.log("userId ...........", userId);
-  //                 console.log("urlName ...........", urlName);
-  //                 let watchlistOfUser = [];
-  //                 if (userId)
-  //                     watchlistOfUser =
-  //                         (await watchlistModel.findOne({ userId }, { properties: 1 }))
-  //                             ?.properties || [];
-  //                 let getData = await productModel.aggregate([
-  //                     {
-  //                         $match: { urlName: urlName }
-  //                     },
-  //                     { $addFields: { is_fav: { $in: ["$_id", watchlistOfUser] } } },
-  //                     { $limit: 1 },
-  //                 ]);
-  //                 console.log("getData .......", getData);
+//     getByName: ({ urlName, userId }) => {
+//         return new Promise(async (res, rej) => {
+//             try {
+//                 console.log("userId ...........", userId);
+//                 console.log("urlName ...........", urlName);
+//                 let watchlistOfUser = [];
+//                 if (userId)
+//                     watchlistOfUser =
+//                         (await watchlistModel.findOne({ userId }, { properties: 1 }))
+//                             ?.properties || [];
+//                 let getData = await productModel.aggregate([
+//                     {
+//                         $match: { urlName: urlName }
+//                     },
+//                     { $addFields: { is_fav: { $in: ["$_id", watchlistOfUser] } } },
+//                     { $limit: 1 },
+//                 ]);
+//                 console.log("getData .......", getData);
 
-  //                 let balance = await walletService.getBalance(userId);
-  //                 console.log("balance .....", balance);
+//                 let balance = await walletService.getBalance(userId);
+//                 console.log("balance .....", balance);
 
-  //                 let propertyId = mongoose.Types.ObjectId(getData[0]._id);
-  //                 let existData = await transactionModel.find({
-  //                     idOfCompanyProperty: mongoose.Types.ObjectId(getData[0]._id),
-  //                 });
-  //                 console.log("existData ......", existData.length);
-  //                 if (existData.length > 0) {
-  //                     let trasactionData = await transactionModel.aggregate([
-  //                         { $match: { idOfCompanyProperty: propertyId } },
-  //                         {
-  //                             $group: {
-  //                                 _id: "$customerId",
-  //                                 totalInvestment: { $sum: "$totalAmount" },
-  //                             },
-  //                         },
-  //                         {
-  //                             $group: {
-  //                                 _id: null,
-  //                                 totalInvestment: { $sum: "$totalInvestment" },
-  //                                 totalInvestors: { $sum: 1 },
-  //                             },
-  //                         },
-  //                     ]);
-  //                     console.log("trasactionData ..........", trasactionData);
-  //                     let funded =
-  //                         (trasactionData[0].totalInvestment / getData[0].totalAmount) * 100;
-  //                     console.log("funded ........", funded);
-  //                     if (getData[0]) {
-  //                         res({
-  //                             status: 200,
-  //                             data: {
-  //                                 totalInvestment: trasactionData[0].totalInvestment || 0,
-  //                                 totalInvestors: trasactionData[0].totalInvestors,
-  //                                 Funded: funded,
-  //                                 balance: balance,
-  //                                 result: getData[0],
-  //                             },
-  //                         });
-  //                     } else {
-  //                         rej({ status: 404, message: "Property Not Found", error: {} });
-  //                     }
-  //                 } else {
-  //                     res({ status: 200, data: { balance: balance, result: getData[0] } });
-  //                 }
-  //                 rej({ status: 404, message: "Property Not Found", error: {} });
-  //             } catch (err) {
-  //                 console.log(err);
-  //                 rej({ status: 500, error: err, message: "something went wrong!!" });
-  //             }
-  //         });
-  //     },
-
+//                 let propertyId = mongoose.Types.ObjectId(getData[0]._id);
+//                 let existData = await transactionModel.find({
+//                     idOfCompanyProperty: mongoose.Types.ObjectId(getData[0]._id),
+//                 });
+//                 console.log("existData ......", existData.length);
+//                 if (existData.length > 0) {
+//                     let trasactionData = await transactionModel.aggregate([
+//                         { $match: { idOfCompanyProperty: propertyId } },
+//                         {
+//                             $group: {
+//                                 _id: "$customerId",
+//                                 totalInvestment: { $sum: "$totalAmount" },
+//                             },
+//                         },
+//                         {
+//                             $group: {
+//                                 _id: null,
+//                                 totalInvestment: { $sum: "$totalInvestment" },
+//                                 totalInvestors: { $sum: 1 },
+//                             },
+//                         },
+//                     ]);
+//                     console.log("trasactionData ..........", trasactionData);
+//                     let funded =
+//                         (trasactionData[0].totalInvestment / getData[0].totalAmount) * 100;
+//                     console.log("funded ........", funded);
+//                     if (getData[0]) {
+//                         res({
+//                             status: 200,
+//                             data: {
+//                                 totalInvestment: trasactionData[0].totalInvestment || 0,
+//                                 totalInvestors: trasactionData[0].totalInvestors,
+//                                 Funded: funded,
+//                                 balance: balance,
+//                                 result: getData[0],
+//                             },
+//                         });
+//                     } else {
+//                         rej({ status: 404, message: "Property Not Found", error: {} });
+//                     }
+//                 } else {
+//                     res({ status: 200, data: { balance: balance, result: getData[0] } });
+//                 }
+//                 rej({ status: 404, message: "Property Not Found", error: {} });
+//             } catch (err) {
+//                 console.log(err);
+//                 rej({ status: 500, error: err, message: "something went wrong!!" });
+//             }
+//         });
+//     },
