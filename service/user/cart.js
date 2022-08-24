@@ -8,21 +8,46 @@ module.exports = {
       try {
         let productData = await productModel.findById(data.product_id);
         console.log("data ........", data);
-        let productId = await addtocartModel.findOne({ product_id: data.product_id });
-        console.log("productId ........", productId);
-        if (productId) {
+        let getData1 = await addtocartModel.findOne({
+          product_id: data.product_id,
+          price: data.price,
+          metal: data.metal,
+          dimand_type: data.dimand_type,
+          user_id: data.user_id,
+          ring_size: data.ring_size,
+        });
+        console.log("getData", getData1);
+        if (getData1) {
           if (data.quantity != 0) {
-            data['user_id'] = user_id;
-            data["product_amount"] = productData.mrp;
-            data["total_price"] = data.quantity * data.product_amount;
-            let getData = await addtocartModel.findOneAndUpdate({ product_id: productId.product_id }, data, { new: true });
+            data["total_price"] = data.quantity * data.price;
+            let getData = await addtocartModel.updateOne(
+              {
+                product_id: getData1.product_id,
+                price: getData1.price,
+                metal: getData1.metal,
+                dimand_type: getData1.dimand_type,
+                user_id: getData1.user_id,
+                ring_size: getData1.ring_size,
+              },
+              data,
+              {
+                new: true,
+              }
+            );
             if (getData) {
               res({ status: 200, data: "Data Updated Successfully!!" });
             } else {
               rej({ status: 404, message: "Invalid id!!" });
             }
           } else {
-            let deleteData = await addtocartModel.findOneAndDelete({ product_id: data.product_id });
+            let deleteData = await addtocartModel.deleteOne({
+              product_id: data.product_id,
+              price: data.price,
+              metal: data.metal,
+              dimand_type: data.dimand_type,
+              user_id: data.user_id,
+              ring_size: data.ring_size,
+            });
             if (deleteData) {
               res({ status: 200, data: "Data Deleted!!" });
             } else {

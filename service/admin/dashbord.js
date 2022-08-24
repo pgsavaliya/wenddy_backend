@@ -6,6 +6,12 @@ const orderModel = require("../../model/order.model");
 module.exports = {
   get: (data) => {
     return new Promise(async (res, rej) => {
+      let curDate = new Date();
+      let gte = new Date(data.query.gte);
+      let lte = new Date(data.query.lte);
+      if (!data.query.lte) {
+        lte = new Date();
+      }
       let lastmonth = new Date();
       lastmonth.setMonth(lastmonth.getMonth() - 1);
       let lastweek = new Date();
@@ -50,14 +56,10 @@ module.exports = {
           },
         ]);
         newproduct = newproduct[0];
-        let order = await orderModel.find();
-        let lastmonthorder = await orderModel.aggregate([
+        let totalorder = await orderModel.find();
+        let order = await orderModel.aggregate([
           {
-            $match: {
-              createdAt: {
-                $gte: lastmonth,
-              },
-            },
+            $match: { createdAt: { $gte: gte, $lte: lte } },
           },
           {
             $facet: {
@@ -69,32 +71,22 @@ module.exports = {
                   },
                 },
               ],
-            },
-          },
-        ]);
-        lastmonthorder = lastmonthorder[0];
-        let lastweekorder = await orderModel.aggregate([
-          {
-            $match: {
-              createdAt: {
-                $gte: lastweek,
-              },
-            },
-          },
-          {
-            $facet: {
-              total_count: [
+              reasult: [
                 {
-                  $group: {
-                    _id: null,
-                    count: { $sum: 1 },
+                  $project: {
+                    // __v: 0,
+                    total: 1,
                   },
                 },
               ],
             },
           },
         ]);
-        lastweekorder = lastweekorder[0];
+        order = order[0];
+        let monthearning = 0;
+        order.reasult.map((item, index) => {
+          monthearning = monthearning + item.total;
+        });
         let recentorder = await orderModel.aggregate([
           {
             $facet: {
@@ -113,7 +105,7 @@ module.exports = {
         ]);
         recentorder = recentorder[0];
         let total_revenue = 0;
-        order.map((item, index) => {
+        totalorder.map((item, index) => {
           total_revenue = total_revenue + item.total;
         });
         let user = await userModel.find();
@@ -150,9 +142,9 @@ module.exports = {
               total_suspend_user: suspenduser.length || 0,
               new_user: newuser.total_count[0]?.count || 0,
               total_revenue: parseInt(total_revenue),
-              total_order: order.lengtdh || 0,
-              total_order_lastmonth: lastmonthorder.total_count[0]?.count || 0,
-              total_order_lastweek: lastweekorder.total_count[0]?.count || 0,
+              month_earning: parseInt(monthearning),
+              total_order: totalorder.length || 0,
+              order: order.total_count[0]?.count || 0,
               recent_order: recentorder.result || 0,
             },
           });

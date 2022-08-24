@@ -172,7 +172,43 @@ module.exports = {
       try {
         let getData = await productModel.findById(_id);
         if (getData) {
-          res({ status: 200, data: getData });
+          // console.log(getData);
+          let qry = {};
+          let categoryArray;
+          if (getData.category)
+            categoryArray = getData.category.toString().split(",");
+          let ring_type_array;
+          if (getData.ring_type)
+            ring_type_array = getData.ring_type.toString().split(",");
+          let diamond_shape_array;
+          if (getData.diamond_shape)
+            diamond_shape_array = getData.diamond_shape.toString().split(",");
+          let tag_array;
+          if (getData.tag) tag_array = getData.tag.toString().split(",");
+          if (getData.category) qry["category"] = { $in: categoryArray };
+          if (getData.ring_type) qry["ring_type"] = { $in: ring_type_array };
+          if (getData.diamond_shape)
+            qry["diamond_shape"] = { $in: diamond_shape_array };
+          if (getData.tag) qry["tag"] = { $in: tag_array };
+
+          let getData1 = await productModel.aggregate([{ $match: qry }]);
+          if (getData1) {
+            res({
+              status: 200,
+              data: {
+                product_data: getData,
+                suggestion_product_data: getData1,
+              },
+            });
+          } else {
+            res({
+              status: 200,
+              data: {
+                product_data: getData,
+                suggestion_product_data: "not Found",
+              },
+            });
+          }
         } else {
           rej({ status: 404, message: "Invalid id!!" });
         }
