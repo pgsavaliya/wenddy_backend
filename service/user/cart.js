@@ -1,13 +1,12 @@
-const bcryptjs = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { encrypt } = require("../../helper/encrypt-decrypt");
+const mongoose = require("mongoose");
 const addtocartModel = require("../../model/addtocart.model");
 const productModel = require("../../model/product.model");
 
 module.exports = {
-  addtocart: (data) => {
+  addtocart: (user_id, data) => {
     return new Promise(async (res, rej) => {
       try {
+        let productData = await productModel.findById(data.product_id);
         console.log("data ........", data);
         let getData1 = await addtocartModel.findOne({
           product_id: data.product_id,
@@ -36,7 +35,7 @@ module.exports = {
               }
             );
             if (getData) {
-              res({ status: 200, data: "update" });
+              res({ status: 200, data: "Data Updated Successfully!!" });
             } else {
               rej({ status: 404, message: "Invalid id!!" });
             }
@@ -56,8 +55,7 @@ module.exports = {
             }
           }
         } else {
-          let productData = await productModel.findById(data.product_id);
-          console.log("productData.mrp .......", productData.mrp);
+          data['user_id'] = user_id;
           data["product_amount"] = productData.mrp;
           data["total_price"] = data.quantity * data.product_amount;
           let newAddtocartModel = new addtocartModel(data);
@@ -70,22 +68,18 @@ module.exports = {
         }
       } catch (err) {
         console.log("err ...", err);
-        rej({
-          status: err?.status || 500,
-          error: err,
-          message: err?.message || "Something Went Wrong!!!",
-        });
+        rej({ status: err?.status || 500, error: err, message: err?.message || "Something Went Wrong!!!" });
       }
     });
   },
-  getcart: (data) => {
+
+  getcart: (user_id) => {
     return new Promise(async (res, rej) => {
       try {
-        // let newViewcartModel = new addtocartModel(data);
         let getData = await addtocartModel.aggregate([
           {
             $match: {
-              userId: data.userId,
+              user_id: mongoose.Types.ObjectId(user_id),
             },
           },
           {
@@ -98,7 +92,7 @@ module.exports = {
           },
         ]);
         let total = 0;
-        getData.map((item, index) => {
+        getData.map((item) => {
           total = total + item.total_price;
         });
         if (getData) {
@@ -117,21 +111,22 @@ module.exports = {
     });
   },
 
-  update: async (_id, data) => {
-    return new Promise(async (res, rej) => {
-      try {
-        let productId = await addtocartModel.findById(_id);
-        if (productId) {
-          // console.log("ptoduct id =", productId);
-        } else {
-          rej({ status: 404, message: "Invalid id!!" });
-        }
-      } catch (err) {
-        console.log("err", err);
-        rej({ status: 500, error: err, message: "something went wrong!!" });
-      }
-    });
-  },
+};
+
+  // update: async (_id, data) => {
+  //   return new Promise(async (res, rej) => {
+  //     try {
+  //       let productId = await addtocartModel.findById(_id);
+  //       if (productId) {
+  //       } else {
+  //         rej({ status: 404, message: "Invalid id!!" });
+  //       }
+  //     } catch (err) {
+  //       console.log("err", err);
+  //       rej({ status: 500, error: err, message: "something went wrong!!" });
+  //     }
+  //   });
+  // },
   // delete: (_id) => {
   //   return new Promise(async (res, rej) => {
   //     try {
@@ -147,4 +142,3 @@ module.exports = {
   //     }
   //   });
   // },
-};

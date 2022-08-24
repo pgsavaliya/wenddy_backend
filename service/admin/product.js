@@ -273,6 +273,8 @@ module.exports = {
     });
   },
 
+};
+
   // exportData: (str, startDate, endDate, status) => {
   //     return new Promise(async (res, rej) => {
   //         try {
@@ -374,4 +376,3 @@ module.exports = {
   //         }
   //     });
   // }
-};

@@ -9,6 +9,6 @@ cartRoute.get("/", (req, res) => {
 
 cartRoute.post("/addtocart", addtocartcontroller.addtocart);
 cartRoute.get("/getcart", addtocartcontroller.getcart);
-cartRoute.put("/update/:_id", addtocartcontroller.update);
+// cartRoute.put("/update/:_id", addtocartcontroller.update);
 
 module.exports = cartRoute;

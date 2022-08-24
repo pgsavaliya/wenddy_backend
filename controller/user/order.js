@@ -1,6 +1,5 @@
-const addtocartService = require("../../service/user/cart");
-const { response } = require("../../middleware/response");
 const orderService = require("../../service/user/order");
+const { response } = require("../../middleware/response");
 
 exports.order = async (req, res) => {
   try {

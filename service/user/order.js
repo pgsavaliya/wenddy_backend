@@ -1,17 +1,12 @@
-const bcryptjs = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { encrypt } = require("../../helper/encrypt-decrypt");
-const addtocartModel = require("../../model/addtocart.model");
 const orderModel = require("../../model/order.model");
-const productModel = require("../../model/product.model");
 const paypal = require("paypal-rest-sdk");
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "./config/.env") });
 
 paypal.configure({
-  mode: "sandbox", //sandbox or live
-  client_id:
-    "AdXwKdtOLChFRJoaGBZW-R6Q5uDL4Ymtbg_JfTsvofWObD2CJgjn-rdybJDHMKtdRwVmclZnEN8ODTdj",
-  client_secret:
-    "ELJncSDGqYl_8QpZDeH_pO_Zp_IIfGEke2HB5ngJ_9W3aoZnz3gI2NPlsguoXOUeZ5mk0wFH0--3I_hT",
+  mode:process.env.MODE, //sandbox or live
+  client_id:process.env.CLIENT_ID,
+  client_secret:process.env.CLIENT_SECRET,
 });
 
 module.exports = {
@@ -82,6 +77,7 @@ module.exports = {
       }
     });
   },
+
   payment: (data) => {
     return new Promise(async (res, rej) => {
       try {
@@ -96,4 +92,5 @@ module.exports = {
       }
     });
   },
+
 };

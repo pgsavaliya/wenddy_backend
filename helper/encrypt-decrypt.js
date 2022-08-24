@@ -9,4 +9,5 @@ function decrypt(text, key) {
     if (text)
         return JSON.parse(cryptoJs.AES.decrypt(text, key.trim()).toString(cryptoJs.enc.Utf8))
 }
+
 module.exports = { encrypt, decrypt }

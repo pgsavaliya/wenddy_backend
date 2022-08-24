@@ -1,19 +1,15 @@
-const bcryptjs = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { encrypt } = require("../../helper/encrypt-decrypt");
-
-// const productModel = require("../../model/product.model");
 const wishlistModel = require("../../model/wishlist.model");
+const mongoose = require("mongoose");
 
 module.exports = {
-  addwishlist: (data) => {
+  addwishlist: (user_id, data) => {
     return new Promise(async (res, rej) => {
       try {
-        let productdata = await wishlistModel.find({ user_id: data.user_id });
-        console.log("data", productdata);
+        let productdata = await wishlistModel.find({ user_id: user_id });
+        console.log("data ...", productdata);
         if (productdata != "") {
           let updateData = await wishlistModel.findOneAndUpdate(
-            { user_id: data.user_id },
+            { user_id: user_id },
             { $addToSet: { product_id: data.product_id } },
             { new: true }
           );
@@ -23,8 +19,8 @@ module.exports = {
             rej({ status: 500, message: "Something Went Worng!!" });
           }
         } else {
-          data.product_id = [data.product_id];
-          console.log(data);
+          // data.product_id = [data.product_id];
+          data["user_id"] = user_id;
           let newwishlistModel = new wishlistModel(data);
           let saveData = await newwishlistModel.save();
           if (saveData) {
@@ -43,14 +39,16 @@ module.exports = {
       }
     });
   },
-  getwishlist: (data) => {
+
+  getwishlist: (user_id) => {
     return new Promise(async (res, rej) => {
       try {
+        console.log("user_id ......", user_id);
         // let newViewcartModel = new addtocartModel(data);
         let getData = await wishlistModel.aggregate([
           {
             $match: {
-              userId: data.userId,
+              user_id: mongoose.Types.ObjectId(user_id),
             },
           },
           {
@@ -78,25 +76,6 @@ module.exports = {
     });
   },
 
-  // update: async (_id, data) => {
-  //   return new Promise(async (res, rej) => {
-  //     try {
-  //       let updateData = await wishlistModel.findOneAndUpdate(
-  //         { user_id: _id },
-  //         { $addToSet: { product_id: data } },
-  //         { new: true }
-  //       );
-  //       if (updateData) {
-  //         res({ status: 200, data: "Data Updated!!" });
-  //       } else {
-  //         rej({ status: 500, error: err, message: "Something Went Worng!!" });
-  //       }
-  //     } catch (err) {
-  //       console.log("err", err);
-  //       rej({ status: 500, error: err, message: "something went wrong!!" });
-  //     }
-  //   });
-  // },
   delete: (id, data) => {
     return new Promise(async (res, rej) => {
       try {
@@ -118,4 +97,25 @@ module.exports = {
       }
     });
   },
+
 };
+
+  // update: async (_id, data) => {
+  //   return new Promise(async (res, rej) => {
+  //     try {
+  //       let updateData = await wishlistModel.findOneAndUpdate(
+  //         { user_id: _id },
+  //         { $addToSet: { product_id: data } },
+  //         { new: true }
+  //       );
+  //       if (updateData) {
+  //         res({ status: 200, data: "Data Updated!!" });
+  //       } else {
+  //         rej({ status: 500, error: err, message: "Something Went Worng!!" });
+  //       }
+  //     } catch (err) {
+  //       console.log("err", err);
+  //       rej({ status: 500, error: err, message: "something went wrong!!" });
+  //     }
+  //   });
+  // },

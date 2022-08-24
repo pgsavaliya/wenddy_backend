@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const reviewcontroller = require("../../controller/user/review");
-const { userEmailCheck } = require("../../middleware/validation");
 
 const reviewRoute = Router();
 
@@ -9,7 +8,7 @@ reviewRoute.get("/", (req, res) => {
 });
 
 reviewRoute.post("/addreview", reviewcontroller.addreview);
-reviewRoute.get("/getreview", reviewcontroller.getreview);
+reviewRoute.get("/getreview/:product_id", reviewcontroller.getreview);
 // cartRoute.put("/update/:_id", addtocartcontroller.update);
 // cartRoute.delete("/delete/:_id", addtocartcontroller.delete);
 

@@ -1,7 +1,4 @@
-const bcryptjs = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { default: mongoose } = require("mongoose");
-const { encrypt } = require("../../helper/encrypt-decrypt");
+const mongoose = require("mongoose");
 const reviewproductModel = require("../../model/reviewproduct.model");
 
 module.exports = {
@@ -26,19 +23,16 @@ module.exports = {
       }
     });
   },
-  getreview: (data) => {
+  
+  getreview: (product_id, page, limit) => {
     return new Promise(async (res, rej) => {
       try {
-        page = parseInt(data.page);
-        limit = parseInt(data.limit);
-
-        // let newViewcartModel = new addtocartModel(data);
+        let qry = {};
+        page = parseInt(page);
+        limit = parseInt(limit);
+        qry = { product_id: mongoose.Types.ObjectId(product_id) }
         let getData = await reviewproductModel.aggregate([
-          {
-            $match: {
-              product_id: mongoose.Types.ObjectId(data.product_id),
-            },
-          },
+          { $match: qry },
           {
             $facet: {
               total_count: [
@@ -55,31 +49,18 @@ module.exports = {
                     __v: 0,
                   },
                 },
-                { $sort: { createdAt: -1 } },
+                { $sort: { rating: 1 } },
                 { $skip: (page - 1) * limit },
                 { $limit: limit },
               ],
             },
           },
         ]);
-        // .find({
-        //   product_id: data.product_id,
-        // })
-        // .sort({ createdAt: -1 });
-        // },
-        // {
-        //   $lookup: {
-        //     from: "products",
-        //     localField: "product_id",
-        //     foreignField: "_id",
-        //     as: "product_data",
-        //   },
-        // },
-        // ]);
-        if (getData) {
-          res({ status: 200, data: getData });
+        getData = getData[0];
+        if (getData.result.length > 0) {
+          res({ status: 200, data: { total_count: getData.total_count[0].count, result: getData.result } });
         } else {
-          rej({ status: 404, message: "Invalid id!!" });
+          rej({ status: 404, message: "No data found!!" });
         }
       } catch (err) {
         console.log("err ...", err);
@@ -91,6 +72,8 @@ module.exports = {
       }
     });
   },
+
+};
 
   // update: async (_id, data) => {
   //   return new Promise(async (res, rej) => {
@@ -124,4 +107,3 @@ module.exports = {
   //     }
   //   });
   // },
-};
