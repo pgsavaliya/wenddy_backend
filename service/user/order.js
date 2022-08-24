@@ -4,9 +4,9 @@ const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "./config/.env") });
 
 paypal.configure({
-  mode:process.env.MODE, //sandbox or live
-  client_id:process.env.CLIENT_ID,
-  client_secret:process.env.CLIENT_SECRET,
+  mode: process.env.MODE, //sandbox or live
+  client_id: process.env.CLIENT_ID,
+  client_secret: process.env.CLIENT_SECRET,
 });
 
 module.exports = {
@@ -92,5 +92,4 @@ module.exports = {
       }
     });
   },
-
 };
