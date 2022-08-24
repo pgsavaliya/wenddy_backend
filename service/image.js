@@ -55,7 +55,7 @@ module.exports = {
         // }
         console.log("image from service .......", image);
         let imageBuffer = await fs.readFile(image.path);
-        let result = await uploadImage(imageBuffer, image.filename, [2]);
+        let result = await uploadImage(imageBuffer, image.filename, [1, 2]);
         console.log("result....", result);
         if (result) {
           res({

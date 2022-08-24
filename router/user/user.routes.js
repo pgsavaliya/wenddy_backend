@@ -8,10 +8,11 @@ const {
 const authRoute = require("./auth");
 const productRoute = require("./product");
 const cartRoute = require("./cart");
+const orderRoute = require("./order");
+const wishlistRoute = require("./wishlist");
 const reviewRoute = require("./review");
 const profileRoute = require("./profile");
-const wishlistRoute = require("./wishlist");
-const orderRoute = require("./order");
+const addressRoute = require("./address");
 
 userRoute.get("/", (req, res) => {
   res.status(200).json({ message: "user route is working" });
@@ -24,5 +25,6 @@ userRoute.use("/order", verifyUserToken, orderRoute);
 userRoute.use("/wishlist", verifyUserToken, wishlistRoute);
 userRoute.use("/review", verifyUserToken, reviewRoute);
 userRoute.use("/profile", verifyUserToken, profileRoute);
+userRoute.use("/address", verifyUserToken, addressRoute);
 
 module.exports = userRoute;
