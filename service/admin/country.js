@@ -6,12 +6,10 @@ module.exports = {
   addcountry: (data) => {
     return new Promise(async (res, rej) => {
       try {
-        // console.log("data ........", data);
         let getData1 = await countryModel.findOne({
           name: data.name,
           currency: data.currency,
         });
-        // console.log("getData", getData1);
         if (getData1) {
           let getData = await countryModel.updateOne(
             {
@@ -24,26 +22,40 @@ module.exports = {
             }
           );
           if (getData) {
-            let date = new Date();
-            let Data = await countrybackupModel.findOne({ date: date });
-            if (Data) {
-              let Data1 = await countrybackupModel.findAndUpdate(
-                { date: date },
-                { $push: { country_data: getData1 } },
-                { new: true }
-              );
+            if (data.price) {
+              let d = new Date();
+              let month = d.getMonth() + 1;
+              let date = d.getDate();
+              let year = d.getFullYear();
+              let curDate = year + "-" + month + "-" + date;
+              console.log("data", curDate);
+              let Data = await countrybackupModel.findOne({ date: curDate });
+              if (Data) {
+                let Data1 = await countrybackupModel.updateOne(
+                  { date: curDate },
+                  { $push: { country_data: data } },
+                  { new: true }
+                );
+                if (Data1) {
+                  res({ status: 200, data: "Data Updated Sucessfully!!" });
+                } else {
+                  rej({ status: 404, message: "Invalid id!!" });
+                }
+              } else {
+                let backup = {};
+                backup.date = curDate;
+                backup.country_data = data;
+                let newcountrybackupModel = new countrybackupModel(backup);
+                let Data1 = await newcountrybackupModel.save();
+                if (Data1) {
+                  res({ status: 200, data: "Data Inserted Sucessfully!!" });
+                } else {
+                  rej({ status: 404, message: "Invalid id!!" });
+                }
+              }
             } else {
-              console.log(getData1);
-
-              let data = {};
-              data.date = date;
-              data.country_data = getData;
-              let newcountrybackupModel = new countrybackupModel(data);
-              let Data1 = await newcountrybackupModel.save();
+              res({ status: 200, data: "Data Updated Sucessfully!!" });
             }
-            res({ status: 200, data: "Data Updated Successfully!!" });
-          } else {
-            rej({ status: 404, message: "Invalid id!!" });
           }
         } else {
           let newcountryModel = new countryModel(data);

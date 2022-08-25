@@ -103,6 +103,14 @@ module.exports = {
           },
         ]);
         recentorder = recentorder[0];
+        recentorder.result.map((item, index) => {
+          let que = 0;
+          item.product.map((item1) => {
+            que = que + item1.quantity;
+          });
+          recentorder.result[index].quantity = que;
+        });
+        // console.log(recentorder.result);
         let total_revenue = 0;
         totalorder.map((item, index) => {
           total_revenue = total_revenue + item.total;
@@ -154,5 +162,4 @@ module.exports = {
       }
     });
   },
-  
 };
