@@ -1,5 +1,7 @@
 const productModel = require("../../model/product.model");
+const reviewModel = require("../../model/reviewproduct.model");
 const ipModel = require("../../model/ip.model");
+const mongoose = require("mongoose");
 
 module.exports = {
   getAll: ({
@@ -195,10 +197,15 @@ module.exports = {
           if (getData.tag) qry["tag"] = { $in: tag_array };
 
           let getData1 = await productModel.aggregate([{ $match: qry }]);
+          console.log("getData1 ...", getData1[0]._id);
+          let reviewData = await reviewModel.find({
+            product_id: mongoose.Types.ObjectId(getData1[0]._id),
+          });
           if (getData1) {
             res({
               status: 200,
               data: {
+                review_count: reviewData.length,
                 product_data: getData,
                 suggestion_product_data: getData1,
               },
