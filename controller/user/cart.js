@@ -15,7 +15,10 @@ exports.addtocart = async (req, res) => {
 };
 exports.getcart = async (req, res) => {
   try {
-    let resp = await addtocartService.getcart(req.user_id);
+    let resp = await addtocartService.getcart({
+      user_id: req.user_id,
+      country: req.query.country,
+    });
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {

@@ -22,6 +22,7 @@ exports.getAll = async (req, res) => {
         max: req.query.max,
         tag: req.query.tag,
         category: req.query.category,
+        country: req.query.country,
       });
       if (resp) {
         // req.ip = RequestIp.getClientIp(req);
@@ -47,7 +48,10 @@ exports.getAll = async (req, res) => {
 
 exports.byId = async (req, res) => {
   try {
-    let resp = await productService.byId(req.params._id);
+    let resp = await productService.byId({
+      _id: req.params._id,
+      country: req.query.country,
+    });
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {
@@ -59,7 +63,10 @@ exports.byId = async (req, res) => {
 };
 exports.search = async (req, res) => {
   try {
-    let resp = await productService.search(req.query.str);
+    let resp = await productService.search({
+      str: req.query.str,
+      country: req.query.country,
+    });
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {

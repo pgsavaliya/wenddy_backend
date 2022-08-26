@@ -1,5 +1,6 @@
 const productModel = require("../../model/product.model");
 const ipModel = require("../../model/ip.model");
+const countryModel = require("../../model/country.model");
 
 module.exports = {
   getAll: ({
@@ -16,9 +17,11 @@ module.exports = {
     min,
     max,
     tag,
+    country,
   }) => {
     return new Promise(async (res, rej) => {
       try {
+        //find data
         let qry = {};
         page = parseInt(page);
         limit = parseInt(limit);
@@ -57,7 +60,6 @@ module.exports = {
         // console.log("userId: ", userId);
         // console.log("qry ...........", qry);
         let limit1 = parseInt(limit * 0.4);
-        let limit2 = limit - limit1;
         let getData1 = await productModel.aggregate([
           { $match: qry },
           {
@@ -89,6 +91,9 @@ module.exports = {
             },
           },
         ]);
+        getData1 = getData1[0]; //|| { total_count: [0] };
+        let data1count = getData1.total_count[0]?.count || 0;
+        let limit2 = limit - data1count;
         let getData2 = await productModel.aggregate([
           { $match: qry },
           { $match: { is_fav: false } },
@@ -116,8 +121,33 @@ module.exports = {
             },
           },
         ]);
-        getData1 = getData1[0]; //|| { total_count: [0] };
         getData2 = getData2[0]; //|| { total_count: [0] };
+        if (country) {
+          let countryData = await countryModel.findOne({ currency: country });
+          if (countryData) {
+            // console.log("countryData ...........", getData2.result);
+            if (getData1.result != "") {
+              getData1.result.map((item) => {
+                item.real_price = item.real_price * countryData.price;
+                item.mrp = item.mrp * countryData.price;
+                item.product_variation.map((item1) => {
+                  item1.real_price = item1.real_price * countryData.price;
+                  item1.mrp = item1.mrp * countryData.price;
+                });
+              });
+            }
+            if (getData2.result != "") {
+              getData2.result.map((item) => {
+                item.real_price = item.real_price * countryData.price;
+                item.mrp = item.mrp * countryData.price;
+                item.product_variation.map((item1) => {
+                  item1.real_price = item1.real_price * countryData.price;
+                  item1.mrp = item1.mrp * countryData.price;
+                });
+              });
+            }
+          }
+        }
         let getData = [];
         let countofgetdata1 = console.log(getData1);
         let count =
@@ -170,7 +200,7 @@ module.exports = {
     });
   },
 
-  byId: (_id) => {
+  byId: ({ _id, country }) => {
     return new Promise(async (res, rej) => {
       try {
         let getData = await productModel.findById(_id);
@@ -195,6 +225,29 @@ module.exports = {
           if (getData.tag) qry["tag"] = { $in: tag_array };
 
           let getData1 = await productModel.aggregate([{ $match: qry }]);
+          if (country) {
+            let countryData = await countryModel.findOne({ currency: country });
+            if (countryData) {
+              if (getData != "") {
+                getData.real_price = getData.real_price * countryData.price;
+                getData.mrp = getData.mrp * countryData.price;
+                getData.product_variation.map((item1) => {
+                  item1.real_price = item1.real_price * countryData.price;
+                  item1.mrp = item1.mrp * countryData.price;
+                });
+              }
+              if (getData1 != "") {
+                getData1.map((item) => {
+                  item.real_price = item.real_price * countryData.price;
+                  item.mrp = item.mrp * countryData.price;
+                  item.product_variation.map((item1) => {
+                    item1.real_price = item1.real_price * countryData.price;
+                    item1.mrp = item1.mrp * countryData.price;
+                  });
+                });
+              }
+            }
+          }
           if (getData1) {
             res({
               status: 200,
@@ -222,7 +275,7 @@ module.exports = {
     });
   },
 
-  search: (str) => {
+  search: ({ str, country }) => {
     return new Promise(async (res, rej) => {
       try {
         let qry = {};
@@ -255,8 +308,23 @@ module.exports = {
           ];
         }
         let getData = await productModel.aggregate([{ $match: qry }]);
-        console.log(getData);
         if (getData) {
+          if (country) {
+            let countryData = await countryModel.findOne({ currency: country });
+            console.log(getData);
+            if (countryData) {
+              if (getData != "") {
+                getData.map((item) => {
+                  item.real_price = item.real_price * countryData.price;
+                  item.mrp = item.mrp * countryData.price;
+                  item.product_variation.map((item1) => {
+                    item1.real_price = item1.real_price * countryData.price;
+                    item1.mrp = item1.mrp * countryData.price;
+                  });
+                });
+              }
+            }
+          }
           res({
             status: 200,
             data: {
