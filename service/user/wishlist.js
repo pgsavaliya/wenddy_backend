@@ -1,4 +1,5 @@
 const wishlistModel = require("../../model/wishlist.model");
+const countryModel = require("../../model/country.model");
 const mongoose = require("mongoose");
 
 module.exports = {
@@ -40,7 +41,7 @@ module.exports = {
     });
   },
 
-  getwishlist: (user_id) => {
+  getwishlist: ({ user_id, country }) => {
     return new Promise(async (res, rej) => {
       try {
         console.log("user_id ......", user_id);
@@ -60,7 +61,23 @@ module.exports = {
             },
           },
         ]);
+        getData = getData[0];
         if (getData) {
+          // console.log("getData .......", getData);
+          if (country) {
+            let countryData = await countryModel.findOne({ currency: country });
+            console.log(countryData);
+            if (countryData) {
+              getData.product_data.map((item) => {
+                item.real_price = item.real_price * countryData.price;
+                item.mrp = item.mrp * countryData.price;
+                item.product_variation.map((item1) => {
+                  item1.real_price = item1.real_price * countryData.price;
+                  item1.mrp = item1.mrp * countryData.price;
+                });
+              });
+            }
+          }
           res({ status: 200, data: getData });
         } else {
           rej({ status: 404, message: "Invalid id!!" });
@@ -97,25 +114,24 @@ module.exports = {
       }
     });
   },
-
 };
 
-  // update: async (_id, data) => {
-  //   return new Promise(async (res, rej) => {
-  //     try {
-  //       let updateData = await wishlistModel.findOneAndUpdate(
-  //         { user_id: _id },
-  //         { $addToSet: { product_id: data } },
-  //         { new: true }
-  //       );
-  //       if (updateData) {
-  //         res({ status: 200, data: "Data Updated!!" });
-  //       } else {
-  //         rej({ status: 500, error: err, message: "Something Went Worng!!" });
-  //       }
-  //     } catch (err) {
-  //       console.log("err", err);
-  //       rej({ status: 500, error: err, message: "something went wrong!!" });
-  //     }
-  //   });
-  // },
+// update: async (_id, data) => {
+//   return new Promise(async (res, rej) => {
+//     try {
+//       let updateData = await wishlistModel.findOneAndUpdate(
+//         { user_id: _id },
+//         { $addToSet: { product_id: data } },
+//         { new: true }
+//       );
+//       if (updateData) {
+//         res({ status: 200, data: "Data Updated!!" });
+//       } else {
+//         rej({ status: 500, error: err, message: "Something Went Worng!!" });
+//       }
+//     } catch (err) {
+//       console.log("err", err);
+//       rej({ status: 500, error: err, message: "something went wrong!!" });
+//     }
+//   });
+// },
