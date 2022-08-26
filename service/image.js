@@ -15,7 +15,7 @@
 //     "gs://wenddys-528d3.appspot.com"
 // );
 
-const { uploadImage } = require("../helper/imageize");
+const { uploadImage,deletedImage } = require("../helper/imageize");
 const fs = require("fs/promises");
 
 module.exports = {
@@ -55,7 +55,7 @@ module.exports = {
         // }
         console.log("image from service .......", image);
         let imageBuffer = await fs.readFile(image.path);
-        let result = await uploadImage(imageBuffer, image.filename, [1, 2]);
+        let result = await uploadImage(imageBuffer, image, image.filename, [1, 2, 3, 4]);
         console.log("result....", result);
         if (result) {
           res({
@@ -75,11 +75,22 @@ module.exports = {
   delete: async (file) => {
     return new Promise(async (res, rej) => {
       try {
-        const deleted = await bucket.file(file).delete();
+        // const deleted = await bucket.file(file).delete();
+        // if (deleted) {
+        //   res({ status: 200, data: "File Deleted Successfully!!" });
+        // } else {
+        //   rej({ status: 404, error: err });
+        // }
+
+        let deleted = await deletedImage(file, [1, 2, 3, 4]);
+        console.log("deleted....", deleted);
         if (deleted) {
-          res({ status: 200, data: "File Deleted Successfully!!" });
+          res({
+            status: 200,
+            data: deleted,
+          });
         } else {
-          rej({ status: 404, error: err });
+          rej({ status: 404, message: "something went wrong!!" });
         }
       } catch (err) {
         console.log("err...", err);
@@ -87,4 +98,5 @@ module.exports = {
       }
     });
   },
+
 };
