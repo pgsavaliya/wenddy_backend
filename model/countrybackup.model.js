@@ -19,6 +19,12 @@ let countrybackupSchema = new Schema(
           type: Number,
           require: true,
         },
+        symbol: {
+          type: String,
+        },
+        image: {
+          type: String,
+        },
       },
     ],
   },
