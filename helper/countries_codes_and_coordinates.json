@@ -2,6 +2,7 @@
     {
         "name": "Andorra",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "AD",
         "emoji": "🇦🇩",
         "unicode": "U+1F1E6 U+1F1E9",
@@ -10,6 +11,7 @@
     {
         "name": "United Arab Emirates",
         "ISO": "AED",
+        "symbol":"د.إ",
         "code": "AE",
         "emoji": "🇦🇪",
         "unicode": "U+1F1E6 U+1F1EA",
@@ -18,6 +20,7 @@
     {
         "name": "Albania",
         "ISO": "ALL",
+        "symbol":"L",
         "code": "AL",
         "emoji": "🇦🇱",
         "unicode": "U+1F1E6 U+1F1F1",
@@ -26,6 +29,7 @@
     {
         "name": "Armenia",
         "ISO": "AMD",
+        "symbol":"Դ",
         "code": "AM",
         "emoji": "🇦🇲",
         "unicode": "U+1F1E6 U+1F1F2",
@@ -34,6 +38,7 @@
     {
         "name": "Angola",
         "ISO": "AOA",
+        "symbol":"Kz",
         "code": "AO",
         "emoji": "🇦🇴",
         "unicode": "U+1F1E6 U+1F1F4",
@@ -42,6 +47,7 @@
     {
         "name": "Argentina",
         "ISO": "ARS",
+        "symbol":"$",
         "code": "AR",
         "emoji": "🇦🇷",
         "unicode": "U+1F1E6 U+1F1F7",
@@ -50,6 +56,7 @@
     {
         "name": "Austria",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "AT",
         "emoji": "🇦🇹",
         "unicode": "U+1F1E6 U+1F1F9",
@@ -58,6 +65,7 @@
     {
         "name": "Australia",
         "ISO": "AUD",
+        "symbol":"$",
         "code": "AU",
         "emoji": "🇦🇺",
         "unicode": "U+1F1E6 U+1F1FA",
@@ -66,7 +74,8 @@
     {
         "name": "Azerbaijan",
         "ISO": "AZN",
-        "code": "AZ",
+        "symbol":"₼",
+        "code": "AZ", 
         "emoji": "🇦🇿",
         "unicode": "U+1F1E6 U+1F1FF",
         "image": "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/AZ.svg"
@@ -74,6 +83,7 @@
     {
         "name": "Barbados",
         "ISO": "BBD",
+        "symbol":"$",
         "code": "BB",
         "emoji": "🇧🇧",
         "unicode": "U+1F1E7 U+1F1E7",
@@ -82,6 +92,7 @@
     {
         "name": "Bangladesh",
         "ISO": "BDT",
+        "symbol":"৳",
         "code": "BD",
         "emoji": "🇧🇩",
         "unicode": "U+1F1E7 U+1F1E9",
@@ -90,6 +101,7 @@
     {
         "name": "Belgium",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "BE",
         "emoji": "🇧🇪",
         "unicode": "U+1F1E7 U+1F1EA",
@@ -98,6 +110,7 @@
     {
         "name": "Burkina Faso",
         "ISO": "XOF",
+        "symbol":"CFA",
         "code": "BF",
         "emoji": "🇧🇫",
         "unicode": "U+1F1E7 U+1F1EB",
@@ -106,6 +119,7 @@
     {
         "name": "Bulgaria",
         "ISO": "BGN",
+        "symbol":"Лв.",
         "code": "BG",
         "emoji": "🇧🇬",
         "unicode": "U+1F1E7 U+1F1EC",
@@ -114,6 +128,7 @@
     {
         "name": "Bahrain",
         "ISO": "BHD",
+        "symbol":"د.ب",
         "code": "BH",
         "emoji": "🇧🇭",
         "unicode": "U+1F1E7 U+1F1ED",
@@ -122,6 +137,7 @@
     {
         "name": "Burundi",
         "ISO": "BIF",
+        "symbol":"FBu",
         "code": "BI",
         "emoji": "🇧🇮",
         "unicode": "U+1F1E7 U+1F1EE",
@@ -130,6 +146,7 @@
     {
         "name": "Benin",
         "ISO": "XOF",
+        "symbol":"CFA",
         "code": "BJ",
         "emoji": "🇧🇯",
         "unicode": "U+1F1E7 U+1F1EF",
@@ -138,6 +155,7 @@
     {
         "name": "Brunei",
         "ISO": "BND",
+        "symbol":"$",
         "code": "BN",
         "emoji": "🇧🇳",
         "unicode": "U+1F1E7 U+1F1F3",
@@ -146,6 +164,7 @@
     {
         "name": "Bolivia",
         "ISO": "BOB",
+        "symbol":"Bs.",
         "code": "BO",
         "emoji": "🇧🇴",
         "unicode": "U+1F1E7 U+1F1F4",
@@ -154,6 +173,7 @@
     {
         "name": "Brazil",
         "ISO": "BRL",
+        "symbol":"$",
         "code": "BR",
         "emoji": "🇧🇷",
         "unicode": "U+1F1E7 U+1F1F7",
@@ -162,6 +182,7 @@
     {
         "name": "Bahamas",
         "ISO": "BSD",
+        "symbol":"$",
         "code": "BS",
         "emoji": "🇧🇸",
         "unicode": "U+1F1E7 U+1F1F8",
@@ -169,7 +190,8 @@
     },
     {
         "name": "Bhutan",
-        "ISO": "ATN",
+        "ISO": "BTN",
+        "symbol":"Nu.",
         "code": "BT",
         "emoji": "🇧🇹",
         "unicode": "U+1F1E7 U+1F1F9",
@@ -178,6 +200,7 @@
     {
         "name": "Botswana",
         "ISO": "BWP",
+        "symbol":"P",
         "code": "BW",
         "emoji": "🇧🇼",
         "unicode": "U+1F1E7 U+1F1FC",
@@ -186,6 +209,7 @@
     {
         "name": "Belarus",
         "ISO": "BYN",
+        "symbol":"Br",
         "code": "BY",
         "emoji": "🇧🇾",
         "unicode": "U+1F1E7 U+1F1FE",
@@ -194,6 +218,7 @@
     {
         "name": "Belize",
         "ISO": "BZD",
+        "symbol":"$",
         "code": "BZ",
         "emoji": "🇧🇿",
         "unicode": "U+1F1E7 U+1F1FF",
@@ -202,6 +227,7 @@
     {
         "name": "Canada",
         "ISO": "CAD",
+        "symbol":"$",
         "code": "CA",
         "emoji": "🇨🇦",
         "unicode": "U+1F1E8 U+1F1E6",
@@ -210,6 +236,7 @@
     {
         "name": "Congo - Kinshasa",
         "ISO": "XAF",
+        "symbol":"€",
         "code": "CD",
         "emoji": "🇨🇩",
         "unicode": "U+1F1E8 U+1F1E9",
@@ -218,6 +245,7 @@
     {
         "name": "Central African Republic",
         "ISO": "XAF",
+        "symbol":"FCFA",
         "code": "CF",
         "emoji": "🇨🇫",
         "unicode": "U+1F1E8 U+1F1EB",
@@ -226,6 +254,7 @@
     {
         "name": "Congo - Brazzaville",
         "ISO": "XAF",
+        "symbol":"FCFA",
         "code": "CG",
         "emoji": "🇨🇬",
         "unicode": "U+1F1E8 U+1F1EC",
@@ -234,6 +263,7 @@
     {
         "name": "Switzerland",
         "ISO": "CHF",
+        "symbol":"Fr.",
         "code": "CH",
         "emoji": "🇨🇭",
         "unicode": "U+1F1E8 U+1F1ED",
@@ -242,6 +272,7 @@
     {
         "name": "Chile",
         "ISO": "CLP",
+        "symbol":"$",
         "code": "CL",
         "emoji": "🇨🇱",
         "unicode": "U+1F1E8 U+1F1F1",
@@ -250,6 +281,7 @@
     {
         "name": "Cameroon",
         "ISO": "XAF",
+        "symbol":"FCFA",
         "code": "CM",
         "emoji": "🇨🇲",
         "unicode": "U+1F1E8 U+1F1F2",
@@ -258,6 +290,7 @@
     {
         "name": "China",
         "ISO": "CNY",
+        "symbol":"¥",
         "code": "CN",
         "emoji": "🇨🇳",
         "unicode": "U+1F1E8 U+1F1F3",
@@ -266,6 +299,7 @@
     {
         "name": "Colombia",
         "ISO": "COP",
+        "symbol":"$",
         "code": "CO",
         "emoji": "🇨🇴",
         "unicode": "U+1F1E8 U+1F1F4",
@@ -274,6 +308,7 @@
     {
         "name": "Costa Rica",
         "ISO": "CRC",
+        "symbol":"₡",
         "code": "CR",
         "emoji": "🇨🇷",
         "unicode": "U+1F1E8 U+1F1F7",
@@ -282,6 +317,7 @@
     {
         "name": "Cuba",
         "ISO": "CUP",
+        "symbol":"₱",
         "code": "CU",
         "emoji": "🇨🇺",
         "unicode": "U+1F1E8 U+1F1FA",
@@ -289,7 +325,8 @@
     },
     {
         "name": "Cape Verde",
-        "ISO": "CVC",
+        "ISO": "Esc",
+        "symbol":"€",
         "code": "CV",
         "emoji": "🇨🇻",
         "unicode": "U+1F1E8 U+1F1FB",
@@ -298,6 +335,7 @@
     {
         "name": "Cyprus",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "CY",
         "emoji": "🇨🇾",
         "unicode": "U+1F1E8 U+1F1FE",
@@ -306,6 +344,7 @@
     {
         "name": "Germany",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "DE",
         "emoji": "🇩🇪",
         "unicode": "U+1F1E9 U+1F1EA",
@@ -314,6 +353,7 @@
     {
         "name": "Djibouti",
         "ISO": "DJF",
+        "symbol":"Fdj",
         "code": "DJ",
         "emoji": "🇩🇯",
         "unicode": "U+1F1E9 U+1F1EF",
@@ -322,6 +362,7 @@
     {
         "name": "Denmark",
         "ISO": "DKK",
+        "symbol":"Kr.",
         "code": "DK",
         "emoji": "🇩🇰",
         "unicode": "U+1F1E9 U+1F1F0",
@@ -330,6 +371,7 @@
     {
         "name": "Dominica",
         "ISO": "XCD",
+        "symbol":"$",
         "code": "DM",
         "emoji": "🇩🇲",
         "unicode": "U+1F1E9 U+1F1F2",
@@ -338,6 +380,7 @@
     {
         "name": "Dominican Republic",
         "ISO": "DOP",
+        "symbol":"$",
         "code": "DO",
         "emoji": "🇩🇴",
         "unicode": "U+1F1E9 U+1F1F4",
@@ -346,6 +389,7 @@
     {
         "name": "Algeria",
         "ISO": "DZD",
+        "symbol":"دج",
         "code": "DZ",
         "emoji": "🇩🇿",
         "unicode": "U+1F1E9 U+1F1FF",
@@ -354,6 +398,7 @@
     {
         "name": "Ecuador",
         "ISO": "USD",
+        "symbol":"$",
         "code": "EC",
         "emoji": "🇪🇨",
         "unicode": "U+1F1EA U+1F1E8",
@@ -362,6 +407,7 @@
     {
         "name": "Estonia",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "EE",
         "emoji": "🇪🇪",
         "unicode": "U+1F1EA U+1F1EA",
@@ -370,6 +416,7 @@
     {
         "name": "Egypt",
         "ISO": "EGP",
+        "symbol":"ج.م",
         "code": "EG",
         "emoji": "🇪🇬",
         "unicode": "U+1F1EA U+1F1EC",
@@ -378,6 +425,7 @@
     {
         "name": "Eritrea",
         "ISO": "ERN",
+        "symbol":"ናቕፋ",
         "code": "ER",
         "emoji": "🇪🇷",
         "unicode": "U+1F1EA U+1F1F7",
@@ -386,6 +434,7 @@
     {
         "name": "Spain",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "ES",
         "emoji": "🇪🇸",
         "unicode": "U+1F1EA U+1F1F8",
@@ -394,6 +443,7 @@
     {
         "name": "Ethiopia",
         "ISO": "ETB",
+        "symbol":"ብር",
         "code": "ET",
         "emoji": "🇪🇹",
         "unicode": "U+1F1EA U+1F1F9",
@@ -402,6 +452,7 @@
     {
         "name": "Finland",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "FI",
         "emoji": "🇫🇮",
         "unicode": "U+1F1EB U+1F1EE",
@@ -409,7 +460,8 @@
     },
     {
         "name": "Fiji",
-        "ISO": "FZD",
+        "ISO": "FJD",
+        "symbol":"FJ$",
         "code": "FJ",
         "emoji": "🇫🇯",
         "unicode": "U+1F1EB U+1F1EF",
@@ -418,6 +470,7 @@
     {
         "name": "Micronesia",
         "ISO": "USD",
+        "symbol":"$",
         "code": "FM",
         "emoji": "🇫🇲",
         "unicode": "U+1F1EB U+1F1F2",
@@ -426,6 +479,7 @@
     {
         "name": "France",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "FR",
         "emoji": "🇫🇷",
         "unicode": "U+1F1EB U+1F1F7",
@@ -434,6 +488,7 @@
     {
         "name": "Gabon",
         "ISO": "XAF",
+        "symbol":"FCFA",
         "code": "GA",
         "emoji": "🇬🇦",
         "unicode": "U+1F1EC U+1F1E6",
@@ -442,6 +497,7 @@
     {
         "name": "United Kingdom",
         "ISO": "GBP",
+        "symbol":"£",
         "code": "GB",
         "emoji": "🇬🇧",
         "unicode": "U+1F1EC U+1F1E7",
@@ -450,6 +506,7 @@
     {
         "name": "Grenada",
         "ISO": "XCD",
+        "symbol":"$",
         "code": "GD",
         "emoji": "🇬🇩",
         "unicode": "U+1F1EC U+1F1E9",
@@ -458,6 +515,7 @@
     {
         "name": "Ghana",
         "ISO": "GHS",
+        "symbol":"GH₵",
         "code": "GH",
         "emoji": "🇬🇭",
         "unicode": "U+1F1EC U+1F1ED",
@@ -466,6 +524,7 @@
     {
         "name": "Gambia",
         "ISO": "GMD",
+        "symbol":"D",
         "code": "GM",
         "emoji": "🇬🇲",
         "unicode": "U+1F1EC U+1F1F2",
@@ -474,6 +533,7 @@
     {
         "name": "Guinea",
         "ISO": "GNF",
+        "symbol":"FG",
         "code": "GN",
         "emoji": "🇬🇳",
         "unicode": "U+1F1EC U+1F1F3",
@@ -482,6 +542,7 @@
     {
         "name": "Equatorial Guinea",
         "ISO": "XAF",
+        "symbol":"FCFA",
         "code": "GQ",
         "emoji": "🇬🇶",
         "unicode": "U+1F1EC U+1F1F6",
@@ -490,6 +551,7 @@
     {
         "name": "Greece",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "GR",
         "emoji": "🇬🇷",
         "unicode": "U+1F1EC U+1F1F7",
@@ -498,6 +560,7 @@
     {
         "name": "South Georgia & South Sandwich Islands",
         "ISO": "GEL",
+        "symbol":"ლ",
         "code": "GS",
         "emoji": "🇬🇸",
         "unicode": "U+1F1EC U+1F1F8",
@@ -506,6 +569,7 @@
     {
         "name": "Guatemala",
         "ISO": "GTQ",
+        "symbol":"Q",
         "code": "GT",
         "emoji": "🇬🇹",
         "unicode": "U+1F1EC U+1F1F9",
@@ -514,6 +578,7 @@
     {
         "name": "Guinea-Bissau",
         "ISO": "XOF",
+        "symbol":"CFA",
         "code": "GW",
         "emoji": "🇬🇼",
         "unicode": "U+1F1EC U+1F1FC",
@@ -522,6 +587,7 @@
     {
         "name": "Guyana",
         "ISO": "GYD",
+        "symbol":"$",
         "code": "GY",
         "emoji": "🇬🇾",
         "unicode": "U+1F1EC U+1F1FE",
@@ -530,6 +596,7 @@
     {
         "name": "Honduras",
         "ISO": "HNL",
+        "symbol":"L",
         "code": "HN",
         "emoji": "🇭🇳",
         "unicode": "U+1F1ED U+1F1F3",
@@ -538,6 +605,7 @@
     {
         "name": "Croatia",
         "ISO": "HRK",
+        "symbol":"kn",
         "code": "HR",
         "emoji": "🇭🇷",
         "unicode": "U+1F1ED U+1F1F7",
@@ -546,6 +614,7 @@
     {
         "name": "Haiti",
         "ISO": "HTG",
+        "symbol":"G",
         "code": "HT",
         "emoji": "🇭🇹",
         "unicode": "U+1F1ED U+1F1F9",
@@ -554,6 +623,7 @@
     {
         "name": "Hungary",
         "ISO": "HUF",
+        "symbol":"Ft",
         "code": "HU",
         "emoji": "🇭🇺",
         "unicode": "U+1F1ED U+1F1FA",
@@ -562,6 +632,7 @@
     {
         "name": "Indonesia",
         "ISO": "IDR",
+        "symbol":"Rp",
         "code": "ID",
         "emoji": "🇮🇩",
         "unicode": "U+1F1EE U+1F1E9",
@@ -570,6 +641,7 @@
     {
         "name": "Ireland",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "IE",
         "emoji": "🇮🇪",
         "unicode": "U+1F1EE U+1F1EA",
@@ -578,6 +650,7 @@
     {
         "name": "Israel",
         "ISO": "ILS",
+        "symbol":"₪",
         "code": "IL",
         "emoji": "🇮🇱",
         "unicode": "U+1F1EE U+1F1F1",
@@ -586,6 +659,7 @@
     {
         "name": "India",
         "ISO": "INR",
+        "symbol":"₹",
         "code": "IN",
         "emoji": "🇮🇳",
         "unicode": "U+1F1EE U+1F1F3",
@@ -594,6 +668,7 @@
     {
         "name": "Iraq",
         "ISO": "IQD",
+        "symbol":"ع.د",
         "code": "IQ",
         "emoji": "🇮🇶",
         "unicode": "U+1F1EE U+1F1F6",
@@ -602,6 +677,7 @@
     {
         "name": "Iran",
         "ISO": "IRR",
+        "symbol":"﷼",
         "code": "IR",
         "emoji": "🇮🇷",
         "unicode": "U+1F1EE U+1F1F7",
@@ -610,6 +686,7 @@
     {
         "name": "Iceland",
         "ISO": "ISK",
+        "symbol":"Íkr",
         "code": "IS",
         "emoji": "🇮🇸",
         "unicode": "U+1F1EE U+1F1F8",
@@ -618,6 +695,7 @@
     {
         "name": "Italy",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "IT",
         "emoji": "🇮🇹",
         "unicode": "U+1F1EE U+1F1F9",
@@ -626,6 +704,7 @@
     {
         "name": "Jamaica",
         "ISO": "JMD",
+        "symbol":"$",
         "code": "JM",
         "emoji": "🇯🇲",
         "unicode": "U+1F1EF U+1F1F2",
@@ -634,6 +713,7 @@
     {
         "name": "Jordan",
         "ISO": "JOD",
+        "symbol":"د.ا",
         "code": "JO",
         "emoji": "🇯🇴",
         "unicode": "U+1F1EF U+1F1F4",
@@ -642,6 +722,7 @@
     {
         "name": "Japan",
         "ISO": "JPY",
+        "symbol":"¥",
         "code": "JP",
         "emoji": "🇯🇵",
         "unicode": "U+1F1EF U+1F1F5",
@@ -650,6 +731,7 @@
     {
         "name": "Kenya",
         "ISO": "KES",
+        "symbol":"/=",
         "code": "KE",
         "emoji": "🇰🇪",
         "unicode": "U+1F1F0 U+1F1EA",
@@ -658,6 +740,7 @@
     {
         "name": "Kyrgyzstan",
         "ISO": "KGS",
+        "symbol":"/=",
         "code": "KG",
         "emoji": "🇰🇬",
         "unicode": "U+1F1F0 U+1F1EC",
@@ -666,6 +749,7 @@
     {
         "name": "Cambodia",
         "ISO": "KHR",
+        "symbol":"៛",
         "code": "KH",
         "emoji": "🇰🇭",
         "unicode": "U+1F1F0 U+1F1ED",
@@ -674,6 +758,7 @@
     {
         "name": "Kiribati",
         "ISO": "AUD",
+        "symbol":"$",
         "code": "KI",
         "emoji": "🇰🇮",
         "unicode": "U+1F1F0 U+1F1EE",
@@ -682,6 +767,7 @@
     {
         "name": "Comoros",
         "ISO": "KMF",
+        "symbol":"CF",
         "code": "KM",
         "emoji": "🇰🇲",
         "unicode": "U+1F1F0 U+1F1F2",
@@ -690,6 +776,7 @@
     {
         "name": "St. Kitts & Nevis",
         "ISO": "XCD",
+        "symbol":"$",
         "code": "KN",
         "emoji": "🇰🇳",
         "unicode": "U+1F1F0 U+1F1F3",
@@ -698,6 +785,7 @@
     {
         "name": "North Korea",
         "ISO": "KPW",
+        "symbol":"₩",
         "code": "KP",
         "emoji": "🇰🇵",
         "unicode": "U+1F1F0 U+1F1F5",
@@ -706,6 +794,7 @@
     {
         "name": "South Korea",
         "ISO": "KRW",
+        "symbol":"₩",
         "code": "KR",
         "emoji": "🇰🇷",
         "unicode": "U+1F1F0 U+1F1F7",
@@ -714,6 +803,7 @@
     {
         "name": "Kuwait",
         "ISO": "KWD",
+        "symbol":"د.ك",
         "code": "KW",
         "emoji": "🇰🇼",
         "unicode": "U+1F1F0 U+1F1FC",
@@ -722,6 +812,7 @@
     {
         "name": "Kazakhstan",
         "ISO": "KZT",
+        "symbol":"₸",
         "code": "KZ",
         "emoji": "🇰🇿",
         "unicode": "U+1F1F0 U+1F1FF",
@@ -730,6 +821,7 @@
     {
         "name": "Laos",
         "ISO": "LAK",
+        "symbol":"₭",
         "code": "LA",
         "emoji": "🇱🇦",
         "unicode": "U+1F1F1 U+1F1E6",
@@ -738,6 +830,7 @@
     {
         "name": "Lebanon",
         "ISO": "LBP",
+        "symbol":" ل.ل.",
         "code": "LB",
         "emoji": "🇱🇧",
         "unicode": "U+1F1F1 U+1F1E7",
@@ -746,6 +839,7 @@
     {
         "name": "St. Lucia",
         "ISO": "XCD",
+        "symbol":"$",
         "code": "LC",
         "emoji": "🇱🇨",
         "unicode": "U+1F1F1 U+1F1E8",
@@ -754,6 +848,7 @@
     {
         "name": "Liechtenstein",
         "ISO": "CHF",
+        "symbol":"Fr.",
         "code": "LI",
         "emoji": "🇱🇮",
         "unicode": "U+1F1F1 U+1F1EE",
@@ -762,6 +857,7 @@
     {
         "name": "Sri Lanka",
         "ISO": "LKR",
+        "symbol":"රු",
         "code": "LK",
         "emoji": "🇱🇰",
         "unicode": "U+1F1F1 U+1F1F0",
@@ -770,6 +866,7 @@
     {
         "name": "Liberia",
         "ISO": "LRD",
+        "symbol":"$",
         "code": "LR",
         "emoji": "🇱🇷",
         "unicode": "U+1F1F1 U+1F1F7",
@@ -778,6 +875,7 @@
     {
         "name": "Lesotho",
         "ISO": "LSL",
+        "symbol":"L",
         "code": "LS",
         "emoji": "🇱🇸",
         "unicode": "U+1F1F1 U+1F1F8",
@@ -786,6 +884,7 @@
     {
         "name": "Lithuania",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "LT",
         "emoji": "🇱🇹",
         "unicode": "U+1F1F1 U+1F1F9",
@@ -794,6 +893,7 @@
     {
         "name": "Luxembourg",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "LU",
         "emoji": "🇱🇺",
         "unicode": "U+1F1F1 U+1F1FA",
@@ -802,6 +902,7 @@
     {
         "name": "Latvia",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "LV",
         "emoji": "🇱🇻",
         "unicode": "U+1F1F1 U+1F1FB",
@@ -810,6 +911,7 @@
     {
         "name": "Libya",
         "ISO": "LYD",
+        "symbol":"ل.د",
         "code": "LY",
         "emoji": "🇱🇾",
         "unicode": "U+1F1F1 U+1F1FE",
@@ -818,6 +920,7 @@
     {
         "name": "Morocco",
         "ISO": "MAD",
+        "symbol":"MAD",
         "code": "MA",
         "emoji": "🇲🇦",
         "unicode": "U+1F1F2 U+1F1E6",
@@ -826,6 +929,7 @@
     {
         "name": "Monaco",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "MC",
         "emoji": "🇲🇨",
         "unicode": "U+1F1F2 U+1F1E8",
@@ -834,6 +938,7 @@
     {
         "name": "Moldova",
         "ISO": "MDL",
+        "symbol":"L",
         "code": "MD",
         "emoji": "🇲🇩",
         "unicode": "U+1F1F2 U+1F1E9",
@@ -842,6 +947,7 @@
     {
         "name": "Montenegro",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "ME",
         "emoji": "🇲🇪",
         "unicode": "U+1F1F2 U+1F1EA",
@@ -850,6 +956,7 @@
     {
         "name": "Madagascar",
         "ISO": "MGA",
+        "symbol":"Ar",
         "code": "MG",
         "emoji": "🇲🇬",
         "unicode": "U+1F1F2 U+1F1EC",
@@ -858,6 +965,7 @@
     {
         "name": "Marshall Islands",
         "ISO": "USD",
+        "symbol":"$",
         "code": "MH",
         "emoji": "🇲🇭",
         "unicode": "U+1F1F2 U+1F1ED",
@@ -866,6 +974,7 @@
     {
         "name": "North Macedonia",
         "ISO": "MKD",
+        "symbol":"Ден",
         "code": "MK",
         "emoji": "🇲🇰",
         "unicode": "U+1F1F2 U+1F1F0",
@@ -874,6 +983,7 @@
     {
         "name": "Mali",
         "ISO": "XOF",
+        "symbol":"CFA",
         "code": "ML",
         "emoji": "🇲🇱",
         "unicode": "U+1F1F2 U+1F1F1",
@@ -882,6 +992,7 @@
     {
         "name": "Myanmar (Burma)",
         "ISO": "MMK",
+        "symbol":"K",
         "code": "MM",
         "emoji": "🇲🇲",
         "unicode": "U+1F1F2 U+1F1F2",
@@ -890,6 +1001,7 @@
     {
         "name": "Mongolia",
         "ISO": "MNT",
+        "symbol":"₮",
         "code": "MN",
         "emoji": "🇲🇳",
         "unicode": "U+1F1F2 U+1F1F3",
@@ -898,6 +1010,7 @@
     {
         "name": "Mauritania",
         "ISO": "MRO",
+        "symbol":"MRU",
         "code": "MR",
         "emoji": "🇲🇷",
         "unicode": "U+1F1F2 U+1F1F7",
@@ -906,6 +1019,7 @@
     {
         "name": "Malta",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "MT",
         "emoji": "🇲🇹",
         "unicode": "U+1F1F2 U+1F1F9",
@@ -914,6 +1028,7 @@
     {
         "name": "Mauritius",
         "ISO": "MUR",
+        "symbol":"₨",
         "code": "MU",
         "emoji": "🇲🇺",
         "unicode": "U+1F1F2 U+1F1FA",
@@ -922,6 +1037,7 @@
     {
         "name": "Maldives",
         "ISO": "MVR",
+        "symbol":"/-",
         "code": "MV",
         "emoji": "🇲🇻",
         "unicode": "U+1F1F2 U+1F1FB",
@@ -930,6 +1046,7 @@
     {
         "name": "Malawi",
         "ISO": "MWK",
+        "symbol":"MK",
         "code": "MW",
         "emoji": "🇲🇼",
         "unicode": "U+1F1F2 U+1F1FC",
@@ -938,6 +1055,7 @@
     {
         "name": "Mexico",
         "ISO": "MXN",
+        "symbol":"Mex$",
         "code": "MX",
         "emoji": "🇲🇽",
         "unicode": "U+1F1F2 U+1F1FD",
@@ -946,6 +1064,7 @@
     {
         "name": "Malaysia",
         "ISO": "MYR",
+        "symbol":"RM",
         "code": "MY",
         "emoji": "🇲🇾",
         "unicode": "U+1F1F2 U+1F1FE",
@@ -954,6 +1073,7 @@
     {
         "name": "Mozambique",
         "ISO": "MZN",
+        "symbol":"MT",
         "code": "MZ",
         "emoji": "🇲🇿",
         "unicode": "U+1F1F2 U+1F1FF",
@@ -962,6 +1082,7 @@
     {
         "name": "Namibia",
         "ISO": "NAD",
+        "symbol":"N$",
         "code": "NA",
         "emoji": "🇳🇦",
         "unicode": "U+1F1F3 U+1F1E6",
@@ -970,6 +1091,7 @@
     {
         "name": "Niger",
         "ISO": "XOF",
+        "symbol":"CFA",
         "code": "NE",
         "emoji": "🇳🇪",
         "unicode": "U+1F1F3 U+1F1EA",
@@ -978,6 +1100,7 @@
     {
         "name": "Nigeria",
         "ISO": "NGN",
+        "symbol":"₦",
         "code": "NG",
         "emoji": "🇳🇬",
         "unicode": "U+1F1F3 U+1F1EC",
@@ -986,6 +1109,7 @@
     {
         "name": "Nicaragua",
         "ISO": "NIO",
+        "symbol":"C$",
         "code": "NI",
         "emoji": "🇳🇮",
         "unicode": "U+1F1F3 U+1F1EE",
@@ -994,6 +1118,7 @@
     {
         "name": "Netherlands",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "NL",
         "emoji": "🇳🇱",
         "unicode": "U+1F1F3 U+1F1F1",
@@ -1002,6 +1127,7 @@
     {
         "name": "Norway",
         "ISO": "NOK",
+        "symbol":"kr",
         "code": "NO",
         "emoji": "🇳🇴",
         "unicode": "U+1F1F3 U+1F1F4",
@@ -1010,6 +1136,7 @@
     {
         "name": "Nepal",
         "ISO": "NPR",
+        "symbol":"रू",
         "code": "NP",
         "emoji": "🇳🇵",
         "unicode": "U+1F1F3 U+1F1F5",
@@ -1018,6 +1145,7 @@
     {
         "name": "Nauru",
         "ISO": "AUD",
+        "symbol":"€",
         "code": "NR",
         "emoji": "🇳🇷",
         "unicode": "U+1F1F3 U+1F1F7",
@@ -1026,6 +1154,7 @@
     {
         "name": "New Zealand",
         "ISO": "NZD",
+        "symbol":"$",
         "code": "NZ",
         "emoji": "🇳🇿",
         "unicode": "U+1F1F3 U+1F1FF",
@@ -1034,6 +1163,7 @@
     {
         "name": "Oman",
         "ISO": "OMR",
+        "symbol":"ر.ع.",
         "code": "OM",
         "emoji": "🇴🇲",
         "unicode": "U+1F1F4 U+1F1F2",
@@ -1042,6 +1172,7 @@
     {
         "name": "Panama",
         "ISO": "PAB",
+        "symbol":"B/.",
         "code": "PA",
         "emoji": "🇵🇦",
         "unicode": "U+1F1F5 U+1F1E6",
@@ -1050,6 +1181,7 @@
     {
         "name": "Peru",
         "ISO": "PEN",
+        "symbol":"S/",
         "code": "PE",
         "emoji": "🇵🇪",
         "unicode": "U+1F1F5 U+1F1EA",
@@ -1058,6 +1190,7 @@
     {
         "name": "Papua New Guinea",
         "ISO": "PGK",
+        "symbol":"K",
         "code": "PG",
         "emoji": "🇵🇬",
         "unicode": "U+1F1F5 U+1F1EC",
@@ -1066,6 +1199,7 @@
     {
         "name": "Philippines",
         "ISO": "PHP",
+        "symbol":"₱",
         "code": "PH",
         "emoji": "🇵🇭",
         "unicode": "U+1F1F5 U+1F1ED",
@@ -1074,6 +1208,7 @@
     {
         "name": "Pakistan",
         "ISO": "PKR",
+        "symbol":"₨",
         "code": "PK",
         "emoji": "🇵🇰",
         "unicode": "U+1F1F5 U+1F1F0",
@@ -1082,6 +1217,7 @@
     {
         "name": "Poland",
         "ISO": "PLN",
+        "symbol":"zł",
         "code": "PL",
         "emoji": "🇵🇱",
         "unicode": "U+1F1F5 U+1F1F1",
@@ -1090,6 +1226,7 @@
     {
         "name": "Portugal",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "PT",
         "emoji": "🇵🇹",
         "unicode": "U+1F1F5 U+1F1F9",
@@ -1098,6 +1235,7 @@
     {
         "name": "Palau",
         "ISO": "USD",
+        "symbol":"$",
         "code": "PW",
         "emoji": "🇵🇼",
         "unicode": "U+1F1F5 U+1F1FC",
@@ -1106,6 +1244,7 @@
     {
         "name": "Paraguay",
         "ISO": "PYG",
+        "symbol":"₲",
         "code": "PY",
         "emoji": "🇵🇾",
         "unicode": "U+1F1F5 U+1F1FE",
@@ -1114,6 +1253,7 @@
     {
         "name": "Qatar",
         "ISO": "QAR",
+        "symbol":"ر.ق",
         "code": "QA",
         "emoji": "🇶🇦",
         "unicode": "U+1F1F6 U+1F1E6",
@@ -1122,6 +1262,7 @@
     {
         "name": "Romania",
         "ISO": "RON",
+        "symbol":"lei",
         "code": "RO",
         "emoji": "🇷🇴",
         "unicode": "U+1F1F7 U+1F1F4",
@@ -1130,6 +1271,7 @@
     {
         "name": "Serbia",
         "ISO": "RSD",
+        "symbol":"din",
         "code": "RS",
         "emoji": "🇷🇸",
         "unicode": "U+1F1F7 U+1F1F8",
@@ -1138,6 +1280,7 @@
     {
         "name": "Russia",
         "ISO": "RUB",
+        "symbol":"₽",
         "code": "RU",
         "emoji": "🇷🇺",
         "unicode": "U+1F1F7 U+1F1FA",
@@ -1146,6 +1289,7 @@
     {
         "name": "Rwanda",
         "ISO": "RWF",
+        "symbol":"R₣",
         "code": "RW",
         "emoji": "🇷🇼",
         "unicode": "U+1F1F7 U+1F1FC",
@@ -1154,6 +1298,7 @@
     {
         "name": "Solomon Islands",
         "ISO": "SBD",
+        "symbol":"Si$",
         "code": "SB",
         "emoji": "🇸🇧",
         "unicode": "U+1F1F8 U+1F1E7",
@@ -1162,6 +1307,7 @@
     {
         "name": "Seychelles",
         "ISO": "SCR",
+        "symbol":"SRe",
         "code": "SC",
         "emoji": "🇸🇨",
         "unicode": "U+1F1F8 U+1F1E8",
@@ -1170,6 +1316,7 @@
     {
         "name": "Sudan",
         "ISO": "SDG",
+        "symbol":"ج.س.",
         "code": "SD",
         "emoji": "🇸🇩",
         "unicode": "U+1F1F8 U+1F1E9",
@@ -1178,6 +1325,7 @@
     {
         "name": "Sweden",
         "ISO": "SEK",
+        "symbol":"kr",
         "code": "SE",
         "emoji": "🇸🇪",
         "unicode": "U+1F1F8 U+1F1EA",
@@ -1186,6 +1334,7 @@
     {
         "name": "Singapore",
         "ISO": "SGD",
+        "symbol":"S$",
         "code": "SG",
         "emoji": "🇸🇬",
         "unicode": "U+1F1F8 U+1F1EC",
@@ -1194,6 +1343,7 @@
     {
         "name": "Slovenia",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "SI",
         "emoji": "🇸🇮",
         "unicode": "U+1F1F8 U+1F1EE",
@@ -1202,6 +1352,7 @@
     {
         "name": "Slovakia",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "SK",
         "emoji": "🇸🇰",
         "unicode": "U+1F1F8 U+1F1F0",
@@ -1210,6 +1361,7 @@
     {
         "name": "Sierra Leone",
         "ISO": "SSL",
+        "symbol":"SSL",
         "code": "SL",
         "emoji": "🇸🇱",
         "unicode": "U+1F1F8 U+1F1F1",
@@ -1218,6 +1370,7 @@
     {
         "name": "San Marino",
         "ISO": "EUR",
+        "symbol":"€",
         "code": "SM",
         "emoji": "🇸🇲",
         "unicode": "U+1F1F8 U+1F1F2",
@@ -1226,6 +1379,7 @@
     {
         "name": "Senegal",
         "ISO": "XOF",
+        "symbol":"CFA",
         "code": "SN",
         "emoji": "🇸🇳",
         "unicode": "U+1F1F8 U+1F1F3",
@@ -1234,6 +1388,7 @@
     {
         "name": "Somalia",
         "ISO": "SOS",
+        "symbol":"Sh.so.",
         "code": "SO",
         "emoji": "🇸🇴",
         "unicode": "U+1F1F8 U+1F1F4",
@@ -1242,6 +1397,7 @@
     {
         "name": "South Sudan",
         "ISO": "SSP",
+        "symbol":"£",
         "code": "SS",
         "emoji": "🇸🇸",
         "unicode": "U+1F1F8 U+1F1F8",
@@ -1250,6 +1406,7 @@
     {
         "name": "São Tomé & Príncipe",
         "ISO": "STD",
+        "symbol":"Db",
         "code": "ST",
         "emoji": "🇸🇹",
         "unicode": "U+1F1F8 U+1F1F9",
@@ -1258,6 +1415,7 @@
     {
         "name": "El Salvador",
         "ISO": "USD",
+        "symbol":"$",
         "code": "SV",
         "emoji": "🇸🇻",
         "unicode": "U+1F1F8 U+1F1FB",
@@ -1266,6 +1424,7 @@
     {
         "name": "Syria",
         "ISO": "SYP",
+        "symbol":"£S",
         "code": "SY",
         "emoji": "🇸🇾",
         "unicode": "U+1F1F8 U+1F1FE",
@@ -1274,6 +1433,7 @@
     {
         "name": "Eswatini",
         "ISO": "SZL",
+        "symbol":"L",
         "code": "SZ",
         "emoji": "🇸🇿",
         "unicode": "U+1F1F8 U+1F1FF",
@@ -1282,6 +1442,7 @@
     {
         "name": "Chad",
         "ISO": "XAF",
+        "symbol":"FCFA",
         "code": "TD",
         "emoji": "🇹🇩",
         "unicode": "U+1F1F9 U+1F1E9",
@@ -1290,6 +1451,7 @@
     {
         "name": "Togo",
         "ISO": "XOF",
+        "symbol":"CFA",
         "code": "TG",
         "emoji": "🇹🇬",
         "unicode": "U+1F1F9 U+1F1EC",
@@ -1298,6 +1460,7 @@
     {
         "name": "Thailand",
         "ISO": "THB",
+        "symbol":"฿",
         "code": "TH",
         "emoji": "🇹🇭",
         "unicode": "U+1F1F9 U+1F1ED",
@@ -1306,6 +1469,7 @@
     {
         "name": "Tajikistan",
         "ISO": "TJS",
+        "symbol":"SM",
         "code": "TJ",
         "emoji": "🇹🇯",
         "unicode": "U+1F1F9 U+1F1EF",
@@ -1314,6 +1478,7 @@
     {
         "name": "Turkmenistan",
         "ISO": "TMT",
+        "symbol":"T",
         "code": "TM",
         "emoji": "🇹🇲",
         "unicode": "U+1F1F9 U+1F1F2",
@@ -1322,6 +1487,7 @@
     {
         "name": "Tunisia",
         "ISO": "TND",
+        "symbol":"د.ت",
         "code": "TN",
         "emoji": "🇹🇳",
         "unicode": "U+1F1F9 U+1F1F3",
@@ -1330,6 +1496,7 @@
     {
         "name": "Tonga",
         "ISO": "TOP",
+        "symbol": "$",
         "code": "TO",
         "emoji": "🇹🇴",
         "unicode": "U+1F1F9 U+1F1F4",
@@ -1338,6 +1505,7 @@
     {
         "name": "Turkey",
         "ISO": "TRY",
+        "symbol": "₺",
         "code": "TR",
         "emoji": "🇹🇷",
         "unicode": "U+1F1F9 U+1F1F7",
@@ -1346,6 +1514,7 @@
     {
         "name": "Trinidad & Tobago",
         "ISO": "TTD",
+        "symbol": "TT$",
         "code": "TT",
         "emoji": "🇹🇹",
         "unicode": "U+1F1F9 U+1F1F9",
@@ -1354,6 +1523,7 @@
     {
         "name": "Tuvalu",
         "ISO": "AUD",
+        "symbol": "$",
         "code": "TV",
         "emoji": "🇹🇻",
         "unicode": "U+1F1F9 U+1F1FB",
@@ -1362,6 +1532,7 @@
     {
         "name": "Taiwan",
         "ISO": "TWD",
+        "symbol": "NT$",
         "code": "TW",
         "emoji": "🇹🇼",
         "unicode": "U+1F1F9 U+1F1FC",
@@ -1370,6 +1541,7 @@
     {
         "name": "Tanzania",
         "ISO": "TZS",
+        "symbol": "TSh",
         "code": "TZ",
         "emoji": "🇹🇿",
         "unicode": "U+1F1F9 U+1F1FF",
@@ -1378,6 +1550,7 @@
     {
         "name": "Ukraine",
         "ISO": "UAH",
+        "symbol": "₴",
         "code": "UA",
         "emoji": "🇺🇦",
         "unicode": "U+1F1FA U+1F1E6",
@@ -1386,6 +1559,7 @@
     {
         "name": "Uganda",
         "ISO": "UGX",
+        "symbol": "USh",
         "code": "UG",
         "emoji": "🇺🇬",
         "unicode": "U+1F1FA U+1F1EC",
@@ -1394,6 +1568,7 @@
     {
         "name": "United States",
         "ISO": "USD",
+        "symbol": "$",
         "code": "US",
         "emoji": "🇺🇸",
         "unicode": "U+1F1FA U+1F1F8",
@@ -1402,6 +1577,7 @@
     {
         "name": "Uruguay",
         "ISO": "UYU",
+        "symbol": "$U",
         "code": "UY",
         "emoji": "🇺🇾",
         "unicode": "U+1F1FA U+1F1FE",
@@ -1410,6 +1586,7 @@
     {
         "name": "Uzbekistan",
         "ISO": "UZS",
+        "symbol": "лв",
         "code": "UZ",
         "emoji": "🇺🇿",
         "unicode": "U+1F1FA U+1F1FF",
@@ -1418,6 +1595,7 @@
     {
         "name": "Vatican City",
         "ISO": "EUR",
+        "symbol": "€",
         "code": "VA",
         "emoji": "🇻🇦",
         "unicode": "U+1F1FB U+1F1E6",
@@ -1426,6 +1604,7 @@
     {
         "name": "St. Vincent & Grenadines",
         "ISO": "XCD",
+        "symbol": "$",
         "code": "VC",
         "emoji": "🇻🇨",
         "unicode": "U+1F1FB U+1F1E8",
@@ -1434,6 +1613,7 @@
     {
         "name": "Venezuela",
         "ISO": "VEF",
+        "symbol": "Bs",
         "code": "VE",
         "emoji": "🇻🇪",
         "unicode": "U+1F1FB U+1F1EA",
@@ -1442,6 +1622,7 @@
     {
         "name": "Vietnam",
         "ISO": "VND",
+        "symbol": "₫",
         "code": "VN",
         "emoji": "🇻🇳",
         "unicode": "U+1F1FB U+1F1F3",
@@ -1450,6 +1631,7 @@
     {
         "name": "Vanuatu",
         "ISO": "VUV",
+        "symbol": "VT",
         "code": "VU",
         "emoji": "🇻🇺",
         "unicode": "U+1F1FB U+1F1FA",
@@ -1458,6 +1640,7 @@
     {
         "name": "Samoa",
         "ISO": "WST",
+        "symbol": "$",
         "code": "WS",
         "emoji": "🇼🇸",
         "unicode": "U+1F1FC U+1F1F8",
@@ -1466,6 +1649,7 @@
     {
         "name": "Kosovo",
         "ISO": "EUR",
+        "symbol": "€",
         "code": "XK",
         "emoji": "🇽🇰",
         "unicode": "U+1F1FD U+1F1F0",
@@ -1474,6 +1658,7 @@
     {
         "name": "Yemen",
         "ISO": "YER",
+        "symbol": "﷼",
         "code": "YE",
         "emoji": "🇾🇪",
         "unicode": "U+1F1FE U+1F1EA",
@@ -1482,6 +1667,7 @@
     {
         "name": "South Africa",
         "ISO": "ZAR",
+        "symbol": "R",
         "code": "ZA",
         "emoji": "🇿🇦",
         "unicode": "U+1F1FF U+1F1E6",
@@ -1490,6 +1676,7 @@
     {
         "name": "Zambia",
         "ISO": "ZMW",
+        "symbol": "ZK",
         "code": "ZM",
         "emoji": "🇿🇲",
         "unicode": "U+1F1FF U+1F1F2",
@@ -1498,6 +1685,7 @@
     {
         "name": "Zimbabwe",
         "ISO": "USD",
+        "symbol": "$",
         "code": "ZW",
         "emoji": "🇿🇼",
         "unicode": "U+1F1FF U+1F1FC",
@@ -1506,6 +1694,7 @@
     {
         "name": "Ascension Island",
         "ISO": "SHP",
+        "symbol": "£",
         "code": "AC",
         "emoji": "🇦🇨",
         "unicode": "U+1F1E6 U+1F1E8",
@@ -1514,6 +1703,7 @@
     {
         "name": "Afghanistan",
         "ISO": "AFN",
+        "symbol": "؋",
         "code": "AF",
         "emoji": "🇦🇫",
         "unicode": "U+1F1E6 U+1F1EB",
@@ -1522,6 +1712,7 @@
     {
         "name": "Antigua & Barbuda",
         "ISO": "XCD",
+        "symbol": "$",
         "code": "AG",
         "emoji": "🇦🇬",
         "unicode": "U+1F1E6 U+1F1EC",
@@ -1530,6 +1721,7 @@
     {
         "name": "Anguilla",
         "ISO": "ESD",
+        "symbol": "$",
         "code": "AI",
         "emoji": "🇦🇮",
         "unicode": "U+1F1E6 U+1F1EE",
@@ -1538,6 +1730,7 @@
     {
         "name": "American Samoa",
         "ISO": "USD",
+        "symbol": "$",
         "code": "AS",
         "emoji": "🇦🇸",
         "unicode": "U+1F1E6 U+1F1F8",
@@ -1546,6 +1739,7 @@
     {
         "name": "Åland Islands",
         "ISO": "EUR",
+        "symbol": "€",
         "code": "AX",
         "emoji": "🇦🇽",
         "unicode": "U+1F1E6 U+1F1FD",
@@ -1554,6 +1748,7 @@
     {
         "name": "Bosnia & Herzegovina",
         "ISO": "BAM",
+        "symbol": "KM",
         "code": "BA",
         "emoji": "🇧🇦",
         "unicode": "U+1F1E7 U+1F1E6",
@@ -1562,6 +1757,7 @@
     {
         "name": "St. Barthélemy",
         "ISO": "EUR",
+        "symbol": "€",
         "code": "BL",
         "emoji": "🇧🇱",
         "unicode": "U+1F1E7 U+1F1F1",
@@ -1570,6 +1766,7 @@
     {
         "name": "Bermuda",
         "ISO": "BMD",
+        "symbol": "$",
         "code": "BM",
         "emoji": "🇧🇲",
         "unicode": "U+1F1E7 U+1F1F2",
@@ -1578,6 +1775,7 @@
     {
         "name": "Caribbean Netherlands",
         "ISO": "ANG",
+        "symbol": "ƒ",
         "code": "BQ",
         "emoji": "🇧🇶",
         "unicode": "U+1F1E7 U+1F1F6",
@@ -1586,6 +1784,7 @@
     {
         "name": "Bouvet Island",
         "ISO": "NOK",
+        "symbol": "kr",
         "code": "BV",
         "emoji": "🇧🇻",
         "unicode": "U+1F1E7 U+1F1FB",
@@ -1594,6 +1793,7 @@
     {
         "name": "Cocos (Keeling) Islands",
         "ISO": "AUD",
+        "symbol": "$",
         "code": "CC",
         "emoji": "🇨🇨",
         "unicode": "U+1F1E8 U+1F1E8",
@@ -1602,6 +1802,7 @@
     {
         "name": "Côte d’Ivoire",
         "ISO": "AFN",
+        "symbol": "؋",
         "code": "CI",
         "emoji": "🇨🇮",
         "unicode": "U+1F1E8 U+1F1EE",
@@ -1610,6 +1811,7 @@
     {
         "name": "Cook Islands",
         "ISO": "NZD",
+        "symbol": "$",
         "code": "CK",
         "emoji": "🇨🇰",
         "unicode": "U+1F1E8 U+1F1F0",
@@ -1618,6 +1820,7 @@
     {
         "name": "Clipperton Island",
         "ISO": "AFN",
+        "symbol": "؋",
         "code": "CP",
         "emoji": "🇨🇵",
         "unicode": "U+1F1E8 U+1F1F5",
@@ -1626,6 +1829,7 @@
     {
         "name": "Curaçao",
         "ISO": "AFN",
+        "symbol": "؋",
         "code": "CW",
         "emoji": "🇨🇼",
         "unicode": "U+1F1E8 U+1F1FC",
@@ -1634,6 +1838,7 @@
     {
         "name": "Christmas Island",
         "ISO": "AFN",
+        "symbol": "؋",
         "code": "CX",
         "emoji": "🇨🇽",
         "unicode": "U+1F1E8 U+1F1FD",
@@ -1642,6 +1847,7 @@
     {
         "name": "Czechia",
         "ISO": "CZK",
+        "symbol": "Kč",
         "code": "CZ",
         "emoji": "🇨🇿",
         "unicode": "U+1F1E8 U+1F1FF",
@@ -1650,6 +1856,7 @@
     {
         "name": "Diego Garcia",
         "ISO": "AFN",
+        "symbol": "؋",
         "code": "DG",
         "emoji": "🇩🇬",
         "unicode": "U+1F1E9 U+1F1EC",
@@ -1658,6 +1865,7 @@
     {
         "name": "Ceuta & Melilla",
         "ISO": "AFN",
+        "symbol": "؋",
         "code": "EA",
         "emoji": "🇪🇦",
         "unicode": "U+1F1EA U+1F1E6",
@@ -1666,6 +1874,7 @@
     {
         "name": "Western Sahara",
         "ISO": "ESH",
+        "symbol": "Ptas",
         "code": "EH",
         "emoji": "🇪🇭",
         "unicode": "U+1F1EA U+1F1ED",
@@ -1674,6 +1883,7 @@
     {
         "name": "European Union",
         "ISO": "EUR",
+        "symbol": "€",
         "code": "EU",
         "emoji": "🇪🇺",
         "unicode": "U+1F1EA U+1F1FA",
@@ -1682,6 +1892,7 @@
     {
         "name": "Falkland Islands",
         "ISO": "FKP",
+        "symbol": "£",
         "code": "FK",
         "emoji": "🇫🇰",
         "unicode": "U+1F1EB U+1F1F0",
@@ -1690,6 +1901,7 @@
     {
         "name": "Faroe Islands",
         "ISO": "FOK",
+        "symbol": "kr",
         "code": "FO",
         "emoji": "🇫🇴",
         "unicode": "U+1F1EB U+1F1F4",
@@ -1698,6 +1910,7 @@
     {
         "name": "Georgia",
         "ISO": "AFN",
+        "symbol": "؋",
         "code": "GE",
         "emoji": "🇬🇪",
         "unicode": "U+1F1EC U+1F1EA",
@@ -1706,6 +1919,7 @@
     {
         "name": "French Guiana",
         "ISO": "EUR",
+        "symbol": "€",
         "code": "GF",
         "emoji": "🇬🇫",
         "unicode": "U+1F1EC U+1F1EB",
@@ -1714,6 +1928,7 @@
     {
         "name": "Guernsey",
         "ISO": "GBP",
+        "symbol": "£",
         "code": "GG",
         "emoji": "🇬🇬",
         "unicode": "U+1F1EC U+1F1EC",
@@ -1722,6 +1937,7 @@
     {
         "name": "Gibraltar",
         "ISO": "GIP",
+        "symbol": "£",
         "code": "GI",
         "emoji": "🇬🇮",
         "unicode": "U+1F1EC U+1F1EE",
@@ -1730,6 +1946,7 @@
     {
         "name": "Greenland",
         "ISO": "DKK",
+        "symbol": "kr",
         "code": "GL",
         "emoji": "🇬🇱",
         "unicode": "U+1F1EC U+1F1F1",
@@ -1738,6 +1955,7 @@
     {
         "name": "Guadeloupe",
         "ISO": "EUR",
+        "symbol": "€",
         "code": "GP",
         "emoji": "🇬🇵",
         "unicode": "U+1F1EC U+1F1F5",
@@ -1746,6 +1964,7 @@
     {
         "name": "Guam",
         "ISO": "USD",
+        "symbol": "$",
         "code": "GU",
         "emoji": "🇬🇺",
         "unicode": "U+1F1EC U+1F1FA",
@@ -1754,6 +1973,7 @@
     {
         "name": "Hong Kong SAR China",
         "ISO": "HKD",
+        "symbol": "$",
         "code": "HK",
         "emoji": "🇭🇰",
         "unicode": "U+1F1ED U+1F1F0",
@@ -1762,6 +1982,7 @@
     {
         "name": "Heard & McDonald Islands",
         "ISO": "AFN",
+        "symbol": "؋",
         "code": "HM",
         "emoji": "🇭🇲",
         "unicode": "U+1F1ED U+1F1F2",
@@ -1770,6 +1991,7 @@
     {
         "name": "Canary Islands",
         "ISO": "AFN",
+        "symbol": "؋",
         "code": "IC",
         "emoji": "🇮🇨",
         "unicode": "U+1F1EE U+1F1E8",
@@ -1778,6 +2000,7 @@
     {
         "name": "Isle of Man",
         "ISO": "AFN",
+        "symbol": "؋",
         "code": "IM",
         "emoji": "🇮🇲",
         "unicode": "U+1F1EE U+1F1F2",
@@ -1786,6 +2009,7 @@
     {
         "name": "British Indian Ocean Territory",
         "ISO": "USD",
+        "symbol": "$",
         "code": "IO",
         "emoji": "🇮🇴",
         "unicode": "U+1F1EE U+1F1F4",
@@ -1794,6 +2018,7 @@
     {
         "name": "Jersey",
         "ISO": "JEP",
+        "symbol": "£",
         "code": "JE",
         "emoji": "🇯🇪",
         "unicode": "U+1F1EF U+1F1EA",
@@ -1802,6 +2027,7 @@
     {
         "name": "Cayman Islands",
         "ISO": "KYD",
+        "symbol": "$",
         "code": "KY",
         "emoji": "🇰🇾",
         "unicode": "U+1F1F0 U+1F1FE",
@@ -1810,6 +2036,7 @@
     {
         "name": "St. Martin",
         "ISO": "EUR",
+        "symbol": "€",
         "code": "MF",
         "emoji": "🇲🇫",
         "unicode": "U+1F1F2 U+1F1EB",
@@ -1818,6 +2045,7 @@
     {
         "name": "Macao SAR China",
         "ISO": "MOP",
+        "symbol": "$",
         "code": "MO",
         "emoji": "🇲🇴",
         "unicode": "U+1F1F2 U+1F1F4",
@@ -1826,6 +2054,7 @@
     {
         "name": "Northern Mariana Islands",
         "ISO": "USD",
+        "symbol": "$",
         "code": "MP",
         "emoji": "🇲🇵",
         "unicode": "U+1F1F2 U+1F1F5",
@@ -1834,6 +2063,7 @@
     {
         "name": "Martinique",
         "ISO": "EUR",
+        "symbol": "€",
         "code": "MQ",
         "emoji": "🇲🇶",
         "unicode": "U+1F1F2 U+1F1F6",
@@ -1842,6 +2072,7 @@
     {
         "name": "Montserrat",
         "ISO": "XCD",
+        "symbol": "$",
         "code": "MS",
         "emoji": "🇲🇸",
         "unicode": "U+1F1F2 U+1F1F8",
@@ -1850,6 +2081,7 @@
     {
         "name": "New Caledonia",
         "ISO": "CFP",
+        "symbol": "₣",
         "code": "NC",
         "emoji": "🇳🇨",
         "unicode": "U+1F1F3 U+1F1E8",
@@ -1858,6 +2090,7 @@
     {
         "name": "Norfolk Island",
         "ISO": "AUD",
+        "symbol": "$",
         "code": "NF",
         "emoji": "🇳🇫",
         "unicode": "U+1F1F3 U+1F1EB",
@@ -1866,6 +2099,7 @@
     {
         "name": "Niue",
         "ISO": "NZD",
+        "symbol": "$",
         "code": "NU",
         "emoji": "🇳🇺",
         "unicode": "U+1F1F3 U+1F1FA",
@@ -1874,6 +2108,7 @@
     {
         "name": "French Polynesia",
         "ISO": "XPF",
+        "symbol": "₣",
         "code": "PF",
         "emoji": "🇵🇫",
         "unicode": "U+1F1F5 U+1F1EB",
@@ -1882,6 +2117,7 @@
     {
         "name": "St. Pierre & Miquelon",
         "ISO": "EUR",
+        "symbol": "€",
         "code": "PM",
         "emoji": "🇵🇲",
         "unicode": "U+1F1F5 U+1F1F2",
@@ -1890,6 +2126,7 @@
     {
         "name": "Pitcairn Islands",
         "ISO": "NZD",
+        "symbol": "$",
         "code": "PN",
         "emoji": "🇵🇳",
         "unicode": "U+1F1F5 U+1F1F3",
@@ -1898,6 +2135,7 @@
     {
         "name": "Puerto Rico",
         "ISO": "USD",
+        "symbol": "$",
         "code": "PR",
         "emoji": "🇵🇷",
         "unicode": "U+1F1F5 U+1F1F7",
@@ -1906,6 +2144,7 @@
     {
         "name": "Palestinian Territories",
         "ISO": "ILS",
+        "symbol": "₪",
         "code": "PS",
         "emoji": "🇵🇸",
         "unicode": "U+1F1F5 U+1F1F8",
@@ -1914,6 +2153,7 @@
     {
         "name": "Réunion",
         "ISO": "EUR",
+        "symbol": "€",
         "code": "RE",
         "emoji": "🇷🇪",
         "unicode": "U+1F1F7 U+1F1EA",
@@ -1922,6 +2162,7 @@
     {
         "name": "Saudi Arabia",
         "ISO": "SAR",
+        "symbol": "﷼",
         "code": "SA",
         "emoji": "🇸🇦",
         "unicode": "U+1F1F8 U+1F1E6",
@@ -1930,6 +2171,7 @@
     {
         "name": "St. Helena",
         "ISO": "SHP",
+        "symbol": "£",
         "code": "SH",
         "emoji": "🇸🇭",
         "unicode": "U+1F1F8 U+1F1ED",
@@ -1938,6 +2180,7 @@
     {
         "name": "Svalbard & Jan Mayen",
         "ISO": "NOK",
+        "symbol": "kr",
         "code": "SJ",
         "emoji": "🇸🇯",
         "unicode": "U+1F1F8 U+1F1EF",
@@ -1946,7 +2189,9 @@
     {
         "name": "Suriname",
         "ISO": "SRD",
+        "symbol": "$",
         "ISO": "AFN",
+        "symbol": "€",
         "code": "SR",
         "emoji": "🇸🇷",
         "unicode": "U+1F1F8 U+1F1F7",
@@ -1955,6 +2200,7 @@
     {
         "name": "Sint Maarten",
         "ISO": "ANG",
+        "symbol": "ƒ",
         "code": "SX",
         "emoji": "🇸🇽",
         "unicode": "U+1F1F8 U+1F1FD",
@@ -1963,6 +2209,7 @@
     {
         "name": "Tristan da Cunha",
         "ISO": "SHP",
+        "symbol": "£",
         "code": "TA",
         "emoji": "🇹🇦",
         "unicode": "U+1F1F9 U+1F1E6",
@@ -1971,6 +2218,7 @@
     {
         "name": "Turks & Caicos Islands",
         "ISO": "USD",
+        "symbol": "$",
         "code": "TC",
         "emoji": "🇹🇨",
         "unicode": "U+1F1F9 U+1F1E8",
@@ -1979,6 +2227,7 @@
     {
         "name": "French Southern Territories",
         "ISO": "EUR",
+        "symbol": "€",
         "code": "TF",
         "emoji": "🇹🇫",
         "unicode": "U+1F1F9 U+1F1EB",
@@ -1987,6 +2236,7 @@
     {
         "name": "Tokelau",
         "ISO": "NZD",
+        "symbol": "$",
         "code": "TK",
         "emoji": "🇹🇰",
         "unicode": "U+1F1F9 U+1F1F0",
@@ -1995,6 +2245,7 @@
     {
         "name": "Timor-Leste",
         "ISO": "USD",
+        "symbol": "$",
         "code": "TL",
         "emoji": "🇹🇱",
         "unicode": "U+1F1F9 U+1F1F1",
@@ -2003,6 +2254,7 @@
     {
         "name": "U.S. Outlying Islands",
         "ISO": "USD",
+        "symbol": "$",
         "code": "UM",
         "emoji": "🇺🇲",
         "unicode": "U+1F1FA U+1F1F2",
@@ -2011,6 +2263,7 @@
     {
         "name": "United Nations",
         "ISO": "USD",
+        "symbol": "$",
         "code": "UN",
         "emoji": "🇺🇳",
         "unicode": "U+1F1FA U+1F1F3",
@@ -2019,6 +2272,7 @@
     {
         "name": "British Virgin Islands",
         "ISO": "USD",
+        "symbol": "$",
         "code": "VG",
         "emoji": "🇻🇬",
         "unicode": "U+1F1FB U+1F1EC",
@@ -2027,6 +2281,7 @@
     {
         "name": "U.S. Virgin Islands",
         "ISO": "USD",
+        "symbol": "$",
         "code": "VI",
         "emoji": "🇻🇮",
         "unicode": "U+1F1FB U+1F1EE",
@@ -2035,6 +2290,7 @@
     {
         "name": "Wallis & Futuna",
         "ISO": "CFP",
+        "symbol": "₣",
         "code": "WF",
         "emoji": "🇼🇫",
         "unicode": "U+1F1FC U+1F1EB",
@@ -2043,6 +2299,7 @@
     {
         "name": "Mayotte",
         "ISO": "EUR",
+        "symbol": "€",
         "code": "YT",
         "emoji": "🇾🇹",
         "unicode": "U+1F1FE U+1F1F9",
@@ -2051,6 +2308,7 @@
     {
         "name": "England",
         "ISO": "GBP",
+        "symbol": "£",
         "code": "ENGLAND",
         "emoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
         "unicode": "U+1F3F4 U+E0067 U+E0062 U+E0065 U+E006E U+E0067 U+E007F",
@@ -2059,6 +2317,7 @@
     {
         "name": "Scotland",
         "ISO": "GBP",
+        "symbol": "£",
         "code": "SCOTLAND",
         "emoji": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
         "unicode": "U+1F3F4 U+E0067 U+E0062 U+E0073 U+E0063 U+E0074 U+E007F",
@@ -2067,6 +2326,7 @@
     {
         "name": "Wales",
         "ISO": "GBP",
+        "symbol": "£",
         "code": "WALES",
         "emoji": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
         "unicode": "U+1F3F4 U+E0067 U+E0062 U+E0077 U+E006C U+E0073 U+E007F",

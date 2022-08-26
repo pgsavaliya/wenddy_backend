@@ -13,6 +13,12 @@ let countrySchema = new Schema(
     price: {
       type: Number,
     },
+    symbol: {
+      type: String,
+    },
+    image: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
