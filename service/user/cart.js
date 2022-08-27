@@ -57,8 +57,8 @@ module.exports = {
           }
         } else {
           data["user_id"] = user_id;
-          data["product_amount"] = productData.mrp;
-          data["total_price"] = data.quantity * data.product_amount;
+          // data["product_amount"] = data.price;
+          data["total_price"] = data.quantity * data.price;
           let newAddtocartModel = new addtocartModel(data);
           let saveData = await newAddtocartModel.save();
           if (saveData) {
