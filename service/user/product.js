@@ -253,7 +253,7 @@ module.exports = {
         if (getData.length > 0) {
           res({
             status: 200,
-            data: { count, getData1, getData2 },
+            data: { count, getData },
           });
         } else {
           rej({ status: 404, message: "No Data found!!" });
