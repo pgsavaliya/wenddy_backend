@@ -70,6 +70,15 @@ module.exports = {
           //   },
           // },
           { $match: { is_fav: true } },
+          {
+            $lookup: {
+              from: "reviewproducts",
+              foreignField: "product_id",
+              localField: "_id",
+              as: "avgdata",
+            },
+          },
+          // { $unwind: "$avgdata" },
           // {
           //   $unwind: "$avgdata",
           // },
@@ -83,29 +92,20 @@ module.exports = {
                   },
                 },
               ],
-              // total_avg: [
-              //   {
-              //     $group: {
-              //       _id: "$_id",
-              //       avgRating: { $avg: "$avgdata.rating" },
-              //     },
-              //   },
-              // ],
+              total_avg: [
+                {
+                  $group: {
+                      _id: "$_id",
+                      avgRating: { $avg: "$avgdata.rating" },
+                    },
+                  },
+                ],
               result: [
-                {
-                  $lookup: {
-                    from: "reviewproducts",
-                    foreignField: "product_id",
-                    localField: "_id",
-                    as: "avgdata",
-                  },
-                },
-                { $unwind: "$avgdata" },
-                {
-                  $addFields: {
-                    avg: { $avg: "$avgdata.rating" },
-                  },
-                },
+                // {
+                //   $addFields: {
+                //     avg: { $avg: "$avgdata.rating" },
+                //   },
+                // },
                 {
                   $project: {
                     _id: 1,
@@ -129,6 +129,15 @@ module.exports = {
           //   $unwind: "$avgdata",
           // },
           {
+            $lookup: {
+              from: "reviewproducts",
+              foreignField: "product_id",
+              localField: "_id",
+              as: "avgdata",
+            },
+          },
+          // { $unwind: "$avgdata" },
+          {
             $facet: {
               total_count: [
                 {
@@ -139,29 +148,20 @@ module.exports = {
                   },
                 },
               ],
-              // total_avg: [
-              //   {
-              //     $group: {
-              //       _id: "$_id",
-              //       avgRating: { $avg: "$avgdata.rating" },
-              //     },
-              //   },
-              // ],
+              total_avg: [
+                {
+                  $group: {
+                    _id: "$_id",
+                    avgRating: { $avg: "$avgdata.rating" },
+                  },
+                },
+              ],
               result: [
-                {
-                  $lookup: {
-                    from: "reviewproducts",
-                    foreignField: "product_id",
-                    localField: "_id",
-                    as: "avgdata",
-                  },
-                },
-                { $unwind: "$avgdata" },
-                {
-                  $addFields: {
-                    avg: { $avg: "$avgdata.rating" },
-                  },
-                },
+                // {
+                //   $addFields: {
+                //     avg: { $avg: "$avgdata.rating" },
+                //   },
+                // },
                 {
                   $project: {
                     _id: 1,
@@ -178,7 +178,7 @@ module.exports = {
           },
         ]);
         getData2 = getData2[0]; //|| { total_count: [0] };
-        console.log("countryData ...........", getData2.result.length);
+        console.log("countryData ...........", typeof getData2.result);
         if (getData1.result != "") {
           getData1.result.map(async (item) => {
             if (country) {
