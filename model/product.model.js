@@ -3,40 +3,45 @@ const bcryptjs = require("bcryptjs");
 
 const productSchema = new Schema(
   {
-    product_images: [
+    // product_images: [
+    //   {
+    //     unique_img: {
+    //       type: String,
+    //     },
+    //     original: {
+    //       type: String,
+    //     },
+    //     original_url: {
+    //       type: String,
+    //     },
+    //     reduce: {
+    //       type: String,
+    //     },
+    //     reduce_url: {
+    //       type: String,
+    //     },
+    //     medium: {
+    //       type: String,
+    //     },
+    //     medium_url: {
+    //       type: String,
+    //     },
+    //     is_primary: {
+    //       type: Boolean,
+    //       default: false,
+    //     },
+    //     small: {
+    //       type: String,
+    //     },
+    //     small_url: {
+    //       type: String,
+    //     },
+    //   },
+    // ],
+    image: [
       {
-        unique_img: {
-          type: String,
-        },
-        original: {
-          type: String,
-        },
-        original_url: {
-          type: String,
-        },
-        reduce: {
-          type: String,
-        },
-        reduce_url: {
-          type: String,
-        },
-        medium: {
-          type: String,
-        },
-        medium_url: {
-          type: String,
-        },
-        is_primary: {
-          type: Boolean,
-          default: false,
-        },
-        small: {
-          type: String,
-        },
-        small_url: {
-          type: String,
-        },
-      },
+        type: String,
+      }
     ],
     product_title: {
       type: String,
