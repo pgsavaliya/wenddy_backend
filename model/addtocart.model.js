@@ -24,7 +24,7 @@ const addtocartSchema = new Schema(
     metal: {
       type: String,
     },
-    dimand_type: {
+    diamond_type: {
       type: String,
     },
     ring_size: {
