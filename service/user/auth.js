@@ -10,7 +10,22 @@ module.exports = {
         let newUserModel = new userModel(data);
         let saveData = await newUserModel.save();
         if (saveData) {
-          res({ status: 200, data: "User Registered Successfully!!" });
+          let key1 = process.env.USER_ENCRYPTION_KEY;
+          let encryptUser = encrypt(saveData._id, key1);
+          let encryptPass = encrypt(saveData.password, key1);
+          let encryptEmail = encrypt(saveData.email, key1);
+          console.log(encryptEmail);
+          let token = jwt.sign(
+            {
+              user_id: encryptUser,
+              password: encryptPass,
+              email: encryptEmail,
+            },
+            process.env.USER_ACCESS_TOKEN,
+            { expiresIn: process.env.USER_ACCESS_TIME }
+          );
+          res({ status: 200, data: token });
+          // res({ status: 200, data: "User Registered Successfully!!" });
         } else {
           rej({ status: 404, message: "something went wrong!!" });
         }
@@ -77,5 +92,4 @@ module.exports = {
       }
     });
   },
-  
 };
