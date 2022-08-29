@@ -103,7 +103,7 @@ module.exports = {
               result: [
                 {
                   $addFields: {
-                    avg: { $avg: "$avgdata.rating" },
+                    avgRating: { $avg: "$avgdata.rating" },
                   },
                 },
                 {
@@ -159,7 +159,7 @@ module.exports = {
               result: [
                 {
                   $addFields: {
-                    avg: { $avg: "$avgdata.rating" },
+                    avgRating: { $avg: "$avgdata.rating" },
                   },
                 },
                 {
@@ -176,7 +176,7 @@ module.exports = {
           },
         ]);
         getData2 = getData2[0]; //|| { total_count: [0] };
-        console.log("countryData ...........", getData2.total_avg);
+        // console.log("countryData ...........", getData2.total_avg);
         if (getData1.result != "") {
           getData1.result.map(async (item) => {
             if (country) {
