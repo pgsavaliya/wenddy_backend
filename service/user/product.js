@@ -95,21 +95,21 @@ module.exports = {
               total_avg: [
                 {
                   $group: {
-                      _id: "$_id",
-                      avgRating: { $avg: "$avgdata.rating" },
-                    },
+                    _id: "$_id",
+                    avgRating: { $avg: "$avgdata.rating" },
                   },
-                ],
+                },
+              ],
               result: [
-                // {
-                //   $addFields: {
-                //     avg: { $avg: "$avgdata.rating" },
-                //   },
-                // },
+                {
+                  $addFields: {
+                    avg: { $avg: "$avgdata.rating" },
+                  },
+                },
                 {
                   $project: {
-                    _id: 1,
-                    // avg: 1,
+                    __v: 0,
+                    avgdata: 0,
                   },
                 },
                 // { $sort: { createdAt: -1 } },
@@ -157,17 +157,15 @@ module.exports = {
                 },
               ],
               result: [
-                // {
-                //   $addFields: {
-                //     avg: { $avg: "$avgdata.rating" },
-                //   },
-                // },
+                {
+                  $addFields: {
+                    avg: { $avg: "$avgdata.rating" },
+                  },
+                },
                 {
                   $project: {
-                    _id: 1,
-                    // avg: 1,
-                    avgdata: 0,
                     __v: 0,
+                    avgdata: 0,
                   },
                 },
                 // { $sort: { createdAt: -1 } },
@@ -178,7 +176,7 @@ module.exports = {
           },
         ]);
         getData2 = getData2[0]; //|| { total_count: [0] };
-        console.log("countryData ...........", typeof getData2.result);
+        console.log("countryData ...........", getData2.total_avg);
         if (getData1.result != "") {
           getData1.result.map(async (item) => {
             if (country) {
@@ -243,6 +241,13 @@ module.exports = {
             // console.log(avgData2);
           });
         }
+        // getData2 = getData2.map((item) => {
+        //   return {
+        //     ...item,
+        //     // item.total_avg._id = item.result._id,
+        //   }
+        // })
+        // console.log("getData2 .......", getData2);
         let getData = [];
         let count =
           getData1.total_count[0]?.count ||

@@ -1,11 +1,8 @@
 const { currencyConverter } = require("./helper/currencyConverter");
 const countryService = require("./service/admin/country");
 const countryModel = require("./model/country.model");
-const express = require("express");
-
-const mongoose = require("mongoose");
-
 const cron = require("node-cron");
+
 module.exports = () => {
   try {
     cron.schedule("0 0 0 * * *", async () => {
@@ -13,6 +10,7 @@ module.exports = () => {
       // console.log("dkjfh ......", getData);
       if (getData != "") {
         getData.map(async (item, index) => {
+          console.log("item ....",item);
           let price = await currencyConverter(item.currency);
           body = {};
           body.name = item.name;
@@ -27,7 +25,7 @@ module.exports = () => {
           }
         });
       } else {
-        console.log("cron warking");
+        console.log("cron working");
       }
     });
   } catch (err) {
