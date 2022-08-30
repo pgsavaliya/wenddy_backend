@@ -26,7 +26,6 @@ module.exports = {
         let qry = {};
         page = parseInt(page);
         limit = parseInt(limit);
-        // console.log("limit ....", limit);
         if (startDate && endDate) {
           startDate = new Date(startDate);
           endDate = new Date(endDate);
@@ -59,16 +58,10 @@ module.exports = {
           };
         }
         qry = { is_public: true };
-        // console.log("userId: ", userId);
-        // console.log("qry ...........", qry);
+
         let limit1 = parseInt(limit * 0.4);
         let getData1 = await productModel.aggregate([
           { $match: qry },
-          // {
-          //   $match: {
-          //     is_public: true,
-          //   },
-          // },
           { $match: { is_fav: true } },
           {
             $lookup: {
@@ -176,7 +169,8 @@ module.exports = {
           },
         ]);
         getData2 = getData2[0]; //|| { total_count: [0] };
-        // console.log("countryData ...........", getData2.total_avg);
+        var lowprice = 1000000;
+        var highprice = 0;
         if (getData1.result != "") {
           getData1.result.map(async (item) => {
             if (country) {
@@ -186,12 +180,25 @@ module.exports = {
               if (countryData) {
                 item.real_price = item.real_price * countryData.price;
                 item.mrp = item.mrp * countryData.price;
+                if (lowprice > item.mrp) {
+                  lowprice = item.mrp;
+                }
+                if (highprice < item.mrp) {
+                  highprice = item.mrp;
+                }
                 item.product_variation.map((item1) => {
                   item1.real_price = item1.real_price * countryData.price;
                   item1.mrp = item1.mrp * countryData.price;
+                  if (lowprice > item1.mrp) {
+                    lowprice = item1.mrp;
+                  }
+                  if (highprice < item1.mrp) {
+                    highprice = item1.mrp;
+                  }
                 });
               }
             }
+
             // let avgData1 = await reviewproductModel.aggregate([
             //   {
             //     $match: {
@@ -217,9 +224,16 @@ module.exports = {
               if (countryData) {
                 item.real_price = item.real_price * countryData.price;
                 item.mrp = item.mrp * countryData.price;
+
                 item.product_variation.map((item1) => {
                   item1.real_price = item1.real_price * countryData.price;
                   item1.mrp = item1.mrp * countryData.price;
+                  if (lowprice > item1.mrp) {
+                    lowprice = item1.mrp;
+                  }
+                  if (highprice < item1.mrp) {
+                    highprice = item1.mrp;
+                  }
                 });
               }
             }
@@ -237,18 +251,49 @@ module.exports = {
             //   },
             // ]);
             // item.avg = avgData2.avgRating;
-
-            // console.log(avgData2);
           });
         }
-        // getData2 = getData2.map((item) => {
-        //   return {
-        //     ...item,
-        //     // item.total_avg._id = item.result._id,
-        //   }
-        // })
-        // console.log("getData2 .......", getData2);
+        if (getData1.result != "") {
+          getData1.result.map((item) => {
+            if (lowprice > item.real_price) {
+              lowprice = item.real_price;
+            }
+            if (highprice < item.real_price) {
+              highprice = item.real_price;
+            }
+            item.product_variation.map((item1) => {
+              if (lowprice > item1.real_price) {
+                lowprice = item1.real_price;
+              }
+              if (highprice < item1.real_price) {
+                highprice = item1.real_price;
+              }
+            });
+          });
+        }
+        if (getData2.result != "") {
+          getData2.result.map((item) => {
+            if (lowprice > item.real_price) {
+              lowprice = item.real_price;
+            }
+            if (highprice < item.real_price) {
+              highprice = item.real_price;
+            }
+            item.product_variation.map((item1) => {
+              if (lowprice > item1.real_price) {
+                lowprice = item1.real_price;
+              }
+              if (highprice < item1.real_price) {
+                highprice = item1.real_price;
+              }
+            });
+          });
+        }
         let getData = [];
+        let price = {
+          highprice: highprice,
+          lowprice: lowprice,
+        };
         let count =
           getData1.total_count[0]?.count ||
           0 + getData2.total_count[0]?.count ||
@@ -258,7 +303,7 @@ module.exports = {
         if (getData.length > 0) {
           res({
             status: 200,
-            data: { count, getData },
+            data: { count, price, getData },
           });
         } else {
           rej({ status: 404, message: "No Data found!!" });
@@ -408,7 +453,7 @@ module.exports = {
         if (getData) {
           if (country) {
             let countryData = await countryModel.findOne({ currency: country });
-            console.log(getData);
+            // console.log(getData);
             if (countryData) {
               if (getData != "") {
                 getData.map((item) => {
