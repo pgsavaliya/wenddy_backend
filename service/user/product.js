@@ -45,9 +45,9 @@ module.exports = {
         let tag_array;
         if (tag) tag_array = tag.split(",");
         if (str) {
-          qry["$or"] = [{ product_title: { $regex: str, $options: "i" } }];
+          qry["$or"] = [{ 'product_title': { $regex: str, $options: "i" } }, { 'product_description': { $regex: str, $options: "i" } }];
         }
-        if (metal) qry["metal"] = metal;
+        if (metal) qry["product_variation.metal"] = metal;
         if (category) qry["category"] = { $in: categoryArray };
         if (ring_type) qry["ring_type"] = { $in: ring_type_array };
         if (diamond_shape) qry["diamond_shape"] = { $in: diamond_shape_array };
@@ -58,12 +58,12 @@ module.exports = {
             $lte: parseInt(max),
           };
         }
-        qry = { is_public: true };
-
+        // console.log("qry before getData1 .........",qry);
+        // qry = { is_public: true };
         let limit1 = parseInt(limit * 0.4);
         let getData1 = await productModel.aggregate([
           { $match: qry },
-          { $match: { is_fav: true } },
+          { $match: { is_fav: true,is_public: true  } },
           {
             $lookup: {
               from: "reviewproducts",
@@ -116,9 +116,10 @@ module.exports = {
         getData1 = getData1[0]; //|| { total_count: [0] };
         let data1count = getData1.total_count[0]?.count || 0;
         let limit2 = limit - data1count;
+        // console.log("qry before getData2 .........",qry);
         let getData2 = await productModel.aggregate([
           { $match: qry },
-          { $match: { is_fav: false } },
+          { $match: { is_fav: false,is_public: true  } },
           // {
           //   $unwind: "$avgdata",
           // },
