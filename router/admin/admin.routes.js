@@ -8,6 +8,7 @@ const reviewRoute = require("./review");
 const usermanageRoute = require("./usermanage");
 const dashBoardRoute = require("./dashboard");
 const countryRoute = require("./country");
+const subscribeRoute = require("./subscribe");
 
 adminRoute.get("/", (req, res) => {
   res.status(200).json({ message: "admin Route is working" });
@@ -19,5 +20,6 @@ adminRoute.use("/review", verifyAdminToken, reviewRoute);
 adminRoute.use("/usermanage", verifyAdminToken, usermanageRoute);
 adminRoute.use("/dashBoard", verifyAdminToken, dashBoardRoute);
 adminRoute.use("/country", verifyAdminToken, countryRoute);
+adminRoute.use("/subscribe", verifyAdminToken, subscribeRoute);
 
 module.exports = adminRoute;

@@ -12,6 +12,7 @@ const reviewRoute = require("./review");
 const profileRoute = require("./profile");
 const addressRoute = require("./address");
 const countryRoute = require("./country");
+const subscribeRoute = require("./subscribe");
 
 userRoute.get("/", (req, res) => {
   res.status(200).json({ message: "user route is working" });
@@ -26,5 +27,6 @@ userRoute.use("/review", verifyUserToken, reviewRoute);
 userRoute.use("/profile", verifyUserToken, profileRoute);
 userRoute.use("/address", verifyUserToken, addressRoute);
 userRoute.use("/country", verifyUserToken, countryRoute);
+userRoute.use("/subscribe", subscribeRoute);
 
 module.exports = userRoute;
