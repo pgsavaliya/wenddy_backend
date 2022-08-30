@@ -23,14 +23,15 @@ module.exports = {
       }
     });
   },
-  
+
   getreview: (product_id, page, limit) => {
     return new Promise(async (res, rej) => {
       try {
         let qry = {};
         page = parseInt(page);
         limit = parseInt(limit);
-        qry = { product_id: mongoose.Types.ObjectId(product_id) }
+        // console.log(product_id);
+        qry = { product_id: mongoose.Types.ObjectId(product_id) };
         let getData = await reviewproductModel.aggregate([
           { $match: qry },
           {
@@ -49,7 +50,7 @@ module.exports = {
                     __v: 0,
                   },
                 },
-                { $sort: { rating: 1 } },
+                { $sort: { rating: -1 } },
                 { $skip: (page - 1) * limit },
                 { $limit: limit },
               ],
@@ -58,7 +59,13 @@ module.exports = {
         ]);
         getData = getData[0];
         if (getData.result.length > 0) {
-          res({ status: 200, data: { total_count: getData.total_count[0].count, result: getData.result } });
+          res({
+            status: 200,
+            data: {
+              total_count: getData.total_count[0].count,
+              result: getData.result,
+            },
+          });
         } else {
           rej({ status: 404, message: "No data found!!" });
         }
@@ -72,38 +79,37 @@ module.exports = {
       }
     });
   },
-
 };
 
-  // update: async (_id, data) => {
-  //   return new Promise(async (res, rej) => {
-  //     try {
-  //       let getData = await reviewproductModel.findByIdAndUpdate(_id, data, {
-  //         new: true,
-  //       });
-  //       if (getData) {
-  //         res({ status: 200, data: "update" });
-  //       } else {
-  //         rej({ status: 404, message: "Invalid id!!" });
-  //       }
-  //     } catch (err) {
-  //       console.log("err", err);
-  //       rej({ status: 500, error: err, message: "something went wrong!!" });
-  //     }
-  //   });
-  // },
-  // delete: (_id) => {
-  //   return new Promise(async (res, rej) => {
-  //     try {
-  //       let deleteData = await addtocartModel.findByIdAndDelete(_id);
-  //       if (deleteData) {
-  //         res({ status: 200, data: "Data Deleted!!" });
-  //       } else {
-  //         rej({ status: 500, message: "Invalid id!!" });
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //       rej({ status: 500, error: err, message: "something went wrong!!" });
-  //     }
-  //   });
-  // },
+// update: async (_id, data) => {
+//   return new Promise(async (res, rej) => {
+//     try {
+//       let getData = await reviewproductModel.findByIdAndUpdate(_id, data, {
+//         new: true,
+//       });
+//       if (getData) {
+//         res({ status: 200, data: "update" });
+//       } else {
+//         rej({ status: 404, message: "Invalid id!!" });
+//       }
+//     } catch (err) {
+//       console.log("err", err);
+//       rej({ status: 500, error: err, message: "something went wrong!!" });
+//     }
+//   });
+// },
+// delete: (_id) => {
+//   return new Promise(async (res, rej) => {
+//     try {
+//       let deleteData = await addtocartModel.findByIdAndDelete(_id);
+//       if (deleteData) {
+//         res({ status: 200, data: "Data Deleted!!" });
+//       } else {
+//         rej({ status: 500, message: "Invalid id!!" });
+//       }
+//     } catch (err) {
+//       console.log(err);
+//       rej({ status: 500, error: err, message: "something went wrong!!" });
+//     }
+//   });
+// },
