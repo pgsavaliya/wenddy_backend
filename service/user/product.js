@@ -22,26 +22,18 @@ module.exports = {
   }) => {
     return new Promise(async (res, rej) => {
       try {
-        let qry = {};
-        // let qry1 = {};
-        console.log("page ......", page);
-        console.log("limit ......", limit);
-        console.log("str ......", str);
-        // console.log("startDate ......", startDate);
-        // console.log("endDate ......", endDate);
         //find data
-        page = parseInt(page);
+        let qry = {};
+        page = parseInt(page)
+          ;
         limit = parseInt(limit);
-        // console.log("limit ....", limit);
         if (startDate && endDate) {
           startDate = new Date(startDate);
           endDate = new Date(endDate);
-          console.log("startDate ......", startDate);
-          console.log("endDate ......", endDate);
           endDate.setDate(endDate.getDate() + 1);
           qry["$and"] = [
-            { 'createdAt': { $gt: startDate } },
-            { 'createdAt': { $lt: endDate } },
+            { createdAt: { $gt: startDate } },
+            { createdAt: { $lt: endDate } },
           ];
         }
         let categoryArray;
@@ -53,119 +45,80 @@ module.exports = {
         let tag_array;
         if (tag) tag_array = tag.split(",");
         if (str) {
-          qry["$or"] = [
-            {
-              'product_title': { $regex: str, $options: "i" },
-              'product_description': { $regex: str, $options: "i" },
-            }
-          ];
-          // qry1["$or"] = [
-          //   {
-          //     'product_title': { $regex: str, $options: "i" },
-          //     'product_description': { $regex: str, $options: "i" },
-          //   }
-          // ];
+          qry["$or"] = [{ product_title: { $regex: str, $options: "i" } }];
         }
-        // if (metal) qry["metal"] = metal;
-        // if (category) qry["category"] = { $in: categoryArray };
-        // if (ring_type) qry["ring_type"] = { $in: ring_type_array };
-        // if (diamond_shape) qry["diamond_shape"] = { $in: diamond_shape_array };
-        // if (tag) qry["tag"] = { $in: tag_array };
-        // if (min && max) {
-        //   qry["mrp"] = {
-        //     $gte: parseInt(min),
-        //     $lte: parseInt(max),
-        //   };
-        // }
-        console.log("qry ........", qry);
-        // console.log("qry1 ........", qry1);
-        // qry = { is_public: true };
-        // qry1 = { is_public: true };
-        // console.log("userId: ", userId);
-        // console.log("qry ...........", qry);
+        if (metal) qry["metal"] = metal;
+        if (category) qry["category"] = { $in: categoryArray };
+        if (ring_type) qry["ring_type"] = { $in: ring_type_array };
+        if (diamond_shape) qry["diamond_shape"] = { $in: diamond_shape_array };
+        if (tag) qry["tag"] = { $in: tag_array };
+        if (min && max) {
+          qry["mrp"] = {
+            $gte: parseInt(min),
+            $lte: parseInt(max),
+          };
+        }
+        qry = { is_public: true };
+
         let limit1 = parseInt(limit * 0.4);
-        // let getData1 = await productModel.aggregate([
-        //   { $match: { is_fav: true, is_public: true } },
-        //   { $match: qry },
-        //   // {
-        //   //   $match: {
-        //   //     ["$or"]: [
-        //   //       {
-        //   //         'product_title': { $regex: str, $options: "i" },
-        //   //         'product_description': { $regex: str, $options: "i" },
-        //   //       }
-        //   //     ]
-        //   //   }
-        //   // },
-        //   // {
-        //   //   $match: {
-        //   //     is_public: true,
-        //   //   },
-        //   // },
-        //   {
-        //     $lookup: {
-        //       from: "reviewproducts",
-        //       foreignField: "product_id",
-        //       localField: "_id",
-        //       as: "avgdata",
-        //     },
-        //   },
-        //   // { $unwind: "$avgdata" },
-        //   // {
-        //   //   $unwind: "$avgdata",
-        //   // },
-        //   {
-        //     $facet: {
-        //       total_count: [
-        //         {
-        //           $group: {
-        //             _id: null,
-        //             count: { $sum: 1 },
-        //           },
-        //         },
-        //       ],
-        //       total_avg: [
-        //         {
-        //           $group: {
-        //             _id: "$_id",
-        //             avgRating: { $avg: "$avgdata.rating" },
-        //           },
-        //         },
-        //       ],
-        //       result: [
-        //         {
-        //           $addFields: {
-        //             avgRating: { $avg: "$avgdata.rating" },
-        //           },
-        //         },
-        //         {
-        //           $project: {
-        //             __v: 0,
-        //             avgdata: 0,
-        //           },
-        //         },
-        //         // { $sort: { createdAt: -1 } },
-        //         { $skip: (page - 1) * limit1 },
-        //         { $limit: limit1 },
-        //       ],
-        //     },
-        //   },
-        // ]);
-        // getData1 = getData1[0]; //|| { total_count: [0] };
-        // let data1count = getData1.total_count[0]?.count || 0;
-        // console.log("data1count .....", data1count);
-        // let limit2 = limit - data1count;
-        let limit2 = limit;
-        console.log("qry at getData 2 .........", qry);
-        // console.log("qry1 at getData 2 .........", qry1);
-        let getData2 = await productModel.aggregate([
-          { $match: { is_fav: false, is_public: true } },
-          // { $match: qry },
+        let getData1 = await productModel.aggregate([
+          { $match: qry },
+          { $match: { is_fav: true } },
           {
-            $match: {
-              '$or': [{ product_title: { $regex: str, $options: "i" } }, { product_description: { $regex: str, $options: "i" } }]
-            }
+            $lookup: {
+              from: "reviewproducts",
+              foreignField: "product_id",
+              localField: "_id",
+              as: "avgdata",
+            },
           },
+          // { $unwind: "$avgdata" },
+          // {
+          //   $unwind: "$avgdata",
+          // },
+          {
+            $facet: {
+              total_count: [
+                {
+                  $group: {
+                    _id: null,
+                    count: { $sum: 1 },
+                  },
+                },
+              ],
+              total_avg: [
+                {
+                  $group: {
+                    _id: "$_id",
+                    avgRating: { $avg: "$avgdata.rating" },
+                  },
+                },
+              ],
+              result: [
+                {
+                  $addFields: {
+                    avgRating: { $avg: "$avgdata.rating" },
+                  },
+                },
+                {
+                  $project: {
+                    __v: 0,
+                    avgdata: 0,
+                  },
+                },
+                // { $sort: { createdAt: -1 } },
+                { $skip: (page - 1) * limit1 },
+                { $limit: limit1 },
+              ],
+            },
+          },
+        ]);
+        getData1 = getData1[0]; //|| { total_count: [0] };
+        let data1count = getData1.total_count[0]?.count || 0;
+        let limit2 = limit - data1count;
+        let getData2 = await productModel.aggregate([
+          { $match: qry },
+          { $match: { is_fav: false } },
           // {
           //   $unwind: "$avgdata",
           // },
@@ -217,38 +170,52 @@ module.exports = {
           },
         ]);
         getData2 = getData2[0]; //|| { total_count: [0] };
-        // console.log("countryData ...........", getData2.total_avg);
-        // if (getData1.result != "") {
-        //   getData1.result.map(async (item) => {
-        //     if (country) {
-        //       let countryData = await countryModel.findOne({
-        //         currency: country,
-        //       });
-        //       if (countryData) {
-        //         item.real_price = item.real_price * countryData.price;
-        //         item.mrp = item.mrp * countryData.price;
-        //         item.product_variation.map((item1) => {
-        //           item1.real_price = item1.real_price * countryData.price;
-        //           item1.mrp = item1.mrp * countryData.price;
-        //         });
-        //       }
-        //     }
-        //     // let avgData1 = await reviewproductModel.aggregate([
-        //     //   {
-        //     //     $match: {
-        //     //       product_id: item._id,
-        //     //     },
-        //     //   },
-        //     //   {
-        //     //     $group: {
-        //     //       _id: null,
-        //     //       avgRating: { $avg: "$rating" },
-        //     //     },
-        //     //   },
-        //     // ]);
-        //     // item.avg = avgData1.avgRating;
-        //   });
-        // }
+        var lowprice = 1000000;
+        var highprice = 0;
+        if (getData1.result != "") {
+          getData1.result.map(async (item) => {
+            if (country) {
+              let countryData = await countryModel.findOne({
+                currency: country,
+              });
+              if (countryData) {
+                item.real_price = item.real_price * countryData.price;
+                item.mrp = item.mrp * countryData.price;
+                if (lowprice > item.mrp) {
+                  lowprice = item.mrp;
+                }
+                if (highprice < item.mrp) {
+                  highprice = item.mrp;
+                }
+                item.product_variation.map((item1) => {
+                  item1.real_price = item1.real_price * countryData.price;
+                  item1.mrp = item1.mrp * countryData.price;
+                  if (lowprice > item1.mrp) {
+                    lowprice = item1.mrp;
+                  }
+                  if (highprice < item1.mrp) {
+                    highprice = item1.mrp;
+                  }
+                });
+              }
+            }
+
+            // let avgData1 = await reviewproductModel.aggregate([
+            //   {
+            //     $match: {
+            //       product_id: item._id,
+            //     },
+            //   },
+            //   {
+            //     $group: {
+            //       _id: null,
+            //       avgRating: { $avg: "$rating" },
+            //     },
+            //   },
+            // ]);
+            // item.avg = avgData1.avgRating;
+          });
+        }
         if (getData2.result != "") {
           getData2.result.map(async (item) => {
             if (country) {
@@ -258,9 +225,16 @@ module.exports = {
               if (countryData) {
                 item.real_price = item.real_price * countryData.price;
                 item.mrp = item.mrp * countryData.price;
+
                 item.product_variation.map((item1) => {
                   item1.real_price = item1.real_price * countryData.price;
                   item1.mrp = item1.mrp * countryData.price;
+                  if (lowprice > item1.mrp) {
+                    lowprice = item1.mrp;
+                  }
+                  if (highprice < item1.mrp) {
+                    highprice = item1.mrp;
+                  }
                 });
               }
             }
@@ -278,28 +252,59 @@ module.exports = {
             //   },
             // ]);
             // item.avg = avgData2.avgRating;
-
-            // console.log(avgData2);
           });
         }
-        // getData2 = getData2.map((item) => {
-        //   return {
-        //     ...item,
-        //     // item.total_avg._id = item.result._id,
-        //   }
-        // })
-        // console.log("getData2 .......", getData2);
+        if (getData1.result != "") {
+          getData1.result.map((item) => {
+            if (lowprice > item.real_price) {
+              lowprice = item.real_price;
+            }
+            if (highprice < item.real_price) {
+              highprice = item.real_price;
+            }
+            item.product_variation.map((item1) => {
+              if (lowprice > item1.real_price) {
+                lowprice = item1.real_price;
+              }
+              if (highprice < item1.real_price) {
+                highprice = item1.real_price;
+              }
+            });
+          });
+        }
+        if (getData2.result != "") {
+          getData2.result.map((item) => {
+            if (lowprice > item.real_price) {
+              lowprice = item.real_price;
+            }
+            if (highprice < item.real_price) {
+              highprice = item.real_price;
+            }
+            item.product_variation.map((item1) => {
+              if (lowprice > item1.real_price) {
+                lowprice = item1.real_price;
+              }
+              if (highprice < item1.real_price) {
+                highprice = item1.real_price;
+              }
+            });
+          });
+        }
         let getData = [];
+        let price = {
+          highprice: highprice,
+          lowprice: lowprice,
+        };
         let count =
-          // getData1.total_count[0]?.count ||
+          getData1.total_count[0]?.count ||
           0 + getData2.total_count[0]?.count ||
           0;
-        // getData.push(getData1.result);
+        getData.push(getData1.result);
         getData.push(getData2.result);
         if (getData.length > 0) {
           res({
             status: 200,
-            data: { count, getData },
+            data: { count, price, getData },
           });
         } else {
           rej({ status: 404, message: "No Data found!!" });
@@ -449,7 +454,7 @@ module.exports = {
         if (getData) {
           if (country) {
             let countryData = await countryModel.findOne({ currency: country });
-            console.log(getData);
+            // console.log(getData);
             if (countryData) {
               if (getData != "") {
                 getData.map((item) => {
