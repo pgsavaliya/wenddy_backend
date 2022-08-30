@@ -1,12 +1,11 @@
-const mongoose = require("mongoose");
 const subscribeModel = require("../../model/subscribe.model");
 
 module.exports = {
   addsubscribe: (data) => {
     return new Promise(async (res, rej) => {
       try {
-        let Data = await subscribeModel.find(data);
-        if (data) {
+        let existData = await subscribeModel.find({ email:data.email });
+        if (existData.length > 0) {
           res({
             status: 200,
             data: "already subscribed!!",

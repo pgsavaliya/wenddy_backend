@@ -8,10 +8,6 @@ subscribeRoute.get("/", (req, res) => {
   res.send({ status: 200, message: "subscribe route is working" });
 });
 
-subscribeRoute.post(
-  "/addsubscribe",
-  userEmailCheck,
-  subscribecontroller.addsubscribe
-);
+subscribeRoute.post("/add",subscribecontroller.addsubscribe);
 
 module.exports = subscribeRoute;

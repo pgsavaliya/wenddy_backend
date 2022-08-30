@@ -6,6 +6,7 @@ const subscribeRoute = Router();
 subscribeRoute.get("/", (req, res) => {
   res.send({ status: 200, message: "subscribe Route is working" });
 });
-subscribeRoute.get("/getsubscribe", subscribecontroller.getsubscribe);
+
+subscribeRoute.get("/get", subscribecontroller.getsubscribe);
 
 module.exports = subscribeRoute;
