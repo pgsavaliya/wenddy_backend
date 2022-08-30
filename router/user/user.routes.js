@@ -23,7 +23,7 @@ userRoute.use("/product", productRoute);
 userRoute.use("/cart", verifyUserToken, cartRoute);
 userRoute.use("/order", verifyUserToken, orderRoute);
 userRoute.use("/wishlist", verifyUserToken, wishlistRoute);
-userRoute.use("/review", verifyUserToken, reviewRoute);
+userRoute.use("/review", reviewRoute);
 userRoute.use("/profile", verifyUserToken, profileRoute);
 userRoute.use("/address", verifyUserToken, addressRoute);
 userRoute.use("/country", verifyUserToken, countryRoute);
