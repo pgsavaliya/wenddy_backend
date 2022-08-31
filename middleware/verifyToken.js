@@ -160,7 +160,8 @@ function optionalUserToken(req, res, next) {
 
   let token = req.headers["authorization"];
   if (!token) {
-    res.status(403).json({ success: false, message: "token missing" });
+    // res.status(403).json({ success: false, message: "token missing" });
+    return next();
   } else {
     token = token.split(" ")[1];
     jwt.verify(token, process.env.USER_ACCESS_TOKEN, (err, payload) => {

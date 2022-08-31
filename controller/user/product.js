@@ -51,6 +51,7 @@ exports.byId = async (req, res) => {
     let resp = await productService.byId({
       _id: req.params._id,
       country: req.query.country,
+      user_id: req.user_id,
     });
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
