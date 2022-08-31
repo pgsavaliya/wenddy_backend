@@ -4,12 +4,12 @@ const RequestIp = require("@supercharge/request-ip");
 
 exports.getAll = async (req, res) => {
   try {
-    // console.log("req.userID ............", req.user_id);
+    console.log("req.userID ............", req.user_id);
     if (!req.query.page || !req.query.limit) {
       return response("pagination is require for pagination..!!", {}, 404, res);
     } else {
       let resp = await productService.getAll({
-        userId: req.user_id,
+        user_id: req.user_id,
         page: req.query.page,
         limit: req.query.limit,
         str: req.query.str,

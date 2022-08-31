@@ -10,7 +10,7 @@ module.exports = {
     str,
     startDate,
     endDate,
-    userId,
+    user_id,
     category,
     ring_type,
     diamond_shape,
@@ -58,12 +58,21 @@ module.exports = {
             $lte: parseInt(max),
           };
         }
+        let watchlistOfUser = [];
+        console.log("user_id ..........", user_id);
+        if (user_id) {
+          watchlistOfUser =
+            (await watchlistModel.findOne({ user_id }, { product_id: 1 }))?.product_id ||
+            [];
+          console.log("watchlistOfUser ..........", watchlistOfUser);
+        }
+        console.log("watchlistOfUser ..........", watchlistOfUser);
         // console.log("qry before getData1 .........",qry);
         // qry = { is_public: true };
         let limit1 = parseInt(limit * 0.4);
         let getData1 = await productModel.aggregate([
           { $match: qry },
-          { $match: { is_fav: true,is_public: true  } },
+          { $match: { is_fav: true, is_public: true } },
           {
             $lookup: {
               from: "reviewproducts",
@@ -98,6 +107,7 @@ module.exports = {
                 {
                   $addFields: {
                     avgRating: { $avg: "$avgdata.rating" },
+                    fav: { $in: ["$_id", watchlistOfUser] },
                   },
                 },
                 {
@@ -119,7 +129,7 @@ module.exports = {
         // console.log("qry before getData2 .........",qry);
         let getData2 = await productModel.aggregate([
           { $match: qry },
-          { $match: { is_fav: false,is_public: true  } },
+          { $match: { is_fav: false, is_public: true } },
           // {
           //   $unwind: "$avgdata",
           // },
@@ -129,6 +139,14 @@ module.exports = {
               foreignField: "product_id",
               localField: "_id",
               as: "avgdata",
+            },
+          },
+          {
+            $lookup: {
+              from: "wishlists",
+              foreignField: "product_id",
+              localField: "_id",
+              as: "wishlistsdata",
             },
           },
           // { $unwind: "$avgdata" },
@@ -155,6 +173,7 @@ module.exports = {
                 {
                   $addFields: {
                     avgRating: { $avg: "$avgdata.rating" },
+                    fav: { $in: {} },
                   },
                 },
                 {
