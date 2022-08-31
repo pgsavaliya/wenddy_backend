@@ -142,7 +142,7 @@ module.exports = {
       try {
         let getData = await countryModel.find();
         if (getData) {
-          res({ status: 200, data: { data: getData } });
+          res({ status: 200, data: getData});
         } else {
           rej({ status: 404, message: "Data Not Found!!" });
         }
