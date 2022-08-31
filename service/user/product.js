@@ -107,7 +107,7 @@ module.exports = {
                 {
                   $addFields: {
                     avgRating: { $avg: "$avgdata.rating" },
-                    fav: { $in: ["$_id", watchlistOfUser] },
+                    // fav: { $in: ["$_id", watchlistOfUser] },
                   },
                 },
                 {
@@ -173,7 +173,7 @@ module.exports = {
                 {
                   $addFields: {
                     avgRating: { $avg: "$avgdata.rating" },
-                    fav: { $in: {} },
+                    // fav: { $in: {} },
                   },
                 },
                 {
