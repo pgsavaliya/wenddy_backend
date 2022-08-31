@@ -89,13 +89,15 @@ module.exports = {
         for (i = 0; i < data.countryData.length; i++) {
           let obj = {
             'name': data.countryData[i].name,
-            'currency': data.countryData[i].currency
+            'currency': data.countryData[i].currency,
+            'image': data.countryData[i].image,
+            'symbol': data.countryData[i].symbol,
           }
           let newCountryModel = new countryModel(obj)
           savedata = await newCountryModel.save()
         }
         if (i == data.countryData.length) {
-          res({ status: 200, data: savedata })
+          res({ status: 200, data: "Data Saved Successfully!!" })
         }
         else {
           rej({ status: 404, message: "something went wrong!!" })
