@@ -9,7 +9,7 @@ wishlistRoute.get("/", (req, res) => {
 
 wishlistRoute.post("/addwishlist", wishlistcontroller.addwishlist);
 wishlistRoute.get("/getwishlist", wishlistcontroller.getwishlist);
-wishlistRoute.delete("/delete", wishlistcontroller.delete);
+wishlistRoute.put("/delete", wishlistcontroller.delete);
 // wishlistRoute.put("/update", wishlistcontroller.update);
 
 module.exports = wishlistRoute;
