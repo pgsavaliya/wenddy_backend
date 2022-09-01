@@ -1,7 +1,8 @@
 const productModel = require("../../model/product.model");
 const ipModel = require("../../model/ip.model");
 const countryModel = require("../../model/country.model");
-const reviewproductModel = require("../../model/reviewproduct.model");
+const wishlistModel = require("../../model/wishlist.model");
+const mongoose = require("mongoose");
 
 module.exports = {
   getAll: ({
@@ -64,7 +65,7 @@ module.exports = {
         console.log("user_id ..........", user_id);
         if (user_id) {
           watchlistOfUser =
-            (await watchlistModel.findOne({ user_id }, { product_id: 1 }))
+            (await wishlistModel.findOne({ user_id }, { product_id: 1 }))
               ?.product_id || [];
           console.log("watchlistOfUser ..........", watchlistOfUser);
         }
@@ -109,13 +110,14 @@ module.exports = {
                 {
                   $addFields: {
                     avgRating: { $avg: "$avgdata.rating" },
-                    // fav: { $in: ["$_id", watchlistOfUser] },
+                    watchlist: { $in: ["$_id", watchlistOfUser] },
                   },
                 },
                 {
                   $project: {
                     __v: 0,
                     avgdata: 0,
+                    wishlistsdata: 0,
                   },
                 },
                 // { $sort: { createdAt: -1 } },
@@ -175,13 +177,14 @@ module.exports = {
                 {
                   $addFields: {
                     avgRating: { $avg: "$avgdata.rating" },
-                    // fav: { $in: {} },
+                    watchlist: { $in: ["$_id", watchlistOfUser] },
                   },
                 },
                 {
                   $project: {
                     __v: 0,
                     avgdata: 0,
+                    wishlistsdata: 0,
                   },
                 },
                 // { $sort: { createdAt: -1 } },
@@ -365,10 +368,34 @@ module.exports = {
     });
   },
 
-  byId: ({ _id, country }) => {
+  byId: ({ _id, country, user_id }) => {
     return new Promise(async (res, rej) => {
       try {
-        let getData = await productModel.findById(_id);
+        let watchlistOfUser = [];
+        if (user_id) {
+          watchlistOfUser =
+            (await wishlistModel.findOne({ user_id }, { product_id: 1 }))
+              ?.product_id || [];
+          console.log("watchlistOfUser ..........", watchlistOfUser);
+        }
+        let getData = await productModel.aggregate([
+          {
+            $match: {
+              _id: mongoose.Types.ObjectId(_id),
+            },
+          },
+          {
+            $addFields: {
+              watchlist: { $in: ["$_id", watchlistOfUser] },
+            },
+          },
+          {
+            $project: {
+              __v: 0,
+            },
+          },
+        ]);
+        getData = getData[0];
         if (getData) {
           // console.log(getData);
           let qry = {};
@@ -388,7 +415,6 @@ module.exports = {
           if (getData.diamond_shape)
             qry["diamond_shape"] = { $in: diamond_shape_array };
           if (getData.tag) qry["tag"] = { $in: tag_array };
-
           let getData1 = await productModel.aggregate([{ $match: qry }]);
           if (country) {
             let countryData = await countryModel.findOne({ currency: country });
