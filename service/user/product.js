@@ -24,8 +24,7 @@ module.exports = {
       try {
         //find data
         let qry = {};
-        page = parseInt(page)
-          ;
+        page = parseInt(page);
         limit = parseInt(limit);
         if (startDate && endDate) {
           startDate = new Date(startDate);
@@ -45,7 +44,10 @@ module.exports = {
         let tag_array;
         if (tag) tag_array = tag.split(",");
         if (str) {
-          qry["$or"] = [{ 'product_title': { $regex: str, $options: "i" } }, { 'product_description': { $regex: str, $options: "i" } }];
+          qry["$or"] = [
+            { product_title: { $regex: str, $options: "i" } },
+            { product_description: { $regex: str, $options: "i" } },
+          ];
         }
         if (metal) qry["product_variation.metal"] = metal;
         if (category) qry["category"] = { $in: categoryArray };
@@ -62,8 +64,8 @@ module.exports = {
         console.log("user_id ..........", user_id);
         if (user_id) {
           watchlistOfUser =
-            (await watchlistModel.findOne({ user_id }, { product_id: 1 }))?.product_id ||
-            [];
+            (await watchlistModel.findOne({ user_id }, { product_id: 1 }))
+              ?.product_id || [];
           console.log("watchlistOfUser ..........", watchlistOfUser);
         }
         console.log("watchlistOfUser ..........", watchlistOfUser);

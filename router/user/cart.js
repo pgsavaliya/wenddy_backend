@@ -10,5 +10,5 @@ cartRoute.get("/", (req, res) => {
 cartRoute.post("/addtocart", addtocartcontroller.addtocart);
 cartRoute.get("/getcart", addtocartcontroller.getcart);
 // cartRoute.put("/update/:_id", addtocartcontroller.update);
-
+cartRoute.delete("/delete/:_id", addtocartcontroller.delete);
 module.exports = cartRoute;
