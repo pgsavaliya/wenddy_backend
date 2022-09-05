@@ -42,3 +42,20 @@ exports.getshipping = async (req, res) => {
     return response(err.message, err?.error, err.status, res);
   }
 };
+
+exports.update = async (req, res) => {
+  try {
+    let resp = await shippingService.update(
+      req.body.profile_name,
+      req.body.country,
+      req.body.data
+    );
+    if (resp) {
+      return response("abc", resp.data, 200, res);
+    } else {
+      return response("Error..!!", err.error, err.status, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};

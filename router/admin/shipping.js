@@ -10,5 +10,5 @@ shippingRoute.get("/", (req, res) => {
 shippingRoute.post("/addShipping", shippingcontroller.addshipping);
 shippingRoute.delete("/delete/:_id", shippingcontroller.delete);
 shippingRoute.get("/getShipping", shippingcontroller.getshipping);
-
+shippingRoute.put("/updateShipping", shippingcontroller.update);
 module.exports = shippingRoute;

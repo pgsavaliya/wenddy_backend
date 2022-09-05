@@ -7,7 +7,7 @@ let shippingSchema = new Schema(
     },
     country: [
       {
-        country_name: {
+        name: {
           type: String,
           require: true,
         },
@@ -15,7 +15,11 @@ let shippingSchema = new Schema(
           type: Number,
           require: true,
         },
-        timming: {
+        start: {
+          type: Number,
+          require: true,
+        },
+        end: {
           type: Number,
           require: true,
         },
