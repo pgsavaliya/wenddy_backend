@@ -7,13 +7,13 @@ module.exports = {
     return new Promise(async (res, rej) => {
       try {
         let countrydata = await shippingModel.find({
-          country_name: data.country_name,
+          profile_name: data.profile_name,
         });
         // console.log("data ...", productdata);
         if (countrydata != "") {
           let updateData = await shippingModel.findOneAndUpdate(
             { profile_name: data.profile_name },
-            { $addToSet: { country: data.country } },
+            { $set: { country: data.country } },
             { new: true }
           );
           if (updateData) {
@@ -42,57 +42,33 @@ module.exports = {
     });
   },
 
-  //   getwishlist: ({ user_id, country }) => {
-  //     return new Promise(async (res, rej) => {
-  //       try {
-  //         console.log("user_id ......", user_id);
-  //         // let newViewcartModel = new addtocartModel(data);
-  //         let getData = await wishlistModel.aggregate([
-  //           {
-  //             $match: {
-  //               user_id: mongoose.Types.ObjectId(user_id),
-  //             },
-  //           },
-  //           {
-  //             $lookup: {
-  //               from: "products",
-  //               localField: "product_id",
-  //               foreignField: "_id",
-  //               as: "product_data",
-  //             },
-  //           },
-  //         ]);
-  //         getData = getData[0];
-  //         if (getData) {
-  //           // console.log("getData .......", getData);
-  //           if (country) {
-  //             let countryData = await countryModel.findOne({ currency: country });
-  //             console.log(countryData);
-  //             if (countryData) {
-  //               getData.product_data.map((item) => {
-  //                 item.real_price = item.real_price * countryData.price;
-  //                 item.mrp = item.mrp * countryData.price;
-  //                 item.product_variation.map((item1) => {
-  //                   item1.real_price = item1.real_price * countryData.price;
-  //                   item1.mrp = item1.mrp * countryData.price;
-  //                 });
-  //               });
-  //             }
-  //           }
-  //           res({ status: 200, data: getData });
-  //         } else {
-  //           rej({ status: 404, message: "Invalid id!!" });
-  //         }
-  //       } catch (err) {
-  //         console.log("err ...", err);
-  //         rej({
-  //           status: err?.status || 500,
-  //           error: err,
-  //           message: err?.message || "Something Went Wrong!!!",
-  //         });
-  //       }
-  //     });
-  //   },
+  getshipping: (profile_name, name) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let getData = await shippingModel.aggregate([
+          {
+            $match: {
+              profile_name: profile_name,
+            },
+          },
+        ]);
+        getData = getData[0];
+        if (getData) {
+          // console.log("getData .......", getData);
+          res({ status: 200, data: getData });
+        } else {
+          rej({ status: 404, message: "Invalid id!!" });
+        }
+      } catch (err) {
+        console.log("err ...", err);
+        rej({
+          status: err?.status || 500,
+          error: err,
+          message: err?.message || "Something Went Wrong!!!",
+        });
+      }
+    });
+  },
 
   delete: (_id) => {
     return new Promise(async (res, rej) => {

@@ -26,3 +26,19 @@ exports.delete = async (req, res) => {
     return response(err.message, err?.error, err.status, res);
   }
 };
+
+exports.getshipping = async (req, res) => {
+  try {
+    let resp = await shippingService.getshipping(
+      req.query.profile_name,
+      req.query.name
+    );
+    if (resp) {
+      return response("abc", resp.data, 200, res);
+    } else {
+      return response("Error..!!", err.error, err.status, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};

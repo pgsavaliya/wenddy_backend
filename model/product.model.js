@@ -41,7 +41,7 @@ const productSchema = new Schema(
     image: [
       {
         type: String,
-      }
+      },
     ],
     product_title: {
       type: String,
@@ -51,9 +51,11 @@ const productSchema = new Schema(
     },
     real_price: {
       type: Number,
+      default: 0,
     },
     mrp: {
       type: Number,
+      default: 0,
     },
     sku: {
       type: String,
