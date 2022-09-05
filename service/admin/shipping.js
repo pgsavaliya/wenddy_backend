@@ -85,24 +85,37 @@ module.exports = {
       }
     });
   },
-};
 
-// update: async (_id, data) => {
-//   return new Promise(async (res, rej) => {
-//     try {
-//       let updateData = await wishlistModel.findOneAndUpdate(
-//         { user_id: _id },
-//         { $addToSet: { product_id: data } },
-//         { new: true }
-//       );
-//       if (updateData) {
-//         res({ status: 200, data: "Data Updated!!" });
-//       } else {
-//         rej({ status: 500, error: err, message: "Something Went Worng!!" });
-//       }
-//     } catch (err) {
-//       console.log("err", err);
-//       rej({ status: 500, error: err, message: "something went wrong!!" });
-//     }
-//   });
-// },
+  update: (profile_name, country, data) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let updateData = await shippingModel.findOneAndUpdate(
+          { profile_name: profile_name, "country._id": country },
+          {
+            $set: {
+              "country.$": {
+                name: data.name,
+                price: data.price,
+                start: data.start,
+                end: data.end,
+              },
+            },
+          },
+          { new: true }
+        );
+        if (updateData) {
+          res({ status: 200, data: "Data Updated Successfully!!" });
+        } else {
+          rej({ status: 404, message: "Invalid Address Id!!" });
+        }
+      } catch (err) {
+        console.log("err ...", err);
+        rej({
+          status: err?.status || 500,
+          error: err,
+          message: err?.message || "Something Went Wrong!!!",
+        });
+      }
+    });
+  },
+};
