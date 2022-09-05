@@ -7,7 +7,8 @@ shippingRoute.get("/", (req, res) => {
   res.send({ status: 200, message: "shipping Route is working" });
 });
 
-shippingRoute.post("/addShpping", shippingcontroller.addshipping);
+shippingRoute.post("/addShipping", shippingcontroller.addshipping);
 shippingRoute.delete("/delete/:_id", shippingcontroller.delete);
+shippingRoute.get("/getShipping", shippingcontroller.getshipping);
 
 module.exports = shippingRoute;
