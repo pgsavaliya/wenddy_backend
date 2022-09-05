@@ -50,7 +50,7 @@ module.exports = {
             { product_description: { $regex: str, $options: "i" } },
           ];
         }
-        if (metal) qry["product_variation.metal"] = metal;
+        if (metal) qry["product_variation.metal"] = { $regex: metal, $options: 'i' };
         if (category) qry["category"] = { $in: categoryArray };
         if (ring_type) qry["ring_type"] = { $in: ring_type_array };
         if (diamond_shape) qry["diamond_shape"] = { $in: diamond_shape_array };
@@ -61,6 +61,7 @@ module.exports = {
             $lte: parseInt(max),
           };
         }
+        console.log("qry ...", qry);
         let watchlistOfUser = [];
         console.log("user_id ..........", user_id);
         if (user_id) {
@@ -85,9 +86,6 @@ module.exports = {
             },
           },
           // { $unwind: "$avgdata" },
-          // {
-          //   $unwind: "$avgdata",
-          // },
           {
             $facet: {
               total_count: [
@@ -117,7 +115,6 @@ module.exports = {
                   $project: {
                     __v: 0,
                     avgdata: 0,
-                    wishlistsdata: 0,
                   },
                 },
                 // { $sort: { createdAt: -1 } },
@@ -143,14 +140,6 @@ module.exports = {
               foreignField: "product_id",
               localField: "_id",
               as: "avgdata",
-            },
-          },
-          {
-            $lookup: {
-              from: "wishlists",
-              foreignField: "product_id",
-              localField: "_id",
-              as: "wishlistsdata",
             },
           },
           // { $unwind: "$avgdata" },
@@ -184,7 +173,6 @@ module.exports = {
                   $project: {
                     __v: 0,
                     avgdata: 0,
-                    wishlistsdata: 0,
                   },
                 },
                 // { $sort: { createdAt: -1 } },
@@ -317,8 +305,8 @@ module.exports = {
         }
         let getData = [];
         let price = {
-          highprice: highprice,
-          lowprice: lowprice,
+          highprice: highprice || 0,
+          lowprice: lowprice || 0,
         };
         let count =
           getData1.total_count[0]?.count ||
