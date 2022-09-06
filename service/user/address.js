@@ -2,19 +2,20 @@ const addressModel = require("../../model/address.model");
 const userModel = require("../../model/user.model");
 
 module.exports = {
-  add: (user_id, data) => {
+  add: (_id, data) => {
     return new Promise(async (res, rej) => {
       try {
-        data["user_id"] = user_id;
-        let userData = [await userModel.findOne({ user_id })];
+        data["user_id"] = _id;
+        let userData = [await userModel.findById(_id)];
         if (userData) {
-          //   console.log(userData);
           data.email = userData[0].email;
           data.mobile = userData[0].mobile;
-          let existData = [await addressModel.findOne({ user_id })];
+          let existData = [await addressModel.findOne({ user_id: _id })];
           // console.log("existData.length ...........", existData.length);
           if (existData.length > 0) {
-            let removedData = await addressModel.findOneAndDelete({ user_id });
+            let removedData = await addressModel.findOneAndDelete({
+              user_id: _id,
+            });
             let ifNnewAddressModel = new addressModel(data);
             let if_saveData = await ifNnewAddressModel.save();
             if (if_saveData) {
@@ -116,7 +117,7 @@ module.exports = {
   getAll: (user_id) => {
     return new Promise(async (res, rej) => {
       try {
-        let getData = await addressModel.findOne({ user_id });
+        let getData = await addressModel.findOne({ user_id: user_id });
         if (getData) {
           res({ status: 200, data: getData });
         } else {
