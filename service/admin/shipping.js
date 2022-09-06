@@ -45,13 +45,7 @@ module.exports = {
   getshipping: (profile_name, name) => {
     return new Promise(async (res, rej) => {
       try {
-        let getData = await shippingModel.aggregate([
-          {
-            $match: {
-              profile_name: profile_name,
-            },
-          },
-        ]);
+        let getData = await shippingModel.find();
         getData = getData[0];
         if (getData) {
           // console.log("getData .......", getData);
