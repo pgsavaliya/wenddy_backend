@@ -23,7 +23,6 @@ exports.update = async (req, res) => {
     return response(err.message, err?.error, err.status, res);
   }
 };
-
 exports.updatestatus = async (req, res) => {
   try {
     // console.log(req.body.confirmPassword);
@@ -41,7 +40,6 @@ exports.updatestatus = async (req, res) => {
     return response(err.message, err?.error, err.status, res);
   }
 };
-
 exports.getAll = async (req, res) => {
   try {
     if (!req.query.page || !req.query.limit) {
