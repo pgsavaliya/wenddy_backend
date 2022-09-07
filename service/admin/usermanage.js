@@ -63,6 +63,7 @@ module.exports = {
               result: [
                 {
                   $project: {
+                    password: 0,
                     __v: 0,
                   },
                 },
@@ -98,6 +99,7 @@ module.exports = {
         console.log(id);
         let Data = await userModel.aggregate([
           { $match: { _id: mongoose.Types.ObjectId(id) } },
+          { $project: { password: 0, __v: 0 } }
         ]);
         console.log("Data ..........", Data);
         if (Data) {
@@ -137,5 +139,5 @@ module.exports = {
       }
     });
   },
-  
+
 };
