@@ -47,6 +47,7 @@ module.exports = {
               result: [
                 {
                   $project: {
+                    email:0,
                     __v: 0,
                   },
                 },

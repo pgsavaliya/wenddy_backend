@@ -57,6 +57,9 @@ const productSchema = new Schema(
       type: Number,
       default: 0,
     },
+    percentage_difference: {
+      type: String,
+    },
     sku: {
       type: String,
     },
@@ -79,6 +82,27 @@ const productSchema = new Schema(
           type: String,
           //required: true,
         },
+        qty: {
+          type: Number,
+          //required: true,
+        },
+        real_price: {
+          type: Number,
+        },
+        mrp: {
+          type: Number,
+        },
+        percentage_difference: {
+          type: String,
+        },
+        is_visible: {
+          type: Boolean,
+          //required: true,
+          default: true,
+        },
+        // unique_img: {
+        //   type: String,
+        // },
         // variations: [
         //   {
         //     variation_id: {
@@ -93,25 +117,6 @@ const productSchema = new Schema(
         //     },
         //   },
         // ],
-        qty: {
-          type: Number,
-          //required: true,
-        },
-        real_price: {
-          type: Number,
-        },
-        mrp: {
-          type: Number,
-        },
-
-        // unique_img: {
-        //   type: String,
-        // },
-        is_visible: {
-          type: Boolean,
-          //required: true,
-          default: true,
-        },
       },
     ],
     admin_id: {
@@ -185,6 +190,9 @@ const productSchema = new Schema(
     is_fav: {
       type: Boolean,
       default: false,
+    },
+    uniqueCode: {
+      type: Number,
     },
   },
   { timestamps: true }
