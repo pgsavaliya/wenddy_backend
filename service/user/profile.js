@@ -5,7 +5,7 @@ module.exports = {
   getprofile: (user_id) => {
     return new Promise(async (res, rej) => {
       try {
-        let getData = await userModel.findById(user_id);
+        let getData = await userModel.findById(user_id, { password: 0 });
         if (getData) {
           res({ status: 200, data: getData });
         } else {
