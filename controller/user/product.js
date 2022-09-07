@@ -4,12 +4,12 @@ const RequestIp = require("@supercharge/request-ip");
 
 exports.getAll = async (req, res) => {
   try {
-    // console.log("req.userID ............", req.user_id);
+    console.log("req.userID ............", req.user_id);
     if (!req.query.page || !req.query.limit) {
       return response("pagination is require for pagination..!!", {}, 404, res);
     } else {
       let resp = await productService.getAll({
-        userId: req.user_id,
+        user_id: req.user_id,
         page: req.query.page,
         limit: req.query.limit,
         str: req.query.str,
@@ -22,6 +22,7 @@ exports.getAll = async (req, res) => {
         max: req.query.max,
         tag: req.query.tag,
         category: req.query.category,
+        country: req.query.country,
       });
       if (resp) {
         // req.ip = RequestIp.getClientIp(req);
@@ -47,7 +48,11 @@ exports.getAll = async (req, res) => {
 
 exports.byId = async (req, res) => {
   try {
-    let resp = await productService.byId(req.params._id);
+    let resp = await productService.byId({
+      _id: req.params._id,
+      country: req.query.country,
+      user_id: req.user_id,
+    });
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {
@@ -59,7 +64,10 @@ exports.byId = async (req, res) => {
 };
 exports.search = async (req, res) => {
   try {
-    let resp = await productService.search(req.query.str);
+    let resp = await productService.search({
+      str: req.query.str,
+      country: req.query.country,
+    });
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {

@@ -1,6 +1,7 @@
 const productModel = require("../../model/product.model");
-const reviewModel = require("../../model/reviewproduct.model");
 const ipModel = require("../../model/ip.model");
+const countryModel = require("../../model/country.model");
+const wishlistModel = require("../../model/wishlist.model");
 const mongoose = require("mongoose");
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
     str,
     startDate,
     endDate,
-    userId,
+    user_id,
     category,
     ring_type,
     diamond_shape,
@@ -18,13 +19,14 @@ module.exports = {
     min,
     max,
     tag,
+    country,
   }) => {
     return new Promise(async (res, rej) => {
       try {
+        //find data
         let qry = {};
         page = parseInt(page);
         limit = parseInt(limit);
-        // console.log("limit ....", limit);
         if (startDate && endDate) {
           startDate = new Date(startDate);
           endDate = new Date(endDate);
@@ -43,9 +45,12 @@ module.exports = {
         let tag_array;
         if (tag) tag_array = tag.split(",");
         if (str) {
-          qry["$or"] = [{ product_title: { $regex: str, $options: "i" } }];
+          qry["$or"] = [
+            { product_title: { $regex: str, $options: "i" } },
+            { product_description: { $regex: str, $options: "i" } },
+          ];
         }
-        if (metal) qry["metal"] = metal;
+        if (metal) qry["product_variation.metal"] = { $regex: metal, $options: 'i' };
         if (category) qry["category"] = { $in: categoryArray };
         if (ring_type) qry["ring_type"] = { $in: ring_type_array };
         if (diamond_shape) qry["diamond_shape"] = { $in: diamond_shape_array };
@@ -56,18 +61,31 @@ module.exports = {
             $lte: parseInt(max),
           };
         }
-        // console.log("userId: ", userId);
-        // console.log("qry ...........", qry);
+        console.log("qry ...", qry);
+        let watchlistOfUser = [];
+        console.log("user_id ..........", user_id);
+        if (user_id) {
+          watchlistOfUser =
+            (await wishlistModel.findOne({ user_id }, { product_id: 1 }))
+              ?.product_id || [];
+          console.log("watchlistOfUser ..........", watchlistOfUser);
+        }
+        console.log("watchlistOfUser ..........", watchlistOfUser);
+        // console.log("qry before getData1 .........",qry);
+        // qry = { is_public: true };
         let limit1 = parseInt(limit * 0.4);
-        let limit2 = limit - limit1;
         let getData1 = await productModel.aggregate([
           { $match: qry },
+          { $match: { is_fav: true, is_public: true } },
           {
-            $match: {
-              is_public: true,
+            $lookup: {
+              from: "reviewproducts",
+              foreignField: "product_id",
+              localField: "_id",
+              as: "avgdata",
             },
           },
-          { $match: { is_fav: true } },
+          // { $unwind: "$avgdata" },
           {
             $facet: {
               total_count: [
@@ -78,10 +96,25 @@ module.exports = {
                   },
                 },
               ],
+              total_avg: [
+                {
+                  $group: {
+                    _id: "$_id",
+                    avgRating: { $avg: "$avgdata.rating" },
+                  },
+                },
+              ],
               result: [
+                {
+                  $addFields: {
+                    avgRating: { $avg: "$avgdata.rating" },
+                    watchlist: { $in: ["$_id", watchlistOfUser] },
+                  },
+                },
                 {
                   $project: {
                     __v: 0,
+                    avgdata: 0,
                   },
                 },
                 // { $sort: { createdAt: -1 } },
@@ -91,10 +124,25 @@ module.exports = {
             },
           },
         ]);
+        getData1 = getData1[0]; //|| { total_count: [0] };
+        let data1count = getData1.total_count[0]?.count || 0;
+        let limit2 = limit - data1count;
+        // console.log("qry before getData2 .........",qry);
         let getData2 = await productModel.aggregate([
           { $match: qry },
-          { $match: { is_fav: false } },
-
+          { $match: { is_fav: false, is_public: true } },
+          // {
+          //   $unwind: "$avgdata",
+          // },
+          {
+            $lookup: {
+              from: "reviewproducts",
+              foreignField: "product_id",
+              localField: "_id",
+              as: "avgdata",
+            },
+          },
+          // { $unwind: "$avgdata" },
           {
             $facet: {
               total_count: [
@@ -102,13 +150,29 @@ module.exports = {
                   $group: {
                     _id: null,
                     count: { $sum: 1 },
+                    // avgRating: { $avg: "$avgdata.rating" },
+                  },
+                },
+              ],
+              total_avg: [
+                {
+                  $group: {
+                    _id: "$_id",
+                    avgRating: { $avg: "$avgdata.rating" },
                   },
                 },
               ],
               result: [
                 {
+                  $addFields: {
+                    avgRating: { $avg: "$avgdata.rating" },
+                    watchlist: { $in: ["$_id", watchlistOfUser] },
+                  },
+                },
+                {
                   $project: {
                     __v: 0,
+                    avgdata: 0,
                   },
                 },
                 // { $sort: { createdAt: -1 } },
@@ -118,22 +182,142 @@ module.exports = {
             },
           },
         ]);
-        getData1 = getData1[0]; //|| { total_count: [0] };
         getData2 = getData2[0]; //|| { total_count: [0] };
+        var lowprice = 1000000;
+        var highprice = 0;
+        if (getData1.result != "") {
+          getData1.result.map(async (item) => {
+            if (country) {
+              let countryData = await countryModel.findOne({
+                currency: country,
+              });
+              if (countryData) {
+                item.real_price = item.real_price * countryData.price;
+                item.mrp = item.mrp * countryData.price;
+                if (lowprice > item.mrp) {
+                  lowprice = item.mrp;
+                }
+                if (highprice < item.mrp) {
+                  highprice = item.mrp;
+                }
+                item.product_variation.map((item1) => {
+                  item1.real_price = item1.real_price * countryData.price;
+                  item1.mrp = item1.mrp * countryData.price;
+                  if (lowprice > item1.mrp) {
+                    lowprice = item1.mrp;
+                  }
+                  if (highprice < item1.mrp) {
+                    highprice = item1.mrp;
+                  }
+                });
+              }
+            }
+
+            // let avgData1 = await reviewproductModel.aggregate([
+            //   {
+            //     $match: {
+            //       product_id: item._id,
+            //     },
+            //   },
+            //   {
+            //     $group: {
+            //       _id: null,
+            //       avgRating: { $avg: "$rating" },
+            //     },
+            //   },
+            // ]);
+            // item.avg = avgData1.avgRating;
+          });
+        }
+        if (getData2.result != "") {
+          getData2.result.map(async (item) => {
+            if (country) {
+              let countryData = await countryModel.findOne({
+                currency: country,
+              });
+              if (countryData) {
+                item.real_price = item.real_price * countryData.price;
+                item.mrp = item.mrp * countryData.price;
+
+                item.product_variation.map((item1) => {
+                  item1.real_price = item1.real_price * countryData.price;
+                  item1.mrp = item1.mrp * countryData.price;
+                  if (lowprice > item1.mrp) {
+                    lowprice = item1.mrp;
+                  }
+                  if (highprice < item1.mrp) {
+                    highprice = item1.mrp;
+                  }
+                });
+              }
+            }
+            // let avgData2 = await reviewproductModel.aggregate([
+            //   {
+            //     $match: {
+            //       product_id: item._id,
+            //     },
+            //   },
+            //   {
+            //     $group: {
+            //       _id: null,
+            //       avgRating: { $avg: "$rating" },
+            //     },
+            //   },
+            // ]);
+            // item.avg = avgData2.avgRating;
+          });
+        }
+        if (getData1.result != "") {
+          getData1.result.map((item) => {
+            if (lowprice > item.real_price) {
+              lowprice = item.real_price;
+            }
+            if (highprice < item.real_price) {
+              highprice = item.real_price;
+            }
+            item.product_variation.map((item1) => {
+              if (lowprice > item1.real_price) {
+                lowprice = item1.real_price;
+              }
+              if (highprice < item1.real_price) {
+                highprice = item1.real_price;
+              }
+            });
+          });
+        }
+        if (getData2.result != "") {
+          getData2.result.map((item) => {
+            if (lowprice > item.real_price) {
+              lowprice = item.real_price;
+            }
+            if (highprice < item.real_price) {
+              highprice = item.real_price;
+            }
+            item.product_variation.map((item1) => {
+              if (lowprice > item1.real_price) {
+                lowprice = item1.real_price;
+              }
+              if (highprice < item1.real_price) {
+                highprice = item1.real_price;
+              }
+            });
+          });
+        }
         let getData = [];
-        let countofgetdata1 = console.log(getData1);
+        let price = {
+          highprice: highprice || 0,
+          lowprice: lowprice || 0,
+        };
         let count =
           getData1.total_count[0]?.count ||
           0 + getData2.total_count[0]?.count ||
           0;
         getData.push(getData1.result);
         getData.push(getData2.result);
-        // console.log(getData2);
-        // console.log("getData .......", getData);
         if (getData.length > 0) {
           res({
             status: 200,
-            data: { count, getData },
+            data: { count, price, getData },
           });
         } else {
           rej({ status: 404, message: "No Data found!!" });
@@ -172,10 +356,34 @@ module.exports = {
     });
   },
 
-  byId: (_id) => {
+  byId: ({ _id, country, user_id }) => {
     return new Promise(async (res, rej) => {
       try {
-        let getData = await productModel.findById(_id);
+        let watchlistOfUser = [];
+        if (user_id) {
+          watchlistOfUser =
+            (await wishlistModel.findOne({ user_id }, { product_id: 1 }))
+              ?.product_id || [];
+          console.log("watchlistOfUser ..........", watchlistOfUser);
+        }
+        let getData = await productModel.aggregate([
+          {
+            $match: {
+              _id: mongoose.Types.ObjectId(_id),
+            },
+          },
+          {
+            $addFields: {
+              watchlist: { $in: ["$_id", watchlistOfUser] },
+            },
+          },
+          {
+            $project: {
+              __v: 0,
+            },
+          },
+        ]);
+        getData = getData[0];
         if (getData) {
           // console.log(getData);
           let qry = {};
@@ -195,17 +403,34 @@ module.exports = {
           if (getData.diamond_shape)
             qry["diamond_shape"] = { $in: diamond_shape_array };
           if (getData.tag) qry["tag"] = { $in: tag_array };
-
           let getData1 = await productModel.aggregate([{ $match: qry }]);
-          console.log("getData1 ...", getData1[0]._id);
-          let reviewData = await reviewModel.find({
-            product_id: mongoose.Types.ObjectId(getData1[0]._id),
-          });
+          if (country) {
+            let countryData = await countryModel.findOne({ currency: country });
+            if (countryData) {
+              if (getData != "") {
+                getData.real_price = getData.real_price * countryData.price;
+                getData.mrp = getData.mrp * countryData.price;
+                getData.product_variation.map((item1) => {
+                  item1.real_price = item1.real_price * countryData.price;
+                  item1.mrp = item1.mrp * countryData.price;
+                });
+              }
+              if (getData1 != "") {
+                getData1.map((item) => {
+                  item.real_price = item.real_price * countryData.price;
+                  item.mrp = item.mrp * countryData.price;
+                  item.product_variation.map((item1) => {
+                    item1.real_price = item1.real_price * countryData.price;
+                    item1.mrp = item1.mrp * countryData.price;
+                  });
+                });
+              }
+            }
+          }
           if (getData1) {
             res({
               status: 200,
               data: {
-                review_count: reviewData.length,
                 product_data: getData,
                 suggestion_product_data: getData1,
               },
@@ -229,7 +454,7 @@ module.exports = {
     });
   },
 
-  search: (str) => {
+  search: ({ str, country }) => {
     return new Promise(async (res, rej) => {
       try {
         let qry = {};
@@ -262,8 +487,23 @@ module.exports = {
           ];
         }
         let getData = await productModel.aggregate([{ $match: qry }]);
-        console.log(getData);
         if (getData) {
+          if (country) {
+            let countryData = await countryModel.findOne({ currency: country });
+            // console.log(getData);
+            if (countryData) {
+              if (getData != "") {
+                getData.map((item) => {
+                  item.real_price = item.real_price * countryData.price;
+                  item.mrp = item.mrp * countryData.price;
+                  item.product_variation.map((item1) => {
+                    item1.real_price = item1.real_price * countryData.price;
+                    item1.mrp = item1.mrp * countryData.price;
+                  });
+                });
+              }
+            }
+          }
           res({
             status: 200,
             data: {

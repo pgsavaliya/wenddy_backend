@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const addtocartModel = require("../../model/addtocart.model");
 const productModel = require("../../model/product.model");
+const countryModel = require("../../model/country.model");
 
 module.exports = {
   addtocart: (user_id, data) => {
@@ -12,21 +13,21 @@ module.exports = {
           product_id: data.product_id,
           price: data.price,
           metal: data.metal,
-          dimand_type: data.dimand_type,
-          user_id: data.user_id,
+          diamond_type: data.diamond_type,
+          user_id: user_id,
           ring_size: data.ring_size,
         });
-        console.log("getData", getData1);
+        console.log("getData ........", getData1);
         if (getData1) {
-          if (data.quantity != 0) {
+          if (data.quantity !== 0) {
             data["total_price"] = data.quantity * data.price;
             let getData = await addtocartModel.updateOne(
               {
-                product_id: getData1.product_id,
+                product_id: mongoose.Types.ObjectId(getData1.product_id),
                 price: getData1.price,
                 metal: getData1.metal,
-                dimand_type: getData1.dimand_type,
-                user_id: getData1.user_id,
+                diamond_type: getData1.diamond_type,
+                user_id: mongoose.Types.ObjectId(getData1.user_id),
                 ring_size: getData1.ring_size,
               },
               data,
@@ -34,6 +35,7 @@ module.exports = {
                 new: true,
               }
             );
+            console.log("getData ......", getData);
             if (getData) {
               res({ status: 200, data: "Data Updated Successfully!!" });
             } else {
@@ -44,8 +46,8 @@ module.exports = {
               product_id: data.product_id,
               price: data.price,
               metal: data.metal,
-              dimand_type: data.dimand_type,
-              user_id: data.user_id,
+              diamond_type: data.diamond_type,
+              user_id: user_id,
               ring_size: data.ring_size,
             });
             if (deleteData) {
@@ -55,9 +57,9 @@ module.exports = {
             }
           }
         } else {
-          data['user_id'] = user_id;
-          data["product_amount"] = productData.mrp;
-          data["total_price"] = data.quantity * data.product_amount;
+          data["user_id"] = user_id;
+          // data["product_amount"] = data.price;
+          data["total_price"] = data.quantity * data.price;
           let newAddtocartModel = new addtocartModel(data);
           let saveData = await newAddtocartModel.save();
           if (saveData) {
@@ -68,12 +70,16 @@ module.exports = {
         }
       } catch (err) {
         console.log("err ...", err);
-        rej({ status: err?.status || 500, error: err, message: err?.message || "Something Went Wrong!!!" });
+        rej({
+          status: err?.status || 500,
+          error: err,
+          message: err?.message || "Something Went Wrong!!!",
+        });
       }
     });
   },
 
-  getcart: (user_id) => {
+  getcart: ({ user_id, country }) => {
     return new Promise(async (res, rej) => {
       try {
         let getData = await addtocartModel.aggregate([
@@ -91,11 +97,29 @@ module.exports = {
             },
           },
         ]);
-        let total = 0;
-        getData.map((item) => {
-          total = total + item.total_price;
-        });
         if (getData) {
+          if (country) {
+            let countryData = await countryModel.findOne({ currency: country });
+            console.log(countryData);
+            if (countryData) {
+              getData.map((item2) => {
+                item2.total_price = item2.total_price * countryData.price;
+                item2.price = item2.price * countryData.price;
+                item2.product_data.map((item) => {
+                  item.real_price = item.real_price * countryData.price;
+                  item.mrp = item.mrp * countryData.price;
+                  item.product_variation.map((item1) => {
+                    item1.real_price = item1.real_price * countryData.price;
+                    item1.mrp = item1.mrp * countryData.price;
+                  });
+                });
+              });
+            }
+          }
+          let total = 0;
+          getData.map((item) => {
+            total = total + item.total_price;
+          });
           res({ status: 200, data: { total: total, data: getData } });
         } else {
           rej({ status: 404, message: "Invalid id!!" });
@@ -111,8 +135,6 @@ module.exports = {
     });
   },
 
-};
-
   // update: async (_id, data) => {
   //   return new Promise(async (res, rej) => {
   //     try {
@@ -127,18 +149,19 @@ module.exports = {
   //     }
   //   });
   // },
-  // delete: (_id) => {
-  //   return new Promise(async (res, rej) => {
-  //     try {
-  //       let deleteData = await addtocartModel.findByIdAndDelete(_id);
-  //       if (deleteData) {
-  //         res({ status: 200, data: "Data Deleted!!" });
-  //       } else {
-  //         rej({ status: 500, message: "Invalid id!!" });
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //       rej({ status: 500, error: err, message: "something went wrong!!" });
-  //     }
-  //   });
-  // },
+  delete: (_id) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let deleteData = await addtocartModel.findByIdAndDelete(_id);
+        if (deleteData) {
+          res({ status: 200, data: "Data Deleted!!" });
+        } else {
+          rej({ status: 500, message: "Invalid id!!" });
+        }
+      } catch (err) {
+        console.log(err);
+        rej({ status: 500, error: err, message: "something went wrong!!" });
+      }
+    });
+  },
+};

@@ -3,39 +3,44 @@ const bcryptjs = require("bcryptjs");
 
 const productSchema = new Schema(
   {
-    product_images: [
+    // product_images: [
+    //   {
+    //     unique_img: {
+    //       type: String,
+    //     },
+    //     original: {
+    //       type: String,
+    //     },
+    //     original_url: {
+    //       type: String,
+    //     },
+    //     reduce: {
+    //       type: String,
+    //     },
+    //     reduce_url: {
+    //       type: String,
+    //     },
+    //     medium: {
+    //       type: String,
+    //     },
+    //     medium_url: {
+    //       type: String,
+    //     },
+    //     is_primary: {
+    //       type: Boolean,
+    //       default: false,
+    //     },
+    //     small: {
+    //       type: String,
+    //     },
+    //     small_url: {
+    //       type: String,
+    //     },
+    //   },
+    // ],
+    image: [
       {
-        unique_img: {
-          type: String,
-        },
-        original: {
-          type: String,
-        },
-        original_url: {
-          type: String,
-        },
-        reduce: {
-          type: String,
-        },
-        reduce_url: {
-          type: String,
-        },
-        medium: {
-          type: String,
-        },
-        medium_url: {
-          type: String,
-        },
-        is_primary: {
-          type: Boolean,
-          default: false,
-        },
-        small: {
-          type: String,
-        },
-        small_url: {
-          type: String,
-        },
+        type: String,
       },
     ],
     product_title: {
@@ -46,9 +51,14 @@ const productSchema = new Schema(
     },
     real_price: {
       type: Number,
+      default: 0,
     },
     mrp: {
       type: Number,
+      default: 0,
+    },
+    percentage_difference: {
+      type: String,
     },
     sku: {
       type: String,
@@ -72,6 +82,27 @@ const productSchema = new Schema(
           type: String,
           //required: true,
         },
+        qty: {
+          type: Number,
+          //required: true,
+        },
+        real_price: {
+          type: Number,
+        },
+        mrp: {
+          type: Number,
+        },
+        percentage_difference: {
+          type: String,
+        },
+        is_visible: {
+          type: Boolean,
+          //required: true,
+          default: true,
+        },
+        // unique_img: {
+        //   type: String,
+        // },
         // variations: [
         //   {
         //     variation_id: {
@@ -86,25 +117,6 @@ const productSchema = new Schema(
         //     },
         //   },
         // ],
-        qty: {
-          type: Number,
-          //required: true,
-        },
-        real_price: {
-          type: Number,
-        },
-        mrp: {
-          type: Number,
-        },
-
-        // unique_img: {
-        //   type: String,
-        // },
-        is_visible: {
-          type: Boolean,
-          //required: true,
-          default: true,
-        },
       },
     ],
     admin_id: {
@@ -178,6 +190,9 @@ const productSchema = new Schema(
     is_fav: {
       type: Boolean,
       default: false,
+    },
+    uniqueCode: {
+      type: Number,
     },
   },
   { timestamps: true }

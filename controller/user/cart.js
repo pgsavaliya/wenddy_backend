@@ -15,7 +15,10 @@ exports.addtocart = async (req, res) => {
 };
 exports.getcart = async (req, res) => {
   try {
-    let resp = await addtocartService.getcart(req.user_id);
+    let resp = await addtocartService.getcart({
+      user_id: req.user_id,
+      country: req.query.country,
+    });
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {
@@ -39,15 +42,15 @@ exports.getcart = async (req, res) => {
 //   }
 // };
 
-// exports.delete = async (req, res) => {
-//   try {
-//     let resp = await addtocartService.delete(req.params._id);
-//     if (resp) {
-//       return response("Deleted successfully!!", resp.data, 200, res);
-//     } else {
-//       return response("Error..!!", err.error, err.status, res);
-//     }
-//   } catch (err) {
-//     return response(err.message, err?.error, err.status, res);
-//   }
-// };
+exports.delete = async (req, res) => {
+  try {
+    let resp = await addtocartService.delete(req.params._id);
+    if (resp) {
+      return response("Deleted successfully!!", resp.data, 200, res);
+    } else {
+      return response("Error..!!", err.error, err.status, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};

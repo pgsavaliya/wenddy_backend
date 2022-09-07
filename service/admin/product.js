@@ -1,8 +1,6 @@
 const productModel = require("../../model/product.model");
-
-// const transactionModel = require("../../model/transaction.model");
+const { generateUniqueCode } = require("../../helper/generateUniqueCode");
 const mongoose = require("mongoose");
-const metalModel = require("../../model/metal.model ");
 
 module.exports = {
   add: (data) => {
@@ -11,7 +9,16 @@ module.exports = {
         // console.log("remainingPeriod.slice(0,10) .........", data.remainingPeriod.toString().slice(0, 10));
         // data['remainingPeriod'] = new Date(`${data.remainingPeriod.toString().slice(0, 10)}` + 'T00:00:00.000+00:00');
         // console.log(data);
-
+        let unique_id = await generateUniqueCode();
+        data['percentage_difference'] = parseInt((data.real_price * 100) / data.mrp) + "%" || "";
+        let newData = data.product_variation.map((item, percentage_difference) => {
+          return {
+            ...item,
+            percentage_difference: parseInt((item.real_price * 100) / item.mrp) + "%" || "",
+          }
+        });
+        data['product_variation'] = newData;
+        data['uniqueCode'] = unique_id;
         let newProductModel = new productModel(data);
         let saveData = await newProductModel.save();
         if (saveData) {
