@@ -9,7 +9,7 @@ orderRoute.get("/", (req, res) => {
 orderRoute.post("/add", ordercontroller.add);
 orderRoute.put("/addMultiAddress/:_id", ordercontroller.addMultiAddress);
 orderRoute.put("/update/:address_id", ordercontroller.update);
-orderRoute.put("/deleteone/:address_id", ordercontroller.deleteone);
+orderRoute.put("/deleteOne/:address_id", ordercontroller.deleteOne);
 // orderRoute.put("/primary/:address_id", ordercontroller.primaryUpdate);
 orderRoute.get("/getAll", ordercontroller.getAll);
 orderRoute.delete("/delete/:_id", ordercontroller.delete);
