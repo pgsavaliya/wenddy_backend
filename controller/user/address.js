@@ -48,6 +48,22 @@ exports.update = async (req, res) => {
   }
 };
 
+exports.deleteOne = async (req, res) => {
+  try {
+    let resp = await addressService.deleteOne(
+      req.user_id,
+      req.params.address_id
+    );
+    if (resp) {
+      return response("SUCCESS..!!", resp.data, 200, res);
+    } else {
+      return response("Something went wrong!!", {}, 500, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};
+
 // exports.primaryUpdate = async (req, res) => {
 //     try {
 //         let resp = await addressService.primaryUpdate(req.user_id, req.params._id, req.body);

@@ -93,6 +93,30 @@ module.exports = {
     });
   },
 
+  deleteOne: (user_id, address_id) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let updateData = await addressModel.findOneAndUpdate(
+          { user_id: user_id, "address._id": address_id },
+          { $pull: { "address": {_id:address_id} } },
+          { new: true }
+        );
+        if (updateData) {
+          res({ status: 200, data: "Data Updated Successfully!!" });
+        } else {
+          rej({ status: 404, message: "Invalid Address Id!!" });
+        }
+      } catch (err) {
+        console.log("err ...", err);
+        rej({
+          status: err?.status || 500,
+          error: err,
+          message: err?.message || "Something Went Wrong!!!",
+        });
+      }
+    });
+  },
+
   // primaryUpdate: (user_id, _id, data) => {
   //     return new Promise(async (res, rej) => {
   //         try {
