@@ -1,4 +1,5 @@
 const productModel = require("../../model/product.model");
+const addtocartModel = require("../../model/addtocart.model");
 const { generateUniqueCode } = require("../../helper/generateUniqueCode");
 const mongoose = require("mongoose");
 
@@ -10,15 +11,19 @@ module.exports = {
         // data['remainingPeriod'] = new Date(`${data.remainingPeriod.toString().slice(0, 10)}` + 'T00:00:00.000+00:00');
         // console.log(data);
         let unique_id = await generateUniqueCode();
-        data['percentage_difference'] = parseInt((data.real_price * 100) / data.mrp) + "%" || "";
-        let newData = data.product_variation.map((item, percentage_difference) => {
-          return {
-            ...item,
-            percentage_difference: parseInt((item.real_price * 100) / item.mrp) + "%" || "",
+        data["percentage_difference"] =
+          parseInt((data.real_price * 100) / data.mrp) + "%" || "";
+        let newData = data.product_variation.map(
+          (item, percentage_difference) => {
+            return {
+              ...item,
+              percentage_difference:
+                parseInt((item.real_price * 100) / item.mrp) + "%" || "",
+            };
           }
-        });
-        data['product_variation'] = newData;
-        data['uniqueCode'] = unique_id;
+        );
+        data["product_variation"] = newData;
+        data["uniqueCode"] = unique_id;
         let newProductModel = new productModel(data);
         let saveData = await newProductModel.save();
         if (saveData) {
@@ -269,7 +274,12 @@ module.exports = {
       try {
         let deleteData = await productModel.findByIdAndDelete(_id);
         if (deleteData) {
-          res({ status: 200, data: "Data Deleted!!" });
+          let deletecart = await addtocartModel.deleteMany({ product_id: _id });
+          if (deletecart) {
+            res({ status: 200, data: "Data Deleted!!" });
+          } else {
+            rej({ status: 404, message: "Cart data not deleted!!" });
+          }
         } else {
           rej({ status: 404, message: "Invalid id!!" });
         }
@@ -279,107 +289,106 @@ module.exports = {
       }
     });
   },
-
 };
 
-  // exportData: (str, startDate, endDate, status) => {
-  //     return new Promise(async (res, rej) => {
-  //         try {
-  //             let qry = {};
-  //             if (startDate && endDate) {
-  //                 startDate = new Date(startDate);
-  //                 endDate = new Date(endDate);
-  //                 endDate.setDate(endDate.getDate() + 1);
-  //                 qry["$and"] = [
-  //                     { "createdAt": { $gt: startDate } },
-  //                     { "createdAt": { $lt: endDate } },
-  //                 ];
-  //             }
-  //             if (str) {
-  //                 qry["$or"] = [
-  //                     { fullName: { $regex: str, $options: "i" } },
-  //                     { email: { $regex: str, $options: "i" } },
-  //                     {
-  //                         $expr: {
-  //                             $regexMatch: {
-  //                                 input: { $toString: "$mobile" },
-  //                                 regex: str,
-  //                             },
-  //                         },
-  //                     },
-  //                 ];
-  //             }
-  //             if (status) {
-  //                 qry["status"] = status;
-  //             }
-  //             var getData = await productModel.aggregate([{ $match: qry }]);
-  //             if (getData) {
-  //                 getData = getData.map((item, index) => {
-  //                     return {
-  //                         ...item,
-  //                         index: getData.length - index
-  //                     }
-  //                 });
-  //                 getData = getData.map((item) => {
-  //                     return {
-  //                         index: item?.index.toString(),
-  //                         _id: item?._id.toString(),
-  //                         name: item?.name,
-  //                         featureImage: item?.featureImage,
-  //                         price: item?.price?.toString(),
-  //                         minimunInvestment: item?.minimunInvestment?.toString(),
-  //                         averageRentalYield: item?.averageRentalYield?.toString(),
-  //                         targetIRR: item?.targetIRR?.toString(),
-  //                         dividentYield: item?.dividentYield?.toString(),
-  //                         fiveYearExpectedReturn: item?.fiveYearExpectedReturn?.toString(),
-  //                         funded: item?.funded?.toString(),
-  //                         remainingPeriod: item?.remainingPeriod?.toString(),
-  //                         rentAmount: item?.rentAmount?.toString(),
-  //                         numberOfInvestors: item?.numberOfInvestors?.toString(),
-  //                         totalInvestmentNeeded: item?.totalInvestmentNeeded?.toString(),
-  //                         grossYield: item?.grossYield?.toString(),
-  //                         suggestedHoldingPeriod: item?.suggestedHoldingPeriod?.toString(),
-  //                         propertyType: item?.propertyType,
-  //                         area: item?.area?.toString(),
-  //                         valuationReport: item?.valuationReport,
-  //                         informationMemorandum: item?.InformationMemorandum,
-  //                         financialForecasts: item?.financialForecasts,
-  //                         overview: item?.overview,
-  //                         whyInvest: item?.whyInvest,
-  //                         mapLink: item?.mapLink,
-  //                         propertyManagerName: item?.propertyManagerName,
-  //                         propertyManagerDetails: item?.propertyManagerDetails,
-  //                         developer: item?.developer,
-  //                         developerDetails: item?.developerDetails,
-  //                         tenantName: item?.tenantName,
-  //                         tenantLogo: item?.tenantLogo,
-  //                         tenantOverview: item?.tenantOverview,
-  //                         leaseStructureDetails: item?.leaseStructureDetails,
-  //                         leaseStart: item?.leaseStart?.toString(),
-  //                         leaseLockIn: item?.leaseLockIn?.toString(),
-  //                         leaseEnd: item?.leaseEnd?.toString(),
-  //                         leaseCommencement: item?.leaseCommencement,
-  //                         monthlyRentRupeePerSQFT: item?.monthlyRentRupeePerSQFT?.toString(),
-  //                         escalation: item?.escalation?.toString(),
-  //                         securityDeposit: item?.securityDeposit?.toString(),
-  //                         leaseTerm: item?.leaseTerm,
-  //                         floorPlanDetails: item?.floorPlanDetails,
-  //                         gallaryImages: JSON.stringify(item?.gallaryImages),
-  //                         floorPlan: JSON.stringify(item?.floorPlan),
-  //                         status: item?.status,
-  //                         iframeUrl: item?.iframeUrl,
-  //                         videoUpload: item?.videoUpload,
-  //                         createdAt: item?.createdAt.toString(),
-  //                         updatedAt: item?.updatedAt.toString(),
-  //                     };
-  //                 });
-  //                 res({ status: 200, data: getData });
-  //             } else {
-  //                 rej({ status: 404, message: "No Data found!!" });
-  //             }
-  //         } catch (err) {
-  //             console.log("err", err);
-  //             rej({ status: 500, error: err, message: "something went wrong!!" });
-  //         }
-  //     });
-  // }
+// exportData: (str, startDate, endDate, status) => {
+//     return new Promise(async (res, rej) => {
+//         try {
+//             let qry = {};
+//             if (startDate && endDate) {
+//                 startDate = new Date(startDate);
+//                 endDate = new Date(endDate);
+//                 endDate.setDate(endDate.getDate() + 1);
+//                 qry["$and"] = [
+//                     { "createdAt": { $gt: startDate } },
+//                     { "createdAt": { $lt: endDate } },
+//                 ];
+//             }
+//             if (str) {
+//                 qry["$or"] = [
+//                     { fullName: { $regex: str, $options: "i" } },
+//                     { email: { $regex: str, $options: "i" } },
+//                     {
+//                         $expr: {
+//                             $regexMatch: {
+//                                 input: { $toString: "$mobile" },
+//                                 regex: str,
+//                             },
+//                         },
+//                     },
+//                 ];
+//             }
+//             if (status) {
+//                 qry["status"] = status;
+//             }
+//             var getData = await productModel.aggregate([{ $match: qry }]);
+//             if (getData) {
+//                 getData = getData.map((item, index) => {
+//                     return {
+//                         ...item,
+//                         index: getData.length - index
+//                     }
+//                 });
+//                 getData = getData.map((item) => {
+//                     return {
+//                         index: item?.index.toString(),
+//                         _id: item?._id.toString(),
+//                         name: item?.name,
+//                         featureImage: item?.featureImage,
+//                         price: item?.price?.toString(),
+//                         minimunInvestment: item?.minimunInvestment?.toString(),
+//                         averageRentalYield: item?.averageRentalYield?.toString(),
+//                         targetIRR: item?.targetIRR?.toString(),
+//                         dividentYield: item?.dividentYield?.toString(),
+//                         fiveYearExpectedReturn: item?.fiveYearExpectedReturn?.toString(),
+//                         funded: item?.funded?.toString(),
+//                         remainingPeriod: item?.remainingPeriod?.toString(),
+//                         rentAmount: item?.rentAmount?.toString(),
+//                         numberOfInvestors: item?.numberOfInvestors?.toString(),
+//                         totalInvestmentNeeded: item?.totalInvestmentNeeded?.toString(),
+//                         grossYield: item?.grossYield?.toString(),
+//                         suggestedHoldingPeriod: item?.suggestedHoldingPeriod?.toString(),
+//                         propertyType: item?.propertyType,
+//                         area: item?.area?.toString(),
+//                         valuationReport: item?.valuationReport,
+//                         informationMemorandum: item?.InformationMemorandum,
+//                         financialForecasts: item?.financialForecasts,
+//                         overview: item?.overview,
+//                         whyInvest: item?.whyInvest,
+//                         mapLink: item?.mapLink,
+//                         propertyManagerName: item?.propertyManagerName,
+//                         propertyManagerDetails: item?.propertyManagerDetails,
+//                         developer: item?.developer,
+//                         developerDetails: item?.developerDetails,
+//                         tenantName: item?.tenantName,
+//                         tenantLogo: item?.tenantLogo,
+//                         tenantOverview: item?.tenantOverview,
+//                         leaseStructureDetails: item?.leaseStructureDetails,
+//                         leaseStart: item?.leaseStart?.toString(),
+//                         leaseLockIn: item?.leaseLockIn?.toString(),
+//                         leaseEnd: item?.leaseEnd?.toString(),
+//                         leaseCommencement: item?.leaseCommencement,
+//                         monthlyRentRupeePerSQFT: item?.monthlyRentRupeePerSQFT?.toString(),
+//                         escalation: item?.escalation?.toString(),
+//                         securityDeposit: item?.securityDeposit?.toString(),
+//                         leaseTerm: item?.leaseTerm,
+//                         floorPlanDetails: item?.floorPlanDetails,
+//                         gallaryImages: JSON.stringify(item?.gallaryImages),
+//                         floorPlan: JSON.stringify(item?.floorPlan),
+//                         status: item?.status,
+//                         iframeUrl: item?.iframeUrl,
+//                         videoUpload: item?.videoUpload,
+//                         createdAt: item?.createdAt.toString(),
+//                         updatedAt: item?.updatedAt.toString(),
+//                     };
+//                 });
+//                 res({ status: 200, data: getData });
+//             } else {
+//                 rej({ status: 404, message: "No Data found!!" });
+//             }
+//         } catch (err) {
+//             console.log("err", err);
+//             rej({ status: 500, error: err, message: "something went wrong!!" });
+//         }
+//     });
+// }
