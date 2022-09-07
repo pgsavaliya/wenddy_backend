@@ -92,12 +92,12 @@ module.exports = {
     });
   },
 
-  deleteOne: (user_id, address_id, address) => {
+  deleteOne: (user_id, address_id) => {
     return new Promise(async (res, rej) => {
       try {
         let updateData = await addressModel.findOneAndUpdate(
           { user_id: user_id, "address._id": address_id },
-          { $set: { "address.$": address } },
+          { $pull: { "address": {_id:address_id} } },
           { new: true }
         );
         if (updateData) {

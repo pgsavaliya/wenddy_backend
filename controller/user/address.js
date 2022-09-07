@@ -33,7 +33,7 @@ exports.addMultiAddress = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    let resp = await orderService.update(
+    let resp = await addressService.update(
       req.user_id,
       req.params.address_id,
       req.body.address
@@ -50,10 +50,9 @@ exports.update = async (req, res) => {
 
 exports.deleteOne = async (req, res) => {
   try {
-    let resp = await orderService.deleteOne(
+    let resp = await addressService.deleteOne(
       req.user_id,
-      req.params.address_id,
-      req.body.address
+      req.params.address_id
     );
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
