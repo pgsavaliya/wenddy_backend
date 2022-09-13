@@ -84,7 +84,6 @@ module.exports = {
         // if (existData.length > 0) {
         //   let findData = await countryModel.deleteMany({ serviceId: data.serviceId, countryId: data.countryId });
         // }
-        console.log("data", data);
         let i;
         let savedata;
         for (i = 0; i < data.countryData.length; i++) {
@@ -93,12 +92,12 @@ module.exports = {
             currency: data.countryData[i].currency,
             image: data.countryData[i].image,
             symbol: data.countryData[i].symbol,
+            price: data.countryData[i]?.price,
           };
           let existData = await countryModel.find({
             name: obj.name,
             currency: obj.currency,
           });
-          console.log("exist Data", existData);
           if (existData.length > 0) {
             let findData = await countryModel.deleteMany({
               name: obj.name,
