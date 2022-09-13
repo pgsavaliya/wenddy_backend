@@ -27,13 +27,13 @@ module.exports = () => {
           await newData.countryData.push(body);
           console.log("in.......................", newData);
           // console.log(newData);
-          let resp = await countryService.addcountry(newData);
-          if (resp) {
-            console.log(resp);
-          } else {
-            console.log("data not updated!!");
-          }
         });
+        let resp = await countryService.addcountry(newData);
+        if (resp) {
+          console.log(resp);
+        } else {
+          console.log("data not updated!!");
+        }
         // console.log("jhfgsd", getData);
       } else {
         console.log("cron working");
