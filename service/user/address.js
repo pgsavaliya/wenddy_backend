@@ -49,7 +49,7 @@ module.exports = {
     return new Promise(async (res, rej) => {
       try {
         data["user_id"] = user_id;
-        let updateData = await addressModel.findByIdAndUpdate(_id, data, {
+        let updateData = await addressModel.findByIdAndUpdate(_id, { $push: { address: data.address } }, {
           new: true,
         });
         if (updateData) {
