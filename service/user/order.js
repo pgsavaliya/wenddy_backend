@@ -19,51 +19,53 @@ module.exports = {
         let saveData = await neworderModel.save();
         // res(saveData);
         if (saveData) {
-          const create_payment_json = {
-            intent: "sale",
-            payer: {
-              payment_method: "paypal",
-            },
-            redirect_urls: {
-              return_url: "http://localhost:2000/v1/user/paymant",
-              cancel_url: "http://localhost:2000/v1/user/cart/getcart",
-            },
-            transactions: [
-              {
-                item_list: {
-                  items: [
-                    {
-                      name: "Red Sox Hat",
-                      sku: "001",
-                      price: "25.00",
-                      currency: "USD",
-                      quantity: 1,
-                    },
-                  ],
-                },
-                amount: {
-                  currency: "USD",
-                  total: "25.00",
-                },
-                description: "welcome to wendy backand",
-              },
-            ],
-          };
+          rej({ status: 200, message: saveData });
 
-          paypal.payment.create(create_payment_json, function (error, payment) {
-            if (error) {
-              console.log("error is", error);
-              throw error;
-            } else {
-              for (let i = 0; i < payment.links.length; i++) {
-                if (payment.links[i].rel === "approval_url") {
-                  // console.log(payment.links[i].href);
-                  // window.open(payment.links[i].href);
-                  res({ status: 200, data: payment.links[i].href });
-                }
-              }
-            }
-          });
+          // const create_payment_json = {
+          //   intent: "sale",
+          //   payer: {
+          //     payment_method: "paypal",
+          //   },
+          //   redirect_urls: {
+          //     return_url: "http://localhost:2000/v1/user/paymant",
+          //     cancel_url: "http://localhost:2000/v1/user/cart/getcart",
+          //   },
+          //   transactions: [
+          //     {
+          //       item_list: {
+          //         items: [
+          //           {
+          //             name: "Red Sox Hat",
+          //             sku: "001",
+          //             price: "25.00",
+          //             currency: "USD",
+          //             quantity: 1,
+          //           },
+          //         ],
+          //       },
+          //       amount: {
+          //         currency: "USD",
+          //         total: "25.00",
+          //       },
+          //       description: "welcome to wendy backand",
+          //     },
+          //   ],
+          // };
+
+          // paypal.payment.create(create_payment_json, function (error, payment) {
+          //   if (error) {
+          //     console.log("error is", error);
+          //     throw error;
+          //   } else {
+          //     for (let i = 0; i < payment.links.length; i++) {
+          //       if (payment.links[i].rel === "approval_url") {
+          //         // console.log(payment.links[i].href);
+          //         // window.open(payment.links[i].href);
+          //         res({ status: 200, data: payment.links[i].href });
+          //       }
+          //     }
+          //   }
+          // });
         } else {
           rej({ status: 404, message: "something went wrong!!" });
         }

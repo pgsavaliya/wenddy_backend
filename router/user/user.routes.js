@@ -26,7 +26,7 @@ userRoute.use("/wishlist", verifyUserToken, wishlistRoute);
 userRoute.use("/review", reviewRoute);
 userRoute.use("/profile", verifyUserToken, profileRoute);
 userRoute.use("/address", verifyUserToken, addressRoute);
-userRoute.use("/country", verifyUserToken, countryRoute);
+userRoute.use("/country", countryRoute);
 userRoute.use("/subscribe", subscribeRoute);
 
 module.exports = userRoute;
