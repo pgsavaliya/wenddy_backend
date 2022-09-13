@@ -28,6 +28,7 @@ module.exports = () => {
           // await newData.countryData.push(body);
           // console.log("in.......................", newData);
           // console.log(newData);
+
           if (index == getData.length - 1) {
             // console.log("getData..............", getData);
             body.countryData = getData;
@@ -39,6 +40,7 @@ module.exports = () => {
             }
           }
         });
+
       } else {
         console.log("cron working");
       }

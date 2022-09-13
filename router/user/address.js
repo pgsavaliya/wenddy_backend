@@ -1,17 +1,17 @@
 const { Router } = require("express");
-const ordercontroller = require("../../controller/user/address");
-const orderRoute = Router();
+const addresscontroller = require("../../controller/user/address");
+const addressRoute = Router();
 
-orderRoute.get("/", (req, res) => {
-  res.send({ status: 200, message: "order route is working" });
+addressRoute.get("/", (req, res) => {
+  res.send({ status: 200, message: "address route is working" });
 });
 
-orderRoute.post("/add", ordercontroller.add);
-orderRoute.put("/addMultiAddress/:_id", ordercontroller.addMultiAddress);
-orderRoute.put("/update/:address_id", ordercontroller.update);
-orderRoute.put("/deleteOne/:address_id", ordercontroller.deleteOne);
-// orderRoute.put("/primary/:address_id", ordercontroller.primaryUpdate);
-orderRoute.get("/getAll", ordercontroller.getAll);
-orderRoute.delete("/delete/:_id", ordercontroller.delete);
+addressRoute.post("/add", addresscontroller.add);
+addressRoute.put("/addMultiAddress/:_id", addresscontroller.addMultiAddress);
+addressRoute.put("/update/:address_id", addresscontroller.update);
+addressRoute.put("/deleteOne/:address_id", addresscontroller.deleteOne);
+// addressRoute.put("/primary/:address_id", addresscontroller.primaryUpdate);
+addressRoute.get("/getAll", addresscontroller.getAll);
+addressRoute.delete("/delete/:_id", addresscontroller.delete);
 
-module.exports = orderRoute;
+module.exports = addressRoute;
