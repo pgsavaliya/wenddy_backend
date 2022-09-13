@@ -30,6 +30,9 @@ const addtocartSchema = new Schema(
     ring_size: {
       type: Number,
     },
+    iso: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

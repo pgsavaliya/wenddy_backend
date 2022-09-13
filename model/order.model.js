@@ -10,17 +10,7 @@ const orderSchema = new Schema(
     total: {
       type: Number,
     },
-    payment_status: {
-      type: Boolean,
-      default: false,
-    },
-    payerId: {
-      type: String,
-    },
-    paymentId: {
-      type: String,
-    },
-    address: {
+    address_id: {
       type: String,
     },
     product: [
@@ -44,6 +34,14 @@ const orderSchema = new Schema(
         },
       },
     ],
+    payment_data: {
+      payments: {
+        type: Object,
+      },
+      payer: {
+        type: Object,
+      },
+    },
   },
   { timestamps: true }
 );

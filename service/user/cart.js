@@ -8,7 +8,7 @@ module.exports = {
     return new Promise(async (res, rej) => {
       try {
         let productData = await productModel.findById(data.product_id);
-        console.log("data ........", data);
+        // console.log("data ........", data);
         let getData1 = await addtocartModel.findOne({
           product_id: data.product_id,
           price: data.price,
@@ -17,7 +17,7 @@ module.exports = {
           user_id: user_id,
           ring_size: data.ring_size,
         });
-        console.log("getData ........", getData1);
+        // console.log("getData ........", getData1);
         if (getData1) {
           if (data.quantity !== 0) {
             data["total_price"] = data.quantity * data.price;
@@ -29,13 +29,14 @@ module.exports = {
                 diamond_type: getData1.diamond_type,
                 user_id: mongoose.Types.ObjectId(getData1.user_id),
                 ring_size: getData1.ring_size,
+                iso: getData1.iso,
               },
               data,
               {
                 new: true,
               }
             );
-            console.log("getData ......", getData);
+            // console.log("getData ......", getData);
             if (getData) {
               res({ status: 200, data: "Data Updated Successfully!!" });
             } else {
@@ -100,7 +101,7 @@ module.exports = {
         if (getData) {
           if (country) {
             let countryData = await countryModel.findOne({ currency: country });
-            console.log(countryData);
+            console.log("cdata", countryData);
             if (countryData) {
               getData.map((item2) => {
                 item2.total_price = item2.total_price * countryData.price;
