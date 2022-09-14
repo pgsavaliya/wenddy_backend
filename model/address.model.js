@@ -27,7 +27,7 @@ let addressSchema = new Schema(
                     type: String,
                 },
                 postalcode: {
-                    type: Number,
+                    type: String,
                 },
                 city: {
                     type: String,
