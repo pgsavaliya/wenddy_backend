@@ -94,4 +94,24 @@ module.exports = {
       }
     });
   },
+
+  getorder: (user_id) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let getData = await orderModel.find({ user_id: user_id });
+        if (getData) {
+          res({ status: 200, data: getData });
+        } else {
+          rej({ status: 404, message: "Invalid id!!" });
+        }
+      } catch (err) {
+        console.log("err ...", err);
+        rej({
+          status: err?.status || 500,
+          error: err,
+          message: err?.message || "Something Went Wrong!!!",
+        });
+      }
+    });
+  },
 };

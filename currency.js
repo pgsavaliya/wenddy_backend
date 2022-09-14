@@ -40,7 +40,6 @@ module.exports = () => {
             }
           }
         });
-
       } else {
         console.log("cron working");
       }
