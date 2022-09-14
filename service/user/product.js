@@ -186,7 +186,7 @@ module.exports = {
         var lowprice = 1000000;
         var highprice = 0;
         if (getData1.result != "") {
-          getData1.result.map(async (item) => {
+          await getData1.result.map(async (item) => {
             if (country) {
               let countryData = await countryModel.findOne({
                 currency: country,
