@@ -50,7 +50,8 @@ module.exports = {
             { product_description: { $regex: str, $options: "i" } },
           ];
         }
-        if (metal) qry["product_variation.metal"] = { $regex: metal, $options: 'i' };
+        if (metal)
+          qry["product_variation.metal"] = { $regex: metal, $options: "i" };
         if (category) qry["category"] = { $in: categoryArray };
         if (ring_type) qry["ring_type"] = { $in: ring_type_array };
         if (diamond_shape) qry["diamond_shape"] = { $in: diamond_shape_array };
@@ -186,7 +187,7 @@ module.exports = {
         var lowprice = 1000000;
         var highprice = 0;
         if (getData1.result != "") {
-          await getData1.result.map(async (item) => {
+          getData1.result.map(async (item) => {
             if (country) {
               let countryData = await countryModel.findOne({
                 currency: country,
@@ -230,7 +231,7 @@ module.exports = {
           });
         }
         if (getData2.result != "") {
-          getData2.result.map(async (item) => {
+          let requests = getData2.result.map(async (item) => {
             if (country) {
               let countryData = await countryModel.findOne({
                 currency: country,
@@ -266,6 +267,11 @@ module.exports = {
             // ]);
             // item.avg = avgData2.avgRating;
           });
+          let abc = await Promise.all(requests).then((data) => {
+            console.log("data.....................", data);
+            return data;
+          });
+          console.log("abc...........", abc);
         }
         if (getData1.result != "") {
           getData1.result.map((item) => {
