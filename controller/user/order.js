@@ -35,10 +35,23 @@ exports.payment = async (req, res) => {
   }
 };
 
+exports.getorder = async (req, res) => {
+  try {
+    let resp = await orderService.getorder(req.user_id);
+    if (resp) {
+      return response("SUCESS..!!", resp.data, 200, res);
+    } else {
+      return response("Something went wrong!!", {}, 500, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};
+
 exports.add_address = async (req, res) => {
   try {
     console.log(req.body);
-    let resp = await orderService.add_address(req.user_id,req.body);
+    let resp = await orderService.add_address(req.user_id, req.body);
     if (resp) {
       return response("Added successfully..!!", resp.data, 200, res);
     } else {
@@ -52,7 +65,7 @@ exports.add_address = async (req, res) => {
 exports.get_address = async (req, res) => {
   try {
     console.log(req.body);
-    let resp = await orderService.get_address(req.user_id,req.body);
+    let resp = await orderService.get_address(req.user_id, req.body);
     if (resp) {
       return response("Added successfully..!!", resp.data, 200, res);
     } else {
