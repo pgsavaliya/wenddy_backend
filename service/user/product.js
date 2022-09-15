@@ -187,7 +187,7 @@ module.exports = {
         var lowprice = 1000000;
         var highprice = 0;
         if (getData1.result != "") {
-          getData1.result.map(async (item) => {
+          let requests1 = getData1.result.map(async (item) => {
             if (country) {
               let countryData = await countryModel.findOne({
                 currency: country,
@@ -229,9 +229,12 @@ module.exports = {
             // ]);
             // item.avg = avgData1.avgRating;
           });
+          let xyz = await Promise.all(requests1).then((data) => {
+            return data;
+          });
         }
         if (getData2.result != "") {
-          let requests = getData2.result.map(async (item) => {
+          let requests2 = getData2.result.map(async (item) => {
             if (country) {
               let countryData = await countryModel.findOne({
                 currency: country,
@@ -267,11 +270,9 @@ module.exports = {
             // ]);
             // item.avg = avgData2.avgRating;
           });
-          let abc = await Promise.all(requests).then((data) => {
-            console.log("data.....................", data);
+          let abc = await Promise.all(requests2).then((data) => {
             return data;
           });
-          console.log("abc...........", abc);
         }
         if (getData1.result != "") {
           getData1.result.map((item) => {
@@ -422,13 +423,16 @@ module.exports = {
                 });
               }
               if (getData1 != "") {
-                getData1.map((item) => {
+                let requests = getData1.map((item) => {
                   item.real_price = item.real_price * countryData.price;
                   item.mrp = item.mrp * countryData.price;
                   item.product_variation.map((item1) => {
                     item1.real_price = item1.real_price * countryData.price;
                     item1.mrp = item1.mrp * countryData.price;
                   });
+                });
+                let xyz = await Promise.all(requests).then((data) => {
+                  return data;
                 });
               }
             }
