@@ -62,16 +62,16 @@ module.exports = {
             $lte: parseInt(max),
           };
         }
-        console.log("qry ...", qry);
+        // console.log("qry ...", qry);
         let watchlistOfUser = [];
-        console.log("user_id ..........", user_id);
+        // console.log("user_id ..........", user_id);
         if (user_id) {
           watchlistOfUser =
             (await wishlistModel.findOne({ user_id }, { product_id: 1 }))
               ?.product_id || [];
-          console.log("watchlistOfUser ..........", watchlistOfUser);
+          // console.log("watchlistOfUser ..........", watchlistOfUser);
         }
-        console.log("watchlistOfUser ..........", watchlistOfUser);
+        // console.log("watchlistOfUser ..........", watchlistOfUser);
         // console.log("qry before getData1 .........",qry);
         // qry = { is_public: true };
         let limit1 = parseInt(limit * 0.4);
@@ -316,11 +316,11 @@ module.exports = {
           lowprice: lowprice || 0,
         };
         let count =
-          getData1.total_count[0]?.count ||
-          0 + getData2.total_count[0]?.count ||
-          0;
+          (getData1.total_count[0]?.count || 0) +
+          (getData2.total_count[0]?.count || 0);
         getData.push(getData1.result);
         getData.push(getData2.result);
+        // console.log("count..........", count);
         if (getData.length > 0) {
           res({
             status: 200,
