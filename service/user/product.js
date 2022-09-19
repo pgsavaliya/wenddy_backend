@@ -363,9 +363,10 @@ module.exports = {
     });
   },
 
-  byId: ({ _id, country, user_id }) => {
+  byId: ({ id, country, user_id }) => {
     return new Promise(async (res, rej) => {
       try {
+        console.log("id.........", id);
         let watchlistOfUser = [];
         if (user_id) {
           watchlistOfUser =
@@ -376,7 +377,7 @@ module.exports = {
         let getData = await productModel.aggregate([
           {
             $match: {
-              _id: mongoose.Types.ObjectId(_id),
+              uniqueCode: +id,
             },
           },
           {

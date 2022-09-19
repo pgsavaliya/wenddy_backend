@@ -51,9 +51,14 @@ module.exports = {
   update: async (_id, data) => {
     return new Promise(async (res, rej) => {
       try {
-        let getData = await productModel.findByIdAndUpdate(_id, data, {
-          new: true,
-        });
+        productModel.findOneAndUpdate;
+        let getData = await productModel.findOneAndUpdate(
+          { uniqueCode: _id },
+          data,
+          {
+            new: true,
+          }
+        );
         if (getData) {
           res({ status: 200, data: "" });
         } else {
@@ -69,8 +74,8 @@ module.exports = {
   updatestatus: async (_id, data) => {
     return new Promise(async (res, rej) => {
       try {
-        let getData = await productModel.findByIdAndUpdate(
-          _id,
+        let getData = await productModel.findOneAndUpdate(
+          { uniqueCode: _id },
           { is_public: data },
           { new: true }
         );
@@ -89,8 +94,8 @@ module.exports = {
   updateisfav: async (_id, data) => {
     return new Promise(async (res, rej) => {
       try {
-        let getData = await productModel.findByIdAndUpdate(
-          _id,
+        let getData = await productModel.findOneAndUpdate(
+          { uniqueCode: _id },
           { is_fav: data },
           { new: true }
         );
@@ -211,25 +216,26 @@ module.exports = {
         // });
         // console.log("existData ......", existData.length);
         // if (existData.length > 0) {
-        // console.log(id);
-        let Data = await productModel.aggregate([
-          { $match: { _id: mongoose.Types.ObjectId(id) } },
-          // let trasactionData = await productModel.aggregate([
-          //   { $match: { admin_id: id } },
-          // {
-          //   $group: {
-          //     _id: "$admin_id",
-          //     total: { $sum: "$totalAmount" },
-          //   },
-          // },
-          // {
-          //   $group: {
-          //     _id: null,
-          //     totalInvestment: { $sum: "$totalInvestment" },
-          //     totalInvestors: { $sum: 1 },
-          //   },
-          // },
-        ]);
+        // console.log("gdfdfdsfg", id);
+        let Data = await productModel.find({ uniqueCode: id });
+        // let Data = await productModel.aggregate([
+        // { $match: { uniqueCode: id } },
+        // let trasactionData = await productModel.aggregate([
+        //   { $match: { admin_id: id } },
+        // {
+        //   $group: {
+        //     _id: "$admin_id",
+        //     total: { $sum: "$totalAmount" },
+        //   },
+        // },
+        // {
+        //   $group: {
+        //     _id: null,
+        //     totalInvestment: { $sum: "$totalInvestment" },
+        //     totalInvestors: { $sum: 1 },
+        //   },
+        // },
+        // ]);
         // console.log("Data ..........", Data);
         // let funded =
         //   (trasactionData[0].totalInvestment / getData.totalAmount) * 100;
@@ -269,12 +275,14 @@ module.exports = {
     });
   },
 
-  delete: (_id) => {
+  delete: (id) => {
     return new Promise(async (res, rej) => {
       try {
-        let deleteData = await productModel.findByIdAndDelete(_id);
+        let deleteData = await productModel.deleteOne({
+          uniqueCode: id,
+        });
         if (deleteData) {
-          let deletecart = await addtocartModel.deleteMany({ product_id: _id });
+          let deletecart = await addtocartModel.deleteMany({ product_id: id });
           if (deletecart) {
             res({ status: 200, data: "Data Deleted!!" });
           } else {
