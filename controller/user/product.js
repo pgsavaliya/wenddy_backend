@@ -49,7 +49,7 @@ exports.getAll = async (req, res) => {
 exports.byId = async (req, res) => {
   try {
     let resp = await productService.byId({
-      _id: req.params._id,
+      id: req.params._id,
       country: req.query.country,
       user_id: req.user_id,
     });

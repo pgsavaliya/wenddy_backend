@@ -23,7 +23,7 @@ module.exports = {
             data["total_price"] = data.quantity * data.price;
             let getData = await addtocartModel.updateOne(
               {
-                product_id: mongoose.Types.ObjectId(getData1.product_id),
+                product_id: getData1.product_id,
                 price: getData1.price,
                 metal: getData1.metal,
                 diamond_type: getData1.diamond_type,

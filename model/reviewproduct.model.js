@@ -4,7 +4,7 @@ const bcryptjs = require("bcryptjs");
 const reviewproductSchema = new Schema(
   {
     product_id: {
-      type: Schema.Types.ObjectId,
+      type: String,
     },
     image: [
       {

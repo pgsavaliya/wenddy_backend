@@ -8,7 +8,7 @@ const addtocartSchema = new Schema(
       require: true,
     },
     product_id: {
-      type: Schema.Types.ObjectId,
+      type: String,
       require: true,
     },
     quantity: {
