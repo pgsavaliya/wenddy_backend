@@ -22,6 +22,8 @@ exports.getwishlist = async (req, res) => {
     let resp = await wishlistService.getwishlist({
       user_id: req.user_id,
       country: req.query.country,
+      page: req.query.page,
+      limit: req.query.limit,
     });
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);

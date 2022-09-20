@@ -19,7 +19,7 @@ module.exports = {
         let saveData = await neworderModel.save();
         // res(saveData);
         if (saveData) {
-          rej({ status: 200, message: saveData });
+          rej({ status: 200, message: "Data Added Successfully..." });
 
           // const create_payment_json = {
           //   intent: "sale",

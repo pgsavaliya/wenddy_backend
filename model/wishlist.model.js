@@ -9,7 +9,7 @@ const wishlistSchema = new Schema(
     },
     product_id: [
       {
-        type: Schema.Types.ObjectId,
+        type: Number,
       },
     ],
   },

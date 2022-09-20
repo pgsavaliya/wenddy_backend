@@ -23,6 +23,7 @@ exports.getAll = async (req, res) => {
         tag: req.query.tag,
         category: req.query.category,
         country: req.query.country,
+        sort_by: req.query.sort_by,
       });
       if (resp) {
         // req.ip = RequestIp.getClientIp(req);
