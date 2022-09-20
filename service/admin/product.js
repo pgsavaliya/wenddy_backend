@@ -53,7 +53,7 @@ module.exports = {
       try {
         productModel.findOneAndUpdate;
         let getData = await productModel.findOneAndUpdate(
-          { uniqueCode: _id },
+          { uniqueCode: +_id },
           data,
           {
             new: true,
@@ -75,7 +75,7 @@ module.exports = {
     return new Promise(async (res, rej) => {
       try {
         let getData = await productModel.findOneAndUpdate(
-          { uniqueCode: _id },
+          { uniqueCode: +_id },
           { is_public: data },
           { new: true }
         );
@@ -95,7 +95,7 @@ module.exports = {
     return new Promise(async (res, rej) => {
       try {
         let getData = await productModel.findOneAndUpdate(
-          { uniqueCode: _id },
+          { uniqueCode: +_id },
           { is_fav: data },
           { new: true }
         );
@@ -217,7 +217,7 @@ module.exports = {
         // console.log("existData ......", existData.length);
         // if (existData.length > 0) {
         // console.log("gdfdfdsfg", id);
-        let Data = await productModel.find({ uniqueCode: id });
+        let Data = await productModel.find({ uniqueCode: +id });
         // let Data = await productModel.aggregate([
         // { $match: { uniqueCode: id } },
         // let trasactionData = await productModel.aggregate([
@@ -279,10 +279,10 @@ module.exports = {
     return new Promise(async (res, rej) => {
       try {
         let deleteData = await productModel.deleteOne({
-          uniqueCode: id,
+          uniqueCode: +id,
         });
         if (deleteData) {
-          let deletecart = await addtocartModel.deleteMany({ product_id: id });
+          let deletecart = await addtocartModel.deleteMany({ product_id: +id });
           if (deletecart) {
             res({ status: 200, data: "Data Deleted!!" });
           } else {

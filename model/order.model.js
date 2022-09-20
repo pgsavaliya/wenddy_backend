@@ -16,7 +16,7 @@ const orderSchema = new Schema(
     product: [
       {
         product_id: {
-          type: String,
+          type: Number,
           require: true,
         },
         quantity: {

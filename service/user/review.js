@@ -31,7 +31,7 @@ module.exports = {
         page = parseInt(page);
         limit = parseInt(limit);
         // console.log(product_id);
-        qry = { product_id: mongoose.Types.ObjectId(product_id) };
+        qry = { product_id: +product_id };
         let getData = await reviewproductModel.aggregate([
           { $match: qry },
           {
@@ -47,7 +47,7 @@ module.exports = {
               result: [
                 {
                   $project: {
-                    email:0,
+                    email: 0,
                     __v: 0,
                   },
                 },

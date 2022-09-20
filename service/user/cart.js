@@ -7,10 +7,12 @@ module.exports = {
   addtocart: (user_id, data) => {
     return new Promise(async (res, rej) => {
       try {
-        let productData = await productModel.findById(data.product_id);
+        let productData = await productModel.findOne({
+          uniqueCode: +data.product_id,
+        });
         // console.log("data ........", data);
         let getData1 = await addtocartModel.findOne({
-          product_id: data.product_id,
+          product_id: +data.product_id,
           price: data.price,
           metal: data.metal,
           diamond_type: data.diamond_type,
@@ -23,7 +25,7 @@ module.exports = {
             data["total_price"] = data.quantity * data.price;
             let getData = await addtocartModel.updateOne(
               {
-                product_id: getData1.product_id,
+                product_id: +getData1.product_id,
                 price: getData1.price,
                 metal: getData1.metal,
                 diamond_type: getData1.diamond_type,
@@ -44,7 +46,7 @@ module.exports = {
             }
           } else {
             let deleteData = await addtocartModel.deleteOne({
-              product_id: data.product_id,
+              product_id: +data.product_id,
               price: data.price,
               metal: data.metal,
               diamond_type: data.diamond_type,
@@ -93,7 +95,7 @@ module.exports = {
             $lookup: {
               from: "products",
               localField: "product_id",
-              foreignField: "_id",
+              foreignField: "uniqueCode",
               as: "product_data",
             },
           },

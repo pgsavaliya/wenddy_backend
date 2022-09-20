@@ -11,7 +11,7 @@ module.exports = {
         if (productdata != "") {
           let updateData = await wishlistModel.findOneAndUpdate(
             { user_id: user_id },
-            { $addToSet: { product_id: data.product_id } },
+            { $addToSet: { product_id: +data.product_id } },
             { new: true }
           );
           if (updateData) {
@@ -41,9 +41,11 @@ module.exports = {
     });
   },
 
-  getwishlist: ({ user_id, country }) => {
+  getwishlist: ({ user_id, country, page, limit }) => {
     return new Promise(async (res, rej) => {
       try {
+        page = parseInt(page);
+        limit = parseInt(limit);
         console.log("user_id ......", user_id);
         // let newViewcartModel = new addtocartModel(data);
         let getData = await wishlistModel.aggregate([
@@ -56,14 +58,33 @@ module.exports = {
             $lookup: {
               from: "products",
               localField: "product_id",
-              foreignField: "_id",
+              foreignField: "uniqueCode",
               as: "product_data",
+            },
+          },
+          {
+            $unwind: "$product_data",
+          },
+          {
+            $facet: {
+              total_count: [{ $group: { _id: null, count: { $sum: 1 } } }],
+              data: [
+                {
+                  $project: {
+                    __v: 0,
+                    product_id: 0,
+                  },
+                },
+                { $sort: { createdAt: -1 } },
+                { $skip: (page - 1) * limit },
+                { $limit: limit },
+              ],
             },
           },
         ]);
         getData = getData[0];
         if (getData) {
-          // console.log("getData .......", getData);
+          console.log("getData .......", getData);
           if (country) {
             let countryData = await countryModel.findOne({ currency: country });
             console.log(countryData);
@@ -100,7 +121,7 @@ module.exports = {
         // let deleteData = await wishlistModel.deleteOne({ user_id: id });
         let deletedData = await wishlistModel.findOneAndUpdate(
           { user_id: id },
-          { $pull: { product_id: data } },
+          { $pull: { product_id: +data } },
           { new: true }
         );
         if (deletedData) {
