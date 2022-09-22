@@ -167,4 +167,19 @@ module.exports = {
       }
     });
   },
+  deleteall: (id) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let deleteData = await addtocartModel.deleteMany({ user_id: id });
+        if (deleteData) {
+          res({ status: 200, data: "Data Deleted!!" });
+        } else {
+          rej({ status: 500, message: "Invalid id!!" });
+        }
+      } catch (err) {
+        console.log(err);
+        rej({ status: 500, error: err, message: "something went wrong!!" });
+      }
+    });
+  },
 };

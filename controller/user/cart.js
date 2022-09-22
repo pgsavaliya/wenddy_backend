@@ -54,3 +54,16 @@ exports.delete = async (req, res) => {
     return response(err.message, err?.error, err.status, res);
   }
 };
+
+exports.deleteall = async (req, res) => {
+  try {
+    let resp = await addtocartService.deleteall(req.user_id);
+    if (resp) {
+      return response("Deleted successfully!!", resp.data, 200, res);
+    } else {
+      return response("Error..!!", err.error, err.status, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};
