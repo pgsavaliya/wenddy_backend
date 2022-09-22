@@ -68,7 +68,7 @@ module.exports = {
           {
             $facet: {
               total_count: [{ $group: { _id: null, count: { $sum: 1 } } }],
-              data: [
+              result: [
                 {
                   $project: {
                     __v: 0,
@@ -84,7 +84,6 @@ module.exports = {
         ]);
         getData = getData[0];
         if (getData) {
-          console.log("getData .......", getData);
           if (country) {
             let countryData = await countryModel.findOne({ currency: country });
             console.log(countryData);
@@ -99,6 +98,7 @@ module.exports = {
               });
             }
           }
+          getData.total_count = getData.total_count[0].count;
           res({ status: 200, data: getData });
         } else {
           rej({ status: 404, message: "Invalid id!!" });

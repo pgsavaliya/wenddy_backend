@@ -19,7 +19,9 @@ function verifyUserToken(req, res, next) {
           process.env.USER_ENCRYPTION_KEY
         );
         req.email = decrypt(payload.email, process.env.USER_ENCRYPTION_KEY);
-        // console.log(req.email);
+
+        // console.log("password ======", payload.password);
+        // console.log("password ======", req.user_id);
         next();
       }
     });
@@ -135,7 +137,6 @@ function verifyAdminToken(req, res, next) {
 // }
 
 function optionalUserToken(req, res, next) {
-
   // if (!token) {
   //   res.status(403).json({ success: false, message: "token missing" });
   // } else {
@@ -155,8 +156,6 @@ function optionalUserToken(req, res, next) {
   //     }
   //   });
   // }
-
-
 
   let token = req.headers["authorization"];
   if (!token) {
