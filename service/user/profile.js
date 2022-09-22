@@ -47,27 +47,27 @@ module.exports = {
         if (data.password == cpassword) {
           let getData1 = await userModel.findById(_id);
           if (getData1) {
-            // const isMatch = await bcryptjs.compare(
-            //   data.oldpassword,
-            //   getData1.password
-            // );
-            // if (isMatch) {
-            let encryptPassword = await bcryptjs.hash(data.password, 12);
-            let password = { password: encryptPassword };
-            console.log("passwird.. ", password);
-            let getData = await userModel.findByIdAndUpdate(_id, password);
-            if (getData) {
-              res({ status: 200, data: getData });
+            const isMatch = await bcryptjs.compare(
+              data.oldpassword,
+              getData1.password
+            );
+            if (isMatch) {
+              let encryptPassword = await bcryptjs.hash(data.password, 12);
+              let password = { password: encryptPassword };
+              console.log("passwird.. ", password);
+              let getData = await userModel.findByIdAndUpdate(_id, password);
+              if (getData) {
+                res({ status: 200, data: getData });
+              } else {
+                rej({ status: 404, message: "Something went worng" });
+              }
             } else {
-              rej({ status: 404, message: "Something went worng" });
+              rej({
+                status: 500,
+                error: "old password worng",
+                message: "something went wrong!!",
+              });
             }
-            // } else {
-            //   rej({
-            //     status: 500,
-            //     error: "old password worng",
-            //     message: "something went wrong!!",
-            //   });
-            // }
           }
         } else {
           rej({

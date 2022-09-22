@@ -11,4 +11,5 @@ cartRoute.post("/addtocart", addtocartcontroller.addtocart);
 cartRoute.get("/getcart", addtocartcontroller.getcart);
 // cartRoute.put("/update/:_id", addtocartcontroller.update);
 cartRoute.delete("/delete/:_id", addtocartcontroller.delete);
+cartRoute.delete("/deleteall", addtocartcontroller.deleteall);
 module.exports = cartRoute;
