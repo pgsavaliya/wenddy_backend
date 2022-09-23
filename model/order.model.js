@@ -29,6 +29,9 @@ const orderSchema = new Schema(
         total_price: {
           type: Number,
         },
+        ring_size: {
+          type: Number,
+        },
         description: {
           type: String,
         },
@@ -42,7 +45,12 @@ const orderSchema = new Schema(
         type: Object,
       },
     },
+    status: {
+      type: String,
+      default: "pending",
+    },
   },
+
   { timestamps: true }
 );
 
