@@ -1,13 +1,14 @@
 const orderModel = require("../../model/order.model");
-const paypal = require("paypal-rest-sdk");
-const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, "./config/.env") });
+const { default: mongoose } = require("mongoose");
+// const paypal = require("paypal-rest-sdk");
+// const path = require("path");
+// require("dotenv").config({ path: path.join(__dirname, "./config/.env") });
 
-paypal.configure({
-  mode: process.env.MODE, //sandbox or live
-  client_id: process.env.CLIENT_ID,
-  client_secret: process.env.CLIENT_SECRET,
-});
+// paypal.configure({
+//   mode: process.env.MODE, //sandbox or live
+//   client_id: process.env.CLIENT_ID,
+//   client_secret: process.env.CLIENT_SECRET,
+// });
 
 module.exports = {
   order: (data) => {
@@ -111,6 +112,45 @@ module.exports = {
           error: err,
           message: err?.message || "Something Went Wrong!!!",
         });
+      }
+    });
+  },
+
+  byId: (id) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let Data = await orderModel.aggregate([
+          {
+            $match: {
+              _id: mongoose.Types.ObjectId(id),
+            },
+          },
+          {
+            $lookup: {
+              from: "products",
+              localField: "product.product_id",
+              foreignField: "uniqueCode",
+              as: "productData",
+            },
+          },
+        ]);
+        if (Data) {
+          Data = Data[0];
+          res({
+            status: 200,
+            data: Data,
+          });
+        } else {
+          rej({ status: 404, message: "Data Not Found", error: {} });
+        }
+        rej({
+          status: 404,
+          message: "Data Not Found, Invalid id!!",
+          error: {},
+        });
+      } catch (err) {
+        console.log(err);
+        rej({ status: 500, error: err, message: "something went wrong!!" });
       }
     });
   },

@@ -48,6 +48,19 @@ exports.getorder = async (req, res) => {
   }
 };
 
+exports.byId = async (req, res) => {
+  try {
+    let resp = await orderService.byId(req.query.id);
+    if (resp) {
+      return response("SUCESS..!!", resp.data, 200, res);
+    } else {
+      return response("Something went wrong!!", {}, 500, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};
+
 exports.add_address = async (req, res) => {
   try {
     console.log(req.body);
