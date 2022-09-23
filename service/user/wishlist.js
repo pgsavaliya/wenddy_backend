@@ -82,7 +82,7 @@ module.exports = {
             },
           },
         ]);
-        getData = getData[0];
+        // getData = getData[0];
         if (getData) {
           if (country) {
             let countryData = await countryModel.findOne({ currency: country });
@@ -100,7 +100,9 @@ module.exports = {
 
             getData.total_count = getData.total_count[0].count;
           }
-          if ((getData.result = [])) {
+
+          console.log("getData", getData[0].result);
+          if (getData[0].result == []) {
             rej({ status: 404, message: "Data Not Found" });
           } else {
             res({ status: 200, data: getData });

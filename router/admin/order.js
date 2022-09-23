@@ -9,4 +9,6 @@ orderRoute.get("/", (req, res) => {
 orderRoute.get("/getorder", ordercontroller.getorder);
 orderRoute.get("/byId", ordercontroller.byId);
 orderRoute.put("/update", ordercontroller.update);
+orderRoute.get("/getcancelorder", ordercontroller.getcancelorder);
+
 module.exports = orderRoute;

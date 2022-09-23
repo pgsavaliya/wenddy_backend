@@ -99,11 +99,14 @@ module.exports = {
   getorder: (user_id) => {
     return new Promise(async (res, rej) => {
       try {
-        let getData = await orderModel.find({ user_id: user_id });
-        if (getData) {
+        let getData = await orderModel.find({
+          user_id: user_id,
+          is_cancel: "false",
+        });
+        if (getData != "") {
           res({ status: 200, data: getData });
         } else {
-          rej({ status: 404, message: "Invalid id!!" });
+          rej({ status: 404, message: "data not found!!" });
         }
       } catch (err) {
         console.log("err ...", err);
@@ -112,6 +115,28 @@ module.exports = {
           error: err,
           message: err?.message || "Something Went Wrong!!!",
         });
+      }
+    });
+  },
+
+  cancel: async (_id) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let getData = await orderModel.findByIdAndUpdate(
+          _id,
+          { is_cancel: "true" },
+          {
+            new: true,
+          }
+        );
+        if (getData) {
+          res({ status: 200, data: "" });
+        } else {
+          rej({ status: 404, message: "Invalid id!!" });
+        }
+      } catch (err) {
+        console.log("err", err);
+        rej({ status: 500, error: err, message: "something went wrong!!" });
       }
     });
   },

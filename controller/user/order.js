@@ -4,12 +4,9 @@ const { response } = require("../../middleware/response");
 exports.order = async (req, res) => {
   try {
     req.body.user_id = req.user_id;
-    // console.log(req.body);
     let resp = await orderService.order(req.body);
     if (resp) {
-      // console.log(resp.data);
       res.redirect(resp.data);
-      // return response("Added successfully..!!", resp.data, 200, res);
     } else {
       return response("Something went wrong!!", {}, 500, res);
     }
@@ -53,6 +50,19 @@ exports.byId = async (req, res) => {
     let resp = await orderService.byId(req.query.id);
     if (resp) {
       return response("SUCESS..!!", resp.data, 200, res);
+    } else {
+      return response("Something went wrong!!", {}, 500, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};
+
+exports.cancel = async (req, res) => {
+  try {
+    let resp = await orderService.cancel(req.query.id);
+    if (resp) {
+      return response("SUCESS..!!", "Data Updated", 200, res);
     } else {
       return response("Something went wrong!!", {}, 500, res);
     }
