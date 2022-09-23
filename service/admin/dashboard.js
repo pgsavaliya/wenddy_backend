@@ -62,6 +62,7 @@ module.exports = {
           {
             $match: { createdAt: { $gte: gte, $lte: lte } },
           },
+
           {
             $facet: {
               total_count: [
@@ -89,6 +90,14 @@ module.exports = {
           monthearning = monthearning + item.total;
         });
         let recentorder = await orderModel.aggregate([
+          // {
+          //   $lookup: {
+          //     from: "products",
+          //     localField: "product.product_id",
+          //     foreignField: "uniqueCode",
+          //     as: "productData",
+          //   },
+          // },
           {
             $facet: {
               result: [
@@ -105,6 +114,10 @@ module.exports = {
           },
         ]);
         recentorder = recentorder[0];
+        // console.log(recentorder.result[0].productData[0]);
+        // await recentorder.result.map((element, index) => {
+        //   element.product.productData = element.productData[index];
+        // });
         recentorder.result.map((item, index) => {
           let que = 0;
           item.product.map((item1) => {

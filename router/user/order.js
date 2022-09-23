@@ -10,5 +10,6 @@ orderRoute.post("/order", ordercontroller.order);
 orderRoute.get("/byId", ordercontroller.byId);
 orderRoute.get("/paymant", ordercontroller.payment);
 orderRoute.get("/getorder", ordercontroller.getorder);
+orderRoute.put("/cancel_order", ordercontroller.cancel);
 
 module.exports = orderRoute;

@@ -49,6 +49,10 @@ const orderSchema = new Schema(
       type: String,
       default: "pending",
     },
+    is_cancel: {
+      type: String,
+      default: "flase",
+    },
   },
 
   { timestamps: true }
