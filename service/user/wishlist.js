@@ -100,7 +100,6 @@ module.exports = {
 
             getData.total_count = getData.total_count[0].count;
           }
-          console.log(getData.result);
           if ((getData.result = [])) {
             rej({ status: 404, message: "Data Not Found" });
           } else {

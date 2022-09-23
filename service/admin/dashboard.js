@@ -8,6 +8,8 @@ module.exports = {
       let curDate = new Date();
       let gte = new Date(data.query.gte);
       let lte = new Date(data.query.lte);
+      // console.log("get.........", gte);
+      // console.log("let.........", lte);
       if (!data.query.lte) {
         lte = new Date();
       }

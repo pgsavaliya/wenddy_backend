@@ -450,7 +450,12 @@ module.exports = {
           let count = getData.total_count[0]?.count || 0;
           // console.log("getData-----------------------------", getData.result);
           if (getData.result.length > 0) {
-            getData = getData.result;
+            let getData1 = getData.result;
+            getData = [];
+            let abc = [];
+            getData.push(abc);
+            getData.push(getData1);
+            console.log("getdata.....", getData);
             res({
               status: 200,
               data: { count, price, getData },
@@ -579,7 +584,11 @@ module.exports = {
           let count = getData.total_count[0]?.count || 0;
           // console.log("getData-----------------------------", getData.result);
           if (getData.result.length > 0) {
-            getData = getData.result;
+            getData1 = getData.result;
+            getData = [];
+            let abc = [];
+            getData.push(abc);
+            getData.push(getData1);
             res({
               status: 200,
               data: { count, price, getData },
@@ -707,7 +716,11 @@ module.exports = {
           let count = getData.total_count[0]?.count || 0;
           // console.log("getData-----------------------------", getData.result);
           if (getData.result.length > 0) {
-            getData = getData.result;
+            getData1 = getData.result;
+            getData = [];
+            let abc = [];
+            getData.push(abc);
+            getData.push(getData1);
             res({
               status: 200,
               data: { count, price, getData },
