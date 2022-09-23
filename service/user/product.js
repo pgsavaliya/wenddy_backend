@@ -37,10 +37,7 @@ module.exports = {
             { createdAt: { $lt: endDate } },
           ];
         }
-        let pavan = "pavansavaliya,trupeshgoyani, ridhhi, rutu, shivangi";
-        pavan = pavan.split(",");
 
-        console.log("Pavan..........", pavan);
         let categoryArray;
         if (category) categoryArray = category.split(",");
         let ring_type_array;

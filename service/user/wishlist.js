@@ -97,9 +97,15 @@ module.exports = {
                 });
               });
             }
+
+            getData.total_count = getData.total_count[0].count;
           }
-          getData.total_count = getData.total_count[0].count;
-          res({ status: 200, data: getData });
+          console.log(getData.result);
+          if ((getData.result = [])) {
+            rej({ status: 404, message: "Data Not Found" });
+          } else {
+            res({ status: 200, data: getData });
+          }
         } else {
           rej({ status: 404, message: "Invalid id!!" });
         }
