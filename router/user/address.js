@@ -12,6 +12,7 @@ addressRoute.put("/update/:address_id", addresscontroller.update);
 addressRoute.put("/deleteOne/:address_id", addresscontroller.deleteOne);
 // addressRoute.put("/primary/:address_id", addresscontroller.primaryUpdate);
 addressRoute.get("/getAll", addresscontroller.getAll);
+addressRoute.get("/byId/:_id", addresscontroller.byId);
 addressRoute.delete("/delete/:_id", addresscontroller.delete);
 
 module.exports = addressRoute;

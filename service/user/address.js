@@ -1,5 +1,7 @@
 const addressModel = require("../../model/address.model");
 const userModel = require("../../model/user.model");
+const { default: mongoose } = require("mongoose");
+
 
 module.exports = {
   add: (_id, data) => {
@@ -153,6 +155,43 @@ module.exports = {
           error: err,
           message: err?.message || "Something Went Wrong!!!",
         });
+      }
+    });
+  },
+
+  byId: (id, user_id) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let Data = await addressModel.aggregate([
+          {
+            $match: {
+              user_id: mongoose.Types.ObjectId(user_id),
+            },
+          },
+          { $unwind: "$address" },
+          {
+            $match:{
+              "address._id":mongoose.Types.ObjectId(id),
+            }
+          }
+        ]);
+        if (Data) {
+          Data = Data[0];
+          res({
+            status: 200,
+            data: Data,
+          });
+        } else {
+          rej({ status: 404, message: "Data Not Found", error: {} });
+        }
+        rej({
+          status: 404,
+          message: "Data Not Found, Invalid id!!",
+          error: {},
+        });
+      } catch (err) {
+        console.log(err);
+        rej({ status: 500, error: err, message: "something went wrong!!" });
       }
     });
   },

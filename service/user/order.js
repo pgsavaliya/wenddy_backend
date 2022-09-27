@@ -144,20 +144,21 @@ module.exports = {
   byId: (id) => {
     return new Promise(async (res, rej) => {
       try {
+        
         let Data = await orderModel.aggregate([
           {
             $match: {
               _id: mongoose.Types.ObjectId(id),
             },
           },
-          {
-            $lookup: {
-              from: "products",
-              localField: "product.product_id",
-              foreignField: "uniqueCode",
-              as: "productData",
-            },
-          },
+          // {
+          //   $lookup: {
+          //     from: "products",
+          //     localField: "product.product_id",
+          //     foreignField: "uniqueCode",
+          //     as: "productData",
+          //   },
+          // },
         ]);
         if (Data) {
           Data = Data[0];
