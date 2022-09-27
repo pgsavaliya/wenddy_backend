@@ -18,7 +18,6 @@ exports.addwishlist = async (req, res) => {
 
 exports.getwishlist = async (req, res) => {
   try {
-    console.log("req.user_id ........", req.user_id);
     let resp = await wishlistService.getwishlist({
       user_id: req.user_id,
       country: req.query.country,

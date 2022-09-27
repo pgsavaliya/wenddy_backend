@@ -46,7 +46,6 @@ module.exports = {
       try {
         page = parseInt(page);
         limit = parseInt(limit);
-        console.log("user_id ......", user_id);
         // let newViewcartModel = new addtocartModel(data);
         let getData = await wishlistModel.aggregate([
           {
@@ -86,12 +85,15 @@ module.exports = {
         if (getData) {
           if (country) {
             let countryData = await countryModel.findOne({ currency: country });
-            console.log(countryData);
+            // console.log("getData.....", getData[0].result);
+            // res({ status: 200, data: getData });
+
             if (countryData) {
-              getData.product_data.map((item) => {
-                item.real_price = item.real_price * countryData.price;
-                item.mrp = item.mrp * countryData.price;
-                item.product_variation.map((item1) => {
+              getData[0].result.map((item) => {
+                item.product_data.real_price =
+                  item.real_price * countryData.price;
+                item.product_data.mrp = item.mrp * countryData.price;
+                item.product_data.product_variation.map((item1) => {
                   item1.real_price = item1.real_price * countryData.price;
                   item1.mrp = item1.mrp * countryData.price;
                 });
@@ -102,7 +104,6 @@ module.exports = {
           }
 
           getData[0].total_count = getData[0].total_count[0].count;
-          console.log("getData", getData[0].total_count);
 
           if (getData[0].result == []) {
             rej({ status: 404, message: "Data Not Found" });
