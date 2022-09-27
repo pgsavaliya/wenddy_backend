@@ -91,6 +91,20 @@ exports.getAll = async (req, res) => {
   }
 };
 
+exports.byId = async (req, res) => {
+  try {
+    // console.log("userId........................", req.user_id);
+    let resp = await addressService.byId(req.params._id, req.user_id);
+    if (resp) {
+      return response("SUCCESS..!!", resp.data, 200, res);
+    } else {
+      return response("Something went wrong!!", {}, 500, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};
+
 exports.delete = async (req, res) => {
   try {
     let resp = await addressService.delete(req.params._id);
