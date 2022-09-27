@@ -4,6 +4,14 @@ const { boolean } = require("joi");
 
 const userSchema = new Schema(
   {
+    first_name: {
+      type: String,
+      require: true,
+    },
+    last_name: {
+      type: String,
+      require: true,
+    },
     email: {
       type: String,
       required: true,

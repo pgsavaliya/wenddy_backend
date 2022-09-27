@@ -67,7 +67,12 @@ module.exports = {
               process.env.USER_ACCESS_TOKEN,
               { expiresIn: process.env.USER_ACCESS_TIME }
             );
-            res({ status: 200, data: token });
+            let data = {
+              token: token,
+              first_name: loginData.first_name,
+              last_name: loginData.last_name,
+            };
+            res({ status: 200, data: data });
             // } else {
             //   rej({
             //     status: 404,
