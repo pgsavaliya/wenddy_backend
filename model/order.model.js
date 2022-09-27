@@ -55,7 +55,7 @@ const orderSchema = new Schema(
     },
     is_cancel: {
       type: String,
-      default: "flase",
+      default: "false",
     },
   },
 

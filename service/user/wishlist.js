@@ -98,10 +98,12 @@ module.exports = {
               });
             }
 
-            getData.total_count = getData.total_count[0].count;
+            // getData.total_count = getData[0].total_count[0].count;
           }
 
-          console.log("getData", getData[0].result);
+          getData[0].total_count = getData[0].total_count[0].count;
+          console.log("getData", getData[0].total_count);
+
           if (getData[0].result == []) {
             rej({ status: 404, message: "Data Not Found" });
           } else {
