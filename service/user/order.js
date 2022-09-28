@@ -144,24 +144,26 @@ module.exports = {
   byId: (id) => {
     return new Promise(async (res, rej) => {
       try {
-        
+        // console.log("cncvo");
         let Data = await orderModel.aggregate([
           {
             $match: {
               _id: mongoose.Types.ObjectId(id),
             },
           },
-          // {
-          //   $lookup: {
-          //     from: "products",
-          //     localField: "product.product_id",
-          //     foreignField: "uniqueCode",
-          //     as: "productData",
-          //   },
-          // },
+          {
+            $lookup: {
+              from: "products",
+              localField: "product.product_id",
+              foreignField: "uniqueCode",
+              as: "productData",
+            },
+          },
+          // {$unwind:'$productData'},
         ]);
+        Data = Data[0];
+        // console.log("data .....", Data);
         if (Data) {
-          Data = Data[0];
           res({
             status: 200,
             data: Data,
