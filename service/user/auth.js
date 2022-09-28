@@ -118,7 +118,7 @@ module.exports = {
             );
             let abc = "<a href='" + token + "'>Click Here</a>";
 
-            let sendmail = await mail(email, "this is a sample mail", abc)
+            await mail(email, "this is a sample mail", abc)
               .then((data) => {
                 let data1 = "mail send";
                 res({ status: 200, data: data1 });
