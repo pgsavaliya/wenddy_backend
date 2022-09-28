@@ -28,3 +28,29 @@ exports.login = async (req, res) => {
     return response(err.message, err?.error, err.status, res);
   }
 };
+
+exports.forgot = async (req, res) => {
+  try {
+    let resp = await authService.forgot(req.query.email);
+    if (resp) {
+      return response("SUCCESS..!!", resp.data, 200, res);
+    } else {
+      return response("Something went wrong!!", {}, 500, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};
+
+exports.changepss = async (req, res) => {
+  try {
+    let resp = await authService.changepss(req.body);
+    if (resp) {
+      return response("SUCCESS..!!", resp.data, 200, res);
+    } else {
+      return response("Something went wrong!!", {}, 500, res);
+    }
+  } catch (err) {
+    return response(err.message, err?.error, err.status, res);
+  }
+};

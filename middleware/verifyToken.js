@@ -28,6 +28,27 @@ function verifyUserToken(req, res, next) {
   }
 }
 
+function verifyforgotToken(req, res, next) {
+  let token = req.headers["authorization"];
+  if (!token) {
+    res.status(403).json({ success: false, message: "token missing" });
+  } else {
+    token = token.split(" ")[1];
+    jwt.verify(token, process.env.USER_ACCESS_TOKEN, (err, payload) => {
+      if (err) {
+        res.status(403).json({ success: false, message: "unauthorized token" });
+      } else {
+        req.user_id = decrypt(payload.user_id, process.env.USER_ENCRYPTION_KEY);
+        req.email = decrypt(payload.email, process.env.USER_ENCRYPTION_KEY);
+
+        // console.log("password ======", payload.password);
+        // console.log("password ======", req.user_id);
+        next();
+      }
+    });
+  }
+}
+
 // function verifyUserEmailToken(token) {
 //   return new Promise(async (resolve, reject) => {
 //     if (!token) {

@@ -103,11 +103,11 @@ module.exports = {
             // getData.total_count = getData[0].total_count[0].count;
           }
 
-          getData[0].total_count = getData[0].total_count[0].count;
-
-          if (getData[0].result == []) {
+          if (getData[0].result == "") {
             rej({ status: 404, message: "Data Not Found" });
           } else {
+            getData[0].total_count = getData[0].total_count[0]?.count;
+
             res({ status: 200, data: getData });
           }
         } else {

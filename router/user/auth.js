@@ -10,5 +10,7 @@ authRoute.get("/", (req, res) => {
 
 authRoute.post("/register", userEmailCheck, authController.register);
 authRoute.post("/login", authController.login);
+authRoute.get("/forgotPass", authController.forgot);
+authRoute.post("/changepass", authController.changepss);
 
 module.exports = authRoute;
