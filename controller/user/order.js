@@ -6,7 +6,7 @@ exports.order = async (req, res) => {
     req.body.user_id = req.user_id;
     let resp = await orderService.order(req.body);
     if (resp) {
-      res.redirect(resp.data);
+      return response("SUCCESS..!!", resp.data, 200, res);
     } else {
       return response("Something went wrong!!", {}, 500, res);
     }

@@ -1,74 +1,31 @@
 const orderModel = require("../../model/order.model");
-const { default: mongoose } = require("mongoose");
-// const paypal = require("paypal-rest-sdk");
-// const path = require("path");
-// require("dotenv").config({ path: path.join(__dirname, "./config/.env") });
-
-// paypal.configure({
-//   mode: process.env.MODE, //sandbox or live
-//   client_id: process.env.CLIENT_ID,
-//   client_secret: process.env.CLIENT_SECRET,
-// });
+const cartModel = require("../../model/addtocart.model");
 
 module.exports = {
   order: (data) => {
     return new Promise(async (res, rej) => {
       try {
-        // console.log("data ........", data);
-        // let saveData1 = new Promise(async (res, rej) => {
-        let neworderModel = new orderModel(data);
-        let saveData = await neworderModel.save();
-        // res(saveData);
-        if (saveData) {
-          rej({ status: 200, message: "Data Added Successfully..." });
-
-          // const create_payment_json = {
-          //   intent: "sale",
-          //   payer: {
-          //     payment_method: "paypal",
-          //   },
-          //   redirect_urls: {
-          //     return_url: "http://localhost:2000/v1/user/paymant",
-          //     cancel_url: "http://localhost:2000/v1/user/cart/getcart",
-          //   },
-          //   transactions: [
-          //     {
-          //       item_list: {
-          //         items: [
-          //           {
-          //             name: "Red Sox Hat",
-          //             sku: "001",
-          //             price: "25.00",
-          //             currency: "USD",
-          //             quantity: 1,
-          //           },
-          //         ],
-          //       },
-          //       amount: {
-          //         currency: "USD",
-          //         total: "25.00",
-          //       },
-          //       description: "welcome to wendy backand",
-          //     },
-          //   ],
-          // };
-
-          // paypal.payment.create(create_payment_json, function (error, payment) {
-          //   if (error) {
-          //     console.log("error is", error);
-          //     throw error;
-          //   } else {
-          //     for (let i = 0; i < payment.links.length; i++) {
-          //       if (payment.links[i].rel === "approval_url") {
-          //         // console.log(payment.links[i].href);
-          //         // window.open(payment.links[i].href);
-          //         res({ status: 200, data: payment.links[i].href });
-          //       }
-          //     }
-          //   }
-          // });
-        } else {
-          rej({ status: 404, message: "something went wrong!!" });
+        if (data.payment_data.payments.captures[0].status == 'COMPLETED') {
+          await data.product.map(async (item) => {
+            // console.log("item .....", item.cart_id);
+            let findData = await cartModel.findById(item.cart_id);
+            // console.log("findData .......", findData);
+            if (findData) {
+              // console.log("4t7892y4thu");
+              let cartData = await cartModel.deleteMany({ 'product.cart_id': item.cart_id, user_id: data.user_id });
+            }
+          })
+          let neworderModel = new orderModel(data);
+          let saveData = await neworderModel.save();
+          // res(saveData);
+          if (saveData) {
+            res({ status: 200, message: "Data Added Successfully..." });
+          } else {
+            rej({ status: 404, message: "something went wrong!!" });
+          }
+        }
+        else {
+          rej({ status: 500, message: "something went wrong with payment!!" });
         }
       } catch (err) {
         console.log("err ...", err);
@@ -169,13 +126,13 @@ module.exports = {
             data: Data,
           });
         } else {
-          rej({ status: 404, message: "Data Not Found", error: {} });
+          rej({ status: 404, message: "Invalid id..!!", error: {} });
         }
-        rej({
-          status: 404,
-          message: "Data Not Found, Invalid id!!",
-          error: {},
-        });
+        // rej({
+        //   status: 404,
+        //   message: "Data Not Found, Invalid id!!",
+        //   error: {},
+        // });
       } catch (err) {
         console.log(err);
         rej({ status: 500, error: err, message: "something went wrong!!" });
