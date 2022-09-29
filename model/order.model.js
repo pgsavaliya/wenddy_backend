@@ -19,7 +19,7 @@ const orderSchema = new Schema(
           type: Number,
           require: true,
         },
-        price:{
+        price: {
           type: Number,
           require: true,
         },
@@ -42,6 +42,9 @@ const orderSchema = new Schema(
       },
     ],
     payment_data: {
+      payment_id: {
+        type: String,
+      },
       payments: {
         type: Object,
       },

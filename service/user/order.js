@@ -148,7 +148,7 @@ module.exports = {
         let Data = await orderModel.aggregate([
           {
             $match: {
-              _id: mongoose.Types.ObjectId(id),
+              'payment_data.payment_id': id,
             },
           },
           {
