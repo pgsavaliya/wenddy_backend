@@ -1,24 +1,34 @@
 const orderModel = require("../../model/order.model");
 const cartModel = require("../../model/addtocart.model");
+const productModel = require("../../model/product.model");
 
 module.exports = {
   order: (data) => {
     return new Promise(async (res, rej) => {
       try {
+        let newData1 = [];
         if (data.payment_data.payments.captures[0].status == 'COMPLETED') {
-          await data.product.map(async (item) => {
-            // console.log("item .....", item.cart_id);
+          let newData = await data.product.map(async (item) => {
+            let productData = await productModel.findOne({ uniqueCode: item.product_id });
+            // console.log("item .....", productData);
+            item["product_title"] = productData.product_title;
+            item["product_image"] = productData.image[0];
             let findData = await cartModel.findById(item.cart_id);
             // console.log("findData .......", findData);
             if (findData) {
               // console.log("4t7892y4thu");
-              let cartData = await cartModel.deleteMany({ 'product.cart_id': item.cart_id, user_id: data.user_id });
+              // let cartData = await cartModel.deleteMany({ 'product.cart_id': item.cart_id, user_id: data.user_id });
             }
+            console.log("item .......", item);
+            newData1.concat(item);
           })
+          console.log("newData1 .......", newData1);
+          // console.log("xyz .......", xyz);
+          console.log("data ........", data);
           let neworderModel = new orderModel(data);
-          let saveData = await neworderModel.save();
+          // let saveData = await neworderModel.save();
           // res(saveData);
-          if (saveData) {
+          if (data) {
             res({ status: 200, message: "Data Added Successfully..." });
           } else {
             rej({ status: 404, message: "something went wrong!!" });

@@ -71,7 +71,7 @@ module.exports = {
           watchlistOfUser =
             (await wishlistModel.findOne({ user_id }, { product_id: 1 }))
               ?.product_id || [];
-          // console.log("watchlistOfUser ..........", watchlistOfUser);
+          console.log("watchlistOfUser ..........", watchlistOfUser);
         }
         //-----------------------------------------------------------------------------------------------------------------------------------------
         if (sort_by == "default") {
@@ -143,7 +143,7 @@ module.exports = {
               $lookup: {
                 from: "reviewproducts",
                 foreignField: "product_id",
-                localField: "_id",
+                localField: "uniqueCode",
                 as: "avgdata",
               },
             },
@@ -171,7 +171,7 @@ module.exports = {
                   {
                     $addFields: {
                       avgRating: { $avg: "$avgdata.rating" },
-                      watchlist: { $in: ["$_id", watchlistOfUser] },
+                      watchlist: { $in: ["$uniqueCode", watchlistOfUser] },
                     },
                   },
                   {
@@ -370,7 +370,7 @@ module.exports = {
                   {
                     $addFields: {
                       avgRating: { $avg: "$avgdata.rating" },
-                      watchlist: { $in: ["$_id", watchlistOfUser] },
+                      watchlist: { $in: ["$avgdata.uniqueCode", watchlistOfUser] },
                     },
                   },
                   {
@@ -502,7 +502,7 @@ module.exports = {
                   {
                     $addFields: {
                       avgRating: { $avg: "$avgdata.rating" },
-                      watchlist: { $in: ["$_id", watchlistOfUser] },
+                      watchlist: { $in: ["$avgdata.uniqueCode", watchlistOfUser] },
                     },
                   },
                   {
@@ -636,7 +636,7 @@ module.exports = {
                   {
                     $addFields: {
                       avgRating: { $avg: "$avgdata.rating" },
-                      watchlist: { $in: ["$_id", watchlistOfUser] },
+                      watchlist: { $in: ["$avgdata.uniqueCode", watchlistOfUser] },
                     },
                   },
                   {

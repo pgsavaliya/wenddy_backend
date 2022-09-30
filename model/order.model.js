@@ -43,6 +43,12 @@ const orderSchema = new Schema(
           type: Schema.Types.ObjectId,
           ref: "cart"
         },
+        product_title: {
+          type: String,
+        },
+        product_image: {
+          type: String
+        },
       },
     ],
     payment_data: {
