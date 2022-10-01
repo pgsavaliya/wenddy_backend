@@ -26,9 +26,9 @@ module.exports = {
           // console.log("xyz .......", xyz);
           console.log("data ........", data);
           let neworderModel = new orderModel(data);
-          // let saveData = await neworderModel.save();
+          let saveData = await neworderModel.save();
           // res(saveData);
-          if (data) {
+          if (saveData) {
             res({ status: 200, message: "Data Added Successfully..." });
           } else {
             rej({ status: 404, message: "something went wrong!!" });
