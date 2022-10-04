@@ -204,7 +204,7 @@ module.exports = {
                   if (highprice < item.mrp) {
                     highprice = item.mrp;
                   }
-                  let request2 = item.product_variation.map((item1) => {
+                  let requests2 = item.product_variation.map((item1) => {
                     item1.real_price = item1.real_price * countryData.price;
                     item1.mrp = item1.mrp * countryData.price;
                     if (lowprice > item1.mrp) {
@@ -249,7 +249,7 @@ module.exports = {
                   item.real_price = item.real_price * countryData.price;
                   item.mrp = item.mrp * countryData.price;
 
-                  let request2 = item.product_variation.map((item1) => {
+                  let requests2 = item.product_variation.map((item1) => {
                     item1.real_price = item1.real_price * countryData.price;
                     item1.mrp = item1.mrp * countryData.price;
                     if (lowprice > item1.mrp) {
@@ -441,7 +441,7 @@ module.exports = {
           }
 
           if (getData.result != "") {
-            let request2 = getData.result.map((item) => {
+            let requests2 = getData.result.map((item) => {
               if (lowprice > item.real_price) {
                 lowprice = item.real_price;
               }
@@ -564,7 +564,7 @@ module.exports = {
                   if (highprice < item.mrp) {
                     highprice = item.mrp;
                   }
-                  let request2 = item.product_variation.map((item1) => {
+                  let requests2 = item.product_variation.map((item1) => {
                     item1.real_price = item1.real_price * countryData.price;
                     item1.mrp = item1.mrp * countryData.price;
                     if (lowprice > item1.mrp) {
@@ -587,7 +587,7 @@ module.exports = {
           }
 
           if (getData.result != "") {
-            let request2 = getData.result.map((item) => {
+            let requests2 = getData.result.map((item) => {
               if (lowprice > item.real_price) {
                 lowprice = item.real_price;
               }
@@ -705,7 +705,7 @@ module.exports = {
                   if (highprice < item.mrp) {
                     highprice = item.mrp;
                   }
-                  let request2 = item.product_variation.map((item1) => {
+                  let requests2 = item.product_variation.map((item1) => {
                     item1.real_price = item1.real_price * countryData.price;
                     item1.mrp = item1.mrp * countryData.price;
                     if (lowprice > item1.mrp) {
@@ -727,7 +727,7 @@ module.exports = {
           }
 
           if (getData.result != "") {
-            let request2 = getData.result.map((item) => {
+            let requests2 = getData.result.map((item) => {
               if (lowprice > item.real_price) {
                 lowprice = item.real_price;
               }
