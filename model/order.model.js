@@ -11,7 +11,7 @@ const orderSchema = new Schema(
       type: Number,
     },
     address_id: {
-      type: String,
+      type: Schema.Types.ObjectId,
     },
     product: [
       {

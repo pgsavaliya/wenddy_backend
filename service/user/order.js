@@ -150,18 +150,18 @@ module.exports = {
         let Data = await orderModel.aggregate([
           {
             $match: {
-              'payment_data.payment_id': id,
+              _id: mongoose.Types.ObjectId(id),
             },
           },
           {
             $lookup: {
-              from: "products",
-              localField: "product.product_id",
-              foreignField: "uniqueCode",
-              as: "productData",
+              from: "addresses",
+              localField: "address_id",
+              foreignField: "_id",
+              as: "orderAddressData",
             },
           },
-          // {$unwind:'$productData'},
+          // {$unwind:'$orderAddressData'},
         ]);
         Data = Data[0];
         // console.log("data .....", Data);
@@ -171,7 +171,7 @@ module.exports = {
             data: Data,
           });
         } else {
-          rej({ status: 404, message: "Invalid id..!!", error: {} });
+          rej({ status: 404, message: "Invalid id..!!" });
         }
         // rej({
         //   status: 404,
