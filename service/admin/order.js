@@ -4,6 +4,7 @@ const orderModel = require("../../model/order.model");
 module.exports = {
   getorder: (page, limit) => {
     if (page && limit) {
+      console.log("Pavan");
       return new Promise(async (res, rej) => {
         try {
           let getData = await orderModel.aggregate([
@@ -60,70 +61,66 @@ module.exports = {
         }
       });
     } else {
-      return "pagination is require....";
+      return { status: 404, data: "pagination is require...." };
     }
   },
 
   getcancelorder: (page, limit) => {
-    if (page && limit) {
-      return new Promise(async (res, rej) => {
-        try {
-          let getData = await orderModel.aggregate([
-            {
-              $match: {
-                is_cancel: "true",
-              },
+    return new Promise(async (res, rej) => {
+      try {
+        let getData = await orderModel.aggregate([
+          {
+            $match: {
+              is_cancel: "true",
             },
-            // {
-            //   $lookup: {
-            //     from: "products",
-            //     localField: "product.product_id",
-            //     foreignField: "uniqueCode",
-            //     as: "productData",
-            //   },
-            // },
-            // { $unwind: "$productData" },
-            {
-              $facet: {
-                total_count: [
-                  {
-                    $group: {
-                      _id: null,
-                      count: { $sum: 1 },
-                    },
+          },
+          // {
+          //   $lookup: {
+          //     from: "products",
+          //     localField: "product.product_id",
+          //     foreignField: "uniqueCode",
+          //     as: "productData",
+          //   },
+          // },
+          // { $unwind: "$productData" },
+          {
+            $facet: {
+              total_count: [
+                {
+                  $group: {
+                    _id: null,
+                    count: { $sum: 1 },
                   },
-                ],
-                result: [
-                  {
-                    $project: {
-                      __v: 0,
-                    },
+                },
+              ],
+              result: [
+                {
+                  $project: {
+                    __v: 0,
                   },
-                  { $sort: { createdAt: -1 } },
-                  { $skip: (+page - 1) * +limit },
-                  { $limit: +limit },
-                ],
-              },
+                },
+                { $sort: { createdAt: -1 } },
+                { $skip: (+page - 1) * +limit },
+                { $limit: +limit },
+              ],
             },
-          ]);
-          getData = getData[0];
-          if (getData) {
-            res({ status: 200, data: getData });
-          } else {
-            rej({ status: 404, message: "Data Not found!!" });
-          }
-        } catch (err) {
-          console.log("err ...", err);
-          rej({
-            status: err?.status || 500,
-            error: err,
-            message: err?.message || "Something Went Wrong!!!",
-          });
+          },
+        ]);
+        getData = getData[0];
+        if (getData) {
+          res({ status: 200, data: getData });
+        } else {
+          rej({ status: 404, message: "Data Not found!!" });
         }
-      });
-    } else {
-      return "pagination is require....";
-    }
+      } catch (err) {
+        console.log("err ...", err);
+        rej({
+          status: err?.status || 500,
+          error: err,
+          message: err?.message || "Something Went Wrong!!!",
+        });
+      }
+    });
   },
 
   byId: (id) => {

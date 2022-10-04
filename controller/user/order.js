@@ -37,7 +37,11 @@ exports.getorder = async (req, res) => {
     if (!req.query.page || !req.query.limit) {
       return response("pagination is require for pagination..!!", {}, 404, res);
     } else {
-      let resp = await orderService.getorder(req.user_id, req.query.page, req.query.limit);
+      let resp = await orderService.getorder(
+        req.user_id,
+        req.query.page,
+        req.query.limit
+      );
       if (resp) {
         return response("SUCESS..!!", resp.data, 200, res);
       } else {
@@ -66,7 +70,7 @@ exports.cancel = async (req, res) => {
   try {
     let resp = await orderService.cancel(req.query.id);
     if (resp) {
-      return response("SUCESS..!!", "Data Updated", 200, res);
+      return response("SUCESS..!!", { data: "Data Updated" }, 200, res);
     } else {
       return response("Something went wrong!!", {}, 500, res);
     }

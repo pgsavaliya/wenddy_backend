@@ -67,7 +67,7 @@ exports.byId = async (req, res) => {
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {
-      return response("Error..!!", {}, 500, res);
+      return response("Something went worng..!!", {}, 500, res); //message
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);
@@ -80,7 +80,7 @@ exports.delete = async (req, res) => {
     if (resp) {
       return response("Deleted successfully!!", resp.data, 200, res);
     } else {
-      return response("Error..!!", err.error, err.status, res);
+      return response("Something went worng..!!", err.error, err.status, res);
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);

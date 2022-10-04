@@ -25,64 +25,60 @@ module.exports = {
   },
 
   getreview: (product_id, page, limit) => {
-    if (page && limit) {
-      return new Promise(async (res, rej) => {
-        try {
-          let qry = {};
-          page = parseInt(page);
-          limit = parseInt(limit);
-          // console.log(product_id);
-          qry = { product_id: +product_id };
-          let getData = await reviewproductModel.aggregate([
-            { $match: qry },
-            {
-              $facet: {
-                total_count: [
-                  {
-                    $group: {
-                      _id: null,
-                      count: { $sum: 1 },
-                    },
+    return new Promise(async (res, rej) => {
+      try {
+        let qry = {};
+        page = parseInt(page);
+        limit = parseInt(limit);
+        // console.log(product_id);
+        qry = { product_id: +product_id };
+        let getData = await reviewproductModel.aggregate([
+          { $match: qry },
+          {
+            $facet: {
+              total_count: [
+                {
+                  $group: {
+                    _id: null,
+                    count: { $sum: 1 },
                   },
-                ],
-                result: [
-                  {
-                    $project: {
-                      email: 0,
-                      __v: 0,
-                    },
+                },
+              ],
+              result: [
+                {
+                  $project: {
+                    email: 0,
+                    __v: 0,
                   },
-                  { $sort: { rating: -1 } },
-                  { $skip: (page - 1) * limit },
-                  { $limit: limit },
-                ],
-              },
+                },
+                { $sort: { rating: -1 } },
+                { $skip: (page - 1) * limit },
+                { $limit: limit },
+              ],
             },
-          ]);
-          getData = getData[0];
-          if (getData.result.length > 0) {
-            res({
-              status: 200,
-              data: {
-                total_count: getData.total_count[0].count,
-                result: getData.result,
-              },
-            });
-          } else {
-            rej({ status: 404, message: "No data found!!" });
-          }
-        } catch (err) {
-          console.log("err ...", err);
-          rej({
-            status: err?.status || 500,
-            error: err,
-            message: err?.message || "Something Went Wrong!!!",
+          },
+        ]);
+        getData = getData[0];
+        if (getData.result.length > 0) {
+          res({
+            status: 200,
+            data: {
+              total_count: getData.total_count[0].count,
+              result: getData.result,
+            },
           });
+        } else {
+          rej({ status: 404, message: "No data found!!" });
         }
-      });
-    } else {
-      return "pagination is require....";
-    }
+      } catch (err) {
+        console.log("err ...", err);
+        rej({
+          status: err?.status || 500,
+          error: err,
+          message: err?.message || "Something Went Wrong!!!",
+        });
+      }
+    });
   },
 };
 

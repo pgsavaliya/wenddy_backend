@@ -17,17 +17,21 @@ exports.addreview = async (req, res) => {
 };
 exports.getreview = async (req, res) => {
   try {
-    console.log("req .......", req.query);
-    console.log("req.params .......", req.params.product_id);
-    let resp = await reviewService.getreview(
-      req.params.product_id,
-      req.query.page,
-      req.query.limit
-    );
-    if (resp) {
-      return response("SUCCESS..!!", resp.data, 200, res);
+    // console.log("req .......", req.query);
+    // console.log("req.params .......", req.params.product_id);
+    if (!req.query.page && !req.query.limit) {
+      return response("pagination is  require for pagination", {}, 404, res);
     } else {
-      return response("Something went wrong!!", {}, 500, res);
+      let resp = await reviewService.getreview(
+        req.params.product_id,
+        req.query.page,
+        req.query.limit
+      );
+      if (resp) {
+        return response("SUCCESS..!!", resp.data, 200, res);
+      } else {
+        return response("Something went wrong!!", {}, 500, res);
+      }
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);

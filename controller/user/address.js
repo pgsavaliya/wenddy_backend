@@ -79,7 +79,7 @@ exports.deleteOne = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    console.log("userId........................", req.user_id);
+    // console.log("userId........................", req.user_id);
     let resp = await addressService.getAll(req.user_id);
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);

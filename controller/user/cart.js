@@ -48,7 +48,7 @@ exports.delete = async (req, res) => {
     if (resp) {
       return response("Deleted successfully!!", resp.data, 200, res);
     } else {
-      return response("Error..!!", err.error, err.status, res);
+      return response("Something went worng!!", err.error, err.status, res); //message change kr
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);
@@ -61,7 +61,7 @@ exports.deleteall = async (req, res) => {
     if (resp) {
       return response("Deleted successfully!!", resp.data, 200, res);
     } else {
-      return response("Error..!!", err.error, err.status, res);
+      return response("Something went worng!!", err.error, err.status, res); //same
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);

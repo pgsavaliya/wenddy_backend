@@ -18,16 +18,20 @@ exports.addwishlist = async (req, res) => {
 
 exports.getwishlist = async (req, res) => {
   try {
-    let resp = await wishlistService.getwishlist({
-      user_id: req.user_id,
-      country: req.query.country,
-      page: req.query.page,
-      limit: req.query.limit,
-    });
-    if (resp) {
-      return response("SUCCESS..!!", resp.data, 200, res);
+    if (!req.query.page && !req.query.limit) {
+      return response("pagination is require for pagination!!", {}, 404, res);
     } else {
-      return response("Something went wrong!!", {}, 500, res);
+      let resp = await wishlistService.getwishlist({
+        user_id: req.user_id,
+        country: req.query.country,
+        page: req.query.page,
+        limit: req.query.limit,
+      });
+      if (resp) {
+        return response("SUCCESS..!!", resp.data, 200, res);
+      } else {
+        return response("Something went wrong!!", {}, 500, res);
+      }
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);
@@ -40,7 +44,7 @@ exports.delete = async (req, res) => {
     if (resp) {
       return response("Deleted successfully!!", resp.data, 200, res);
     } else {
-      return response("Error..!!", err.error, err.status, res);
+      return response("Something went worng!!", err.error, err.status, res); //message change kr
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);

@@ -20,7 +20,7 @@ exports.delete = async (req, res) => {
     if (resp) {
       return response("Deleted successfully!!", resp.data, 200, res);
     } else {
-      return response("Error..!!", err.error, err.status, res);
+      return response("Something went worng..!!", err.error, err.status, res);
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);
@@ -34,9 +34,9 @@ exports.getshipping = async (req, res) => {
       req.query.name
     );
     if (resp) {
-      return response("abc", resp.data, 200, res);
+      return response("SUCESS!!", resp.data, 200, res);
     } else {
-      return response("Error..!!", err.error, err.status, res);
+      return response("Something went worng!!", err.error, err.status, res);
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);
@@ -51,9 +51,9 @@ exports.update = async (req, res) => {
       req.body.data
     );
     if (resp) {
-      return response("abc", resp.data, 200, res);
+      return response("SUCESS!!", resp.data, 200, res);
     } else {
-      return response("Error..!!", err.error, err.status, res);
+      return response("Something went worng!!", err.error, err.status, res);
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);

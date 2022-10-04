@@ -16,21 +16,11 @@ exports.add = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    // console.log(req.body.confirmPassword);
-    if (req.body.password || req.body.confirmPassword) {
-      return response(
-        "Cannot update password and confirmPassword!!",
-        {},
-        400,
-        res
-      );
+    let resp = await productService.update(req.params._id, req.body);
+    if (resp) {
+      return response("data updated successfully!!", {}, 200, res);
     } else {
-      let resp = await productService.update(req.params._id, req.body);
-      if (resp) {
-        return response("data updated successfully!!", {}, 200, res);
-      } else {
-        return response("something went wrong!!", {}, 500, res);
-      }
+      return response("something went wrong!!", {}, 500, res);
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);
@@ -99,7 +89,7 @@ exports.byId = async (req, res) => {
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {
-      return response("Error..!!", {}, 500, res);
+      return response("something went wrong..!!", {}, 500, res);
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);
@@ -112,7 +102,7 @@ exports.delete = async (req, res) => {
     if (resp) {
       return response("Deleted successfully!!", resp.data, 200, res);
     } else {
-      return response("Error..!!", err.error, err.status, res);
+      return response("something went wrong..!!", err.error, err.status, res);
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);

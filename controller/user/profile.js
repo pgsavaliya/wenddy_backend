@@ -17,7 +17,12 @@ exports.getprofile = async (req, res) => {
 exports.update = async (req, res) => {
   try {
     if (req.body.password || req.body.confirmPassword) {
-      return response("Cannot update password and confirmPassword..!!", {}, 400, res);
+      return response(
+        "Cannot update password and confirmPassword..!!",
+        {},
+        400,
+        res
+      );
     } else {
       let resp = await profileService.update(req.params._id, req.body);
       if (resp) {
