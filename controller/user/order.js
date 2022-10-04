@@ -34,11 +34,15 @@ exports.payment = async (req, res) => {
 
 exports.getorder = async (req, res) => {
   try {
-    let resp = await orderService.getorder(req.user_id);
-    if (resp) {
-      return response("SUCESS..!!", resp.data, 200, res);
+    if (!req.query.page || !req.query.limit) {
+      return response("pagination is require for pagination..!!", {}, 404, res);
     } else {
-      return response("Something went wrong!!", {}, 500, res);
+      let resp = await orderService.getorder(req.user_id, req.query.page, req.query.limit);
+      if (resp) {
+        return response("SUCESS..!!", resp.data, 200, res);
+      } else {
+        return response("Something went wrong!!", {}, 500, res);
+      }
     }
   } catch (err) {
     return response(err.message, err?.error, err.status, res);

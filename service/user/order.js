@@ -1,6 +1,7 @@
 const orderModel = require("../../model/order.model");
 const cartModel = require("../../model/addtocart.model");
 const productModel = require("../../model/product.model");
+const mongoose = require("mongoose");
 
 module.exports = {
   order: (data) => {
@@ -63,15 +64,49 @@ module.exports = {
     });
   },
 
-  getorder: (user_id) => {
+  getorder: (user_id, page, limit) => {
     return new Promise(async (res, rej) => {
       try {
-        let getData = await orderModel.find({
-          user_id: user_id,
-          is_cancel: "false",
-        }).sort({ createdAt: -1 });
-        if (getData != "") {
-          res({ status: 200, data: getData });
+        page = parseInt(page);
+        limit = parseInt(limit);
+        let getData = await orderModel.aggregate([
+          {
+            $match: {
+              user_id: mongoose.Types.ObjectId(user_id),
+              is_cancel: "false",
+            }
+          },
+          {
+            $facet: {
+              total_count: [
+                {
+                  $group: {
+                    _id: null,
+                    count: { $sum: 1 }
+                  }
+                }
+              ],
+              result: [
+                {
+                  $project: {
+                    __v: 0,
+                  }
+                },
+                { $sort: { createdAt: -1 } },
+                { $skip: (page - 1) * limit },
+                { $limit: limit },
+              ]
+            }
+          }
+        ]);
+        getData = getData[0];
+        if (getData.result.length > 0) {
+          res({
+            status: 200, data: {
+              total_count: getData.total_count[0].count,
+              result: getData.result,
+            },
+          });
         } else {
           rej({ status: 404, message: "data not found!!" });
         }
