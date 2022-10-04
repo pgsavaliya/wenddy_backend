@@ -42,86 +42,92 @@ module.exports = {
   },
 
   getwishlist: ({ user_id, country, page, limit }) => {
-    return new Promise(async (res, rej) => {
-      try {
-        page = parseInt(page);
-        limit = parseInt(limit);
-        // let newViewcartModel = new addtocartModel(data);
-        let getData = await wishlistModel.aggregate([
-          {
-            $match: {
-              user_id: mongoose.Types.ObjectId(user_id),
+    if (page && limit) {
+      return new Promise(async (res, rej) => {
+        try {
+          page = parseInt(page);
+          limit = parseInt(limit);
+          // let newViewcartModel = new addtocartModel(data);
+          let getData = await wishlistModel.aggregate([
+            {
+              $match: {
+                user_id: mongoose.Types.ObjectId(user_id),
+              },
             },
-          },
-          {
-            $lookup: {
-              from: "products",
-              localField: "product_id",
-              foreignField: "uniqueCode",
-              as: "product_data",
+            {
+              $lookup: {
+                from: "products",
+                localField: "product_id",
+                foreignField: "uniqueCode",
+                as: "product_data",
+              },
             },
-          },
-          {
-            $unwind: "$product_data",
-          },
-          {
-            $facet: {
-              total_count: [{ $group: { _id: null, count: { $sum: 1 } } }],
-              result: [
-                {
-                  $project: {
-                    __v: 0,
-                    product_id: 0,
+            {
+              $unwind: "$product_data",
+            },
+            {
+              $facet: {
+                total_count: [{ $group: { _id: null, count: { $sum: 1 } } }],
+                result: [
+                  {
+                    $project: {
+                      __v: 0,
+                      product_id: 0,
+                    },
                   },
-                },
-                { $sort: { createdAt: -1 } },
-                { $skip: (page - 1) * limit },
-                { $limit: limit },
-              ],
+                  { $sort: { createdAt: -1 } },
+                  { $skip: (page - 1) * limit },
+                  { $limit: limit },
+                ],
+              },
             },
-          },
-        ]);
-        // getData = getData[0];
-        if (getData) {
-          if (country) {
-            let countryData = await countryModel.findOne({ currency: country });
-            // console.log("getData.....", getData[0].result);
-            // res({ status: 200, data: getData });
-
-            if (countryData) {
-              getData[0].result.map((item) => {
-                item.product_data.real_price =
-                  item.real_price * countryData.price;
-                item.product_data.mrp = item.mrp * countryData.price;
-                item.product_data.product_variation.map((item1) => {
-                  item1.real_price = item1.real_price * countryData.price;
-                  item1.mrp = item1.mrp * countryData.price;
-                });
+          ]);
+          // getData = getData[0];
+          if (getData) {
+            if (country) {
+              let countryData = await countryModel.findOne({
+                currency: country,
               });
+              // console.log("getData.....", getData[0].result);
+              // res({ status: 200, data: getData });
+
+              if (countryData) {
+                getData[0].result.map((item) => {
+                  item.product_data.real_price =
+                    item.real_price * countryData.price;
+                  item.product_data.mrp = item.mrp * countryData.price;
+                  item.product_data.product_variation.map((item1) => {
+                    item1.real_price = item1.real_price * countryData.price;
+                    item1.mrp = item1.mrp * countryData.price;
+                  });
+                });
+              }
+
+              // getData.total_count = getData[0].total_count[0].count;
             }
 
-            // getData.total_count = getData[0].total_count[0].count;
-          }
+            if (getData[0].result == "") {
+              rej({ status: 404, message: "Data Not Found" });
+            } else {
+              getData[0].total_count = getData[0].total_count[0]?.count;
 
-          if (getData[0].result == "") {
-            rej({ status: 404, message: "Data Not Found" });
+              res({ status: 200, data: getData });
+            }
           } else {
-            getData[0].total_count = getData[0].total_count[0]?.count;
-
-            res({ status: 200, data: getData });
+            rej({ status: 404, message: "Invalid id!!" });
           }
-        } else {
-          rej({ status: 404, message: "Invalid id!!" });
+        } catch (err) {
+          console.log("err ...", err);
+          rej({
+            status: err?.status || 500,
+            error: err,
+            message: err?.message || "Something Went Wrong!!!",
+          });
         }
-      } catch (err) {
-        console.log("err ...", err);
-        rej({
-          status: err?.status || 500,
-          error: err,
-          message: err?.message || "Something Went Wrong!!!",
-        });
-      }
-    });
+      });
+    } else {
+      return "pagination is require....";
+    }
   },
 
   delete: (id, data) => {

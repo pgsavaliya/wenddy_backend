@@ -41,56 +41,60 @@ module.exports = {
   },
 
   getAll: (page, limit, str) => {
-    return new Promise(async (res, rej) => {
-      try {
-        let qry = {};
-        page = parseInt(page);
-        limit = parseInt(limit);
-        let getData = await userModel.aggregate([
-          {
-            $match: { email: { $regex: str, $options: "i" } },
-          },
-          {
-            $facet: {
-              total_count: [
-                {
-                  $group: {
-                    _id: null,
-                    count: { $sum: 1 },
-                  },
-                },
-              ],
-              result: [
-                {
-                  $project: {
-                    password: 0,
-                    __v: 0,
-                  },
-                },
-                { $sort: { createdAt: -1 } },
-                { $skip: (page - 1) * limit },
-                { $limit: limit },
-              ],
+    if (page && limit) {
+      return new Promise(async (res, rej) => {
+        try {
+          let qry = {};
+          page = parseInt(page);
+          limit = parseInt(limit);
+          let getData = await userModel.aggregate([
+            {
+              $match: { email: { $regex: str, $options: "i" } },
             },
-          },
-        ]);
-        getData = getData[0];
-        if (getData.result.length > 0) {
-          res({
-            status: 200,
-            data: {
-              total_count: getData.total_count[0].count,
-              result: getData.result,
+            {
+              $facet: {
+                total_count: [
+                  {
+                    $group: {
+                      _id: null,
+                      count: { $sum: 1 },
+                    },
+                  },
+                ],
+                result: [
+                  {
+                    $project: {
+                      password: 0,
+                      __v: 0,
+                    },
+                  },
+                  { $sort: { createdAt: -1 } },
+                  { $skip: (page - 1) * limit },
+                  { $limit: limit },
+                ],
+              },
             },
-          });
-        } else {
-          rej({ status: 404, message: "No Data Found!!" });
+          ]);
+          getData = getData[0];
+          if (getData.result.length > 0) {
+            res({
+              status: 200,
+              data: {
+                total_count: getData.total_count[0].count,
+                result: getData.result,
+              },
+            });
+          } else {
+            rej({ status: 404, message: "No Data Found!!" });
+          }
+        } catch (err) {
+          console.log("err ....", err);
+          rej({ status: 500, error: err, message: "something went wrong!!" });
         }
-      } catch (err) {
-        console.log("err ....", err);
-        rej({ status: 500, error: err, message: "something went wrong!!" });
-      }
-    });
+      });
+    } else {
+      return "pagination is require....";
+    }
   },
 
   byId: (id) => {
@@ -99,7 +103,7 @@ module.exports = {
         console.log(id);
         let Data = await userModel.aggregate([
           { $match: { _id: mongoose.Types.ObjectId(id) } },
-          { $project: { password: 0, __v: 0 } }
+          { $project: { password: 0, __v: 0 } },
         ]);
         console.log("Data ..........", Data);
         if (Data) {
@@ -139,5 +143,4 @@ module.exports = {
       }
     });
   },
-
 };
