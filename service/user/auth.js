@@ -124,7 +124,7 @@ module.exports = {
                 res({ status: 200, data: data1 });
               })
               .catch((err) => {
-                rej({ status: 500, data: "something want worng" });
+                rej({ status: 500, data: "something went worng" });
                 console.log("err ...", err);
               });
           } else {
