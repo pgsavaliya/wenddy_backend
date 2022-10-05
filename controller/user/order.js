@@ -68,7 +68,7 @@ exports.byId = async (req, res) => {
 
 exports.cancel = async (req, res) => {
   try {
-    let resp = await orderService.cancel(req.query.id);
+    let resp = await orderService.cancel(req.body.id);
     if (resp) {
       return response("SUCESS..!!", { data: "Data Updated" }, 200, res);
     } else {
