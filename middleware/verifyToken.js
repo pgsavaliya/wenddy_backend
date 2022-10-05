@@ -40,9 +40,6 @@ function verifyforgotToken(req, res, next) {
       } else {
         req.user_id = decrypt(payload.user_id, process.env.USER_ENCRYPTION_KEY);
         req.email = decrypt(payload.email, process.env.USER_ENCRYPTION_KEY);
-
-        // console.log("password ======", payload.password);
-        // console.log("password ======", req.user_id);
         next();
       }
     });
@@ -206,6 +203,7 @@ module.exports = {
   //   verifyUserEmailToken,
   //   verifyCpToken,
   //   verifyAdminEmailToken,
+  verifyforgotToken,
   verifyUserToken,
   verifyAdminToken,
   //   verifyToken,

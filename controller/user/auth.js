@@ -44,7 +44,7 @@ exports.forgot = async (req, res) => {
 
 exports.changepss = async (req, res) => {
   try {
-    let resp = await authService.changepss(req.body);
+    let resp = await authService.changepss(req.body, req.email);
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {
