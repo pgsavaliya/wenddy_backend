@@ -116,8 +116,11 @@ module.exports = {
               process.env.USER_ACCESS_TOKEN,
               { expiresIn: process.env.USER_ACCESS_TIME }
             );
-            let abc = "<a href='" + token + "'>Click Here</a>";
-
+            let abc =
+              "<a href='http://localhost:3000/forgot-password?token=" +
+              token +
+              "'>Click Here</a>";
+            console.log(email);
             await mail(email, "this is a sample mail", abc)
               .then((data) => {
                 let data1 = "mail send";
@@ -146,30 +149,38 @@ module.exports = {
     });
   },
 
-  changepss: async (data) => {
+  changepss: async (data, email) => {
     return new Promise(async (res, rej) => {
       try {
-        let cpassword = data.comfirmpassword;
-        if (data.password == cpassword) {
-          let getData1 = await userModel.findOne({ email: data.email });
-          if (getData1) {
-            let encryptPassword = await bcryptjs.hash(data.password, 12);
-            let password = { password: encryptPassword };
-            console.log("password.. ", password);
-            let getData = await userModel.updateOne(
-              { email: data.email },
-              password
-            );
-            if (getData) {
-              res({ status: 200, data: "password update sycessfully" });
-            } else {
-              rej({ status: 404, message: "Something went worng" });
+        if (email == data.email) {
+          let cpassword = data.comfirmpassword;
+          if (data.password == cpassword) {
+            let getData1 = await userModel.findOne({ email: data.email });
+            if (getData1) {
+              let encryptPassword = await bcryptjs.hash(data.password, 12);
+              let password = { password: encryptPassword };
+              console.log("password.. ", password);
+              let getData = await userModel.updateOne(
+                { email: data.email },
+                password
+              );
+              if (getData) {
+                res({ status: 200, data: "password update sycessfully" });
+              } else {
+                rej({ status: 404, message: "Something went worng" });
+              }
             }
+          } else {
+            rej({
+              status: 404,
+              error: "password and confirm password not match",
+              message: "something went wrong!!",
+            });
           }
         } else {
           rej({
-            status: 500,
-            error: "password and confirm password not match",
+            status: 404,
+            error: "This email id is not match please enter right email",
             message: "something went wrong!!",
           });
         }
