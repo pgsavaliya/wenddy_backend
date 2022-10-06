@@ -382,7 +382,7 @@ module.exports = {
                     $addFields: {
                       avgRating: { $avg: "$avgdata.rating" },
                       watchlist: {
-                        $in: ["$avgdata.uniqueCode", watchlistOfUser],
+                        $in: ["$uniqueCode", watchlistOfUser],
                       },
                     },
                   },
@@ -522,7 +522,7 @@ module.exports = {
                     $addFields: {
                       avgRating: { $avg: "$avgdata.rating" },
                       watchlist: {
-                        $in: ["$avgdata.uniqueCode", watchlistOfUser],
+                        $in: ["$uniqueCode", watchlistOfUser],
                       },
                     },
                   },
@@ -668,7 +668,7 @@ module.exports = {
                     $addFields: {
                       avgRating: { $avg: "$avgdata.rating" },
                       watchlist: {
-                        $in: ["$avgdata.uniqueCode", watchlistOfUser],
+                        $in: ["$uniqueCode", watchlistOfUser],
                       },
                     },
                   },
