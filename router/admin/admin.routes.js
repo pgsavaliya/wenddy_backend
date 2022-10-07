@@ -11,6 +11,7 @@ const countryRoute = require("./country");
 const subscribeRoute = require("./subscribe");
 const shippingRoute = require("./shipping");
 const orderRoute = require("./order");
+const supportRoute = require("./support");
 
 adminRoute.get("/", (req, res) => {
   res.status(200).json({ message: "admin Route is working" });
@@ -25,5 +26,6 @@ adminRoute.use("/country", verifyAdminToken, countryRoute);
 adminRoute.use("/subscribe", verifyAdminToken, subscribeRoute);
 adminRoute.use("/shipping", verifyAdminToken, shippingRoute);
 adminRoute.use("/order", verifyAdminToken, orderRoute);
+adminRoute.use("/support", supportRoute);
 
 module.exports = adminRoute;
