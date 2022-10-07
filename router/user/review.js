@@ -10,6 +10,7 @@ reviewRoute.get("/", (req, res) => {
 
 reviewRoute.post("/addreview", verifyUserToken, reviewcontroller.addreview);
 reviewRoute.get("/getreview/:product_id", reviewcontroller.getreview);
+reviewRoute.get("/getAll", reviewcontroller.getAll);
 // cartRoute.put("/update/:_id", addtocartcontroller.update);
 // cartRoute.delete("/delete/:_id", addtocartcontroller.delete);
 
