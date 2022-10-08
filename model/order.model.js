@@ -10,9 +10,7 @@ const orderSchema = new Schema(
     total: {
       type: Number,
     },
-    address_id: {
-      type: Schema.Types.ObjectId,
-    },
+    address: {},
     product: [
       {
         product_id: {
@@ -41,13 +39,13 @@ const orderSchema = new Schema(
         },
         cart_id: {
           type: Schema.Types.ObjectId,
-          ref: "cart"
+          ref: "cart",
         },
         product_title: {
           type: String,
         },
         product_image: {
-          type: String
+          type: String,
         },
       },
     ],
