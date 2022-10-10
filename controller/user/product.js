@@ -4,7 +4,6 @@ const RequestIp = require("@supercharge/request-ip");
 
 exports.getAll = async (req, res) => {
   try {
-    console.log("req.userID ............", req.user_id);
     if (!req.query.page || !req.query.limit) {
       return response("pagination is require for pagination..!!", {}, 404, res);
     } else {
@@ -27,17 +26,14 @@ exports.getAll = async (req, res) => {
       });
       if (resp) {
         // req.ip = RequestIp.getClientIp(req);
-        // console.log(req.ip);
         // let ip = req.socket.localAddress;
         let ip = req.socket.localAddress;
-        // console.log("request", );
         let resp1 = await productService.addip(ip);
         if (resp1) {
           return response("SUCESS..!!", resp.data, 200, res);
         } else {
           return response("something went wrong!!", {}, 404, res);
         }
-        // console.log("iopdfs", ip1);
       } else {
         return response("something went wrong!!", {}, 500, res);
       }
