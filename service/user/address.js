@@ -73,6 +73,11 @@ module.exports = {
   update: (user_id, address_id, address) => {
     return new Promise(async (res, rej) => {
       try {
+        if (address.is_primary == true) {
+          //badha address ne flase karvana
+          //pachi addresis _tyue
+          let defaultData = await addressModel.updateOne({ user_id: user_id }, { $set: { 'address.$[].is_primary': false } });
+        }
         let updateData = await addressModel.findOneAndUpdate(
           { user_id: user_id, "address._id": address_id },
           { $set: { "address.$": address } },
@@ -170,8 +175,8 @@ module.exports = {
           },
           { $unwind: "$address" },
           {
-            $match:{
-              "address._id":mongoose.Types.ObjectId(id),
+            $match: {
+              "address._id": mongoose.Types.ObjectId(id),
             }
           }
         ]);

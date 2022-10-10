@@ -402,13 +402,12 @@ module.exports = {
                       },
                     },
                   ],
-                  result: [
-                    {
-                      $addFields: {
-                        avgRating: { $avg: "$avgdata.rating" },
-                        watchlist: {
-                          $in: ["$avgdata.uniqueCode", watchlistOfUser],
-                        },
+                result: [
+                  {
+                    $addFields: {
+                      avgRating: { $avg: "$avgdata.rating" },
+                      watchlist: {
+                        $in: ["$uniqueCode", watchlistOfUser],
                       },
                     },
                     {
@@ -538,13 +537,12 @@ module.exports = {
                       },
                     },
                   ],
-                  result: [
-                    {
-                      $addFields: {
-                        avgRating: { $avg: "$avgdata.rating" },
-                        watchlist: {
-                          $in: ["$avgdata.uniqueCode", watchlistOfUser],
-                        },
+                result: [
+                  {
+                    $addFields: {
+                      avgRating: { $avg: "$avgdata.rating" },
+                      watchlist: {
+                        $in: ["$uniqueCode", watchlistOfUser],
                       },
                     },
                     {
@@ -680,13 +678,12 @@ module.exports = {
                       },
                     },
                   ],
-                  result: [
-                    {
-                      $addFields: {
-                        avgRating: { $avg: "$avgdata.rating" },
-                        watchlist: {
-                          $in: ["$avgdata.uniqueCode", watchlistOfUser],
-                        },
+                result: [
+                  {
+                    $addFields: {
+                      avgRating: { $avg: "$avgdata.rating" },
+                      watchlist: {
+                        $in: ["$uniqueCode", watchlistOfUser],
                       },
                     },
                     {
