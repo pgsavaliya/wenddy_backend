@@ -51,11 +51,9 @@ const productSchema = new Schema(
     },
     real_price: {
       type: Number,
-      default: 0,
     },
     mrp: {
       type: Number,
-      default: 0,
     },
     percentage_difference: {
       type: String,
@@ -65,6 +63,9 @@ const productSchema = new Schema(
     },
     qty: {
       type: Number,
+    },
+    metal: {
+      type: String,
     },
     product_type: {
       type: String,
