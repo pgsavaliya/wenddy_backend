@@ -13,16 +13,19 @@ module.exports = {
         let unique_id = await generateUniqueCode();
         data["percentage_difference"] =
           parseInt((data.real_price * 100) / data.mrp) + "%" || "";
-        let newData = data.product_variation.map(
-          (item, percentage_difference) => {
-            return {
-              ...item,
-              percentage_difference:
-                parseInt((item.real_price * 100) / item.mrp) + "%" || "",
-            };
-          }
-        );
-        data["product_variation"] = newData;
+        if (data.product_type == "variation") {
+          let newData = data.product_variation.map(
+            (item, percentage_difference) => {
+              return {
+                ...item,
+                percentage_difference:
+                  parseInt((item.real_price * 100) / item.mrp) + "%" || "",
+              };
+            }
+          );
+          data["product_variation"] = newData;
+        }
+
         data["uniqueCode"] = unique_id;
         let newProductModel = new productModel(data);
         let saveData = await newProductModel.save();

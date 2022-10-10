@@ -87,7 +87,8 @@ module.exports = {
         //-----------------------------------------------------------------------------------------------------------------------------------------
         let count, price, datacount, getData1;
         let getData = [];
-
+        let lowprice = 1000000;
+        let highprice = 0;
         switch (sort_by) {
           case "default":
             let limit1 = parseInt(limit * 0.4);
@@ -134,7 +135,7 @@ module.exports = {
                         avgdata: 0,
                       },
                     },
-                    { $sort: { createdAt: -1 } },
+                    // { $sort: { createdAt: -1 } },
                     { $skip: (page - 1) * limit1 },
                     { $limit: limit1 },
                   ],
@@ -200,36 +201,39 @@ module.exports = {
               },
             ]);
             getData2 = getData2[0]; //|| { total_count: [0] };
-            var lowprice = 1000000;
-            var highprice = 0;
+
             if (getData1.result != "") {
               let requests1 = getData1.result.map(async (item) => {
                 if (country) {
                   let countryData = await countryModel.findOne({
                     currency: country,
                   });
+
                   if (countryData) {
-                    item.real_price = item.real_price * countryData.price;
-                    item.mrp = item.mrp * countryData.price;
-                    if (lowprice > item.real_price) {
-                      lowprice = item.real_price;
-                    }
-                    if (highprice < item.real_price) {
-                      highprice = item.real_price;
-                    }
-                    let requests2 = item.product_variation.map((item1) => {
-                      item1.real_price = item1.real_price * countryData.price;
-                      item1.mrp = item1.mrp * countryData.price;
-                      if (lowprice > item1.real_price) {
-                        lowprice = item1.real_price;
+                    if (item.product_type == "variation") {
+                      let requests2 = item.product_variation.map((item1) => {
+                        item1.real_price = item1.real_price * countryData.price;
+                        item1.mrp = item1.mrp * countryData.price;
+                        if (lowprice > item1.real_price) {
+                          lowprice = item1.real_price;
+                        }
+                        if (highprice < item1.real_price) {
+                          highprice = item1.real_price;
+                        }
+                      });
+                      let xys = await Promise.all(requests2).then((data) => {
+                        return data;
+                      });
+                    } else {
+                      item.real_price = item.real_price * countryData.price;
+                      item.mrp = item.mrp * countryData.price;
+                      if (lowprice > item.real_price) {
+                        lowprice = item.real_price;
                       }
-                      if (highprice < item1.real_price) {
-                        highprice = item1.real_price;
+                      if (highprice < item.real_price) {
+                        highprice = item.real_price;
                       }
-                    });
-                    let xys = await Promise.all(requests2).then((data) => {
-                      return data;
-                    });
+                    }
                   }
                 }
 
@@ -259,22 +263,30 @@ module.exports = {
                     currency: country,
                   });
                   if (countryData) {
-                    item.real_price = item.real_price * countryData.price;
-                    item.mrp = item.mrp * countryData.price;
-
-                    let requests2 = item.product_variation.map((item1) => {
-                      item1.real_price = item1.real_price * countryData.price;
-                      item1.mrp = item1.mrp * countryData.price;
-                      if (lowprice > item1.real_price) {
-                        lowprice = item1.real_price;
+                    if (item.product_type == "variation") {
+                      let requests2 = item.product_variation.map((item1) => {
+                        item1.real_price = item1.real_price * countryData.price;
+                        item1.mrp = item1.mrp * countryData.price;
+                        if (lowprice > item1.real_price) {
+                          lowprice = item1.real_price;
+                        }
+                        if (highprice < item1.real_price) {
+                          highprice = item1.real_price;
+                        }
+                      });
+                      let xys = await Promise.all(requests2).then((data) => {
+                        return data;
+                      });
+                    } else {
+                      item.real_price = item.real_price * countryData.price;
+                      item.mrp = item.mrp * countryData.price;
+                      if (lowprice > item.real_price) {
+                        lowprice = item.real_price;
                       }
-                      if (highprice < item1.real_price) {
-                        highprice = item1.real_price;
+                      if (highprice < item.real_price) {
+                        highprice = item.real_price;
                       }
-                    });
-                    let xys = await Promise.all(requests2).then((data) => {
-                      return data;
-                    });
+                    }
                   }
                 }
                 // let avgData2 = await reviewproductModel.aggregate([
@@ -296,48 +308,49 @@ module.exports = {
                 return data;
               });
             }
-            if (getData1.result != "") {
-              let requests2 = getData1.result.map((item) => {
-                if (lowprice > item.real_price) {
-                  lowprice = item.real_price;
-                }
-                if (highprice < item.real_price) {
-                  highprice = item.real_price;
-                }
-                item.product_variation.map((item1) => {
-                  if (lowprice > item1.real_price) {
-                    lowprice = item1.real_price;
-                  }
-                  if (highprice < item1.real_price) {
-                    highprice = item1.real_price;
-                  }
-                });
-              });
-              let xys = await Promise.all(requests2).then((data) => {
-                return data;
-              });
-            }
-            if (getData2.result != "") {
-              let requests2 = getData2.result.map((item) => {
-                if (lowprice > item.real_price) {
-                  lowprice = item.real_price;
-                }
-                if (highprice < item.real_price) {
-                  highprice = item.real_price;
-                }
-                item.product_variation.map((item1) => {
-                  if (lowprice > item1.real_price) {
-                    lowprice = item1.real_price;
-                  }
-                  if (highprice < item1.real_price) {
-                    highprice = item1.real_price;
-                  }
-                });
-              });
-              let xys = await Promise.all(requests2).then((data) => {
-                return data;
-              });
-            }
+            // if (getData1.result != "") {
+            //   let requests2 = getData1.result.map((item) => {
+            //     if (lowprice > item.real_price) {
+            //       lowprice = item.real_price;
+            //     }
+            //     if (highprice < item.real_price) {
+            //       highprice = item.real_price;
+            //     }
+            //     item.product_variation.map((item1) => {
+            //       if (lowprice > item1.real_price) {
+            //         lowprice = item1.real_price;
+            //       }
+            //       if (highprice < item1.real_price) {
+            //         highprice = item1.real_price;
+            //       }
+            //     });
+            //   });
+            //   let xys = await Promise.all(requests2).then((data) => {
+            //     return data;
+            //   });
+            // }
+            // if (getData2.result != "") {
+            //   let requests2 = getData2.result.map((item) => {
+            //     if (lowprice > item.real_price) {
+            //       lowprice = item.real_price;
+            //     }
+            //     if (highprice < item.real_price) {
+            //       highprice = item.real_price;
+            //     }
+            //     item.product_variation.map((item1) => {
+            //       if (lowprice > item1.real_price) {
+            //         lowprice = item1.real_price;
+            //       }
+            //       if (highprice < item1.real_price) {
+            //         highprice = item1.real_price;
+            //       }
+            //     });
+            //   });
+            //   let xys = await Promise.all(requests2).then((data) => {
+            //     return data;
+            //   });
+            // }
+            console.log("low price = ", lowprice);
 
             price = {
               highprice: highprice || 0,
@@ -414,8 +427,6 @@ module.exports = {
             getData = getData[0]; //|| { total_count: [0] };
             datacount = getData.total_count[0]?.count || 0;
 
-            var lowprice = 1000000;
-            var highprice = 0;
             if (getData.result != "") {
               let requests = getData.result.map(async (item) => {
                 if (country) {
@@ -423,27 +434,30 @@ module.exports = {
                     currency: country,
                   });
                   if (countryData) {
-                    item.real_price = item.real_price * countryData.price;
-                    item.mrp = item.mrp * countryData.price;
-                    if (lowprice > item.mrp) {
-                      lowprice = item.mrp;
-                    }
-                    if (highprice < item.mrp) {
-                      highprice = item.mrp;
-                    }
-                    let requests2 = item.product_variation.map((item1) => {
-                      item1.real_price = item1.real_price * countryData.price;
-                      item1.mrp = item1.mrp * countryData.price;
-                      if (lowprice > item1.mrp) {
-                        lowprice = item1.mrp;
+                    if (item.product_type == "variation") {
+                      let requests2 = item.product_variation.map((item1) => {
+                        item1.real_price = item1.real_price * countryData.price;
+                        item1.mrp = item1.mrp * countryData.price;
+                        if (lowprice > item1.real_price) {
+                          lowprice = item1.real_price;
+                        }
+                        if (highprice < item1.real_price) {
+                          highprice = item1.real_price;
+                        }
+                      });
+                      let xys = await Promise.all(requests2).then((data) => {
+                        return data;
+                      });
+                    } else {
+                      item.real_price = item.real_price * countryData.price;
+                      item.mrp = item.mrp * countryData.price;
+                      if (lowprice > item.real_price) {
+                        lowprice = item.real_price;
                       }
-                      if (highprice < item1.mrp) {
-                        highprice = item1.mrp;
+                      if (highprice < item.real_price) {
+                        highprice = item.real_price;
                       }
-                    });
-                    let xys = await Promise.all(requests2).then((data) => {
-                      return data;
-                    });
+                    }
                   }
                 }
               });
@@ -452,27 +466,27 @@ module.exports = {
               });
             }
 
-            if (getData.result != "") {
-              let requests2 = getData.result.map((item) => {
-                if (lowprice > item.real_price) {
-                  lowprice = item.real_price;
-                }
-                if (highprice < item.real_price) {
-                  highprice = item.real_price;
-                }
-                item.product_variation.map((item1) => {
-                  if (lowprice > item1.real_price) {
-                    lowprice = item1.real_price;
-                  }
-                  if (highprice < item1.real_price) {
-                    highprice = item1.real_price;
-                  }
-                });
-              });
-              let xys = await Promise.all(requests2).then((data) => {
-                return data;
-              });
-            }
+            // if (getData.result != "") {
+            //   let requests2 = getData.result.map((item) => {
+            //     if (lowprice > item.real_price) {
+            //       lowprice = item.real_price;
+            //     }
+            //     if (highprice < item.real_price) {
+            //       highprice = item.real_price;
+            //     }
+            //     item.product_variation.map((item1) => {
+            //       if (lowprice > item1.real_price) {
+            //         lowprice = item1.real_price;
+            //       }
+            //       if (highprice < item1.real_price) {
+            //         highprice = item1.real_price;
+            //       }
+            //     });
+            //   });
+            //   let xys = await Promise.all(requests2).then((data) => {
+            //     return data;
+            //   });
+            // }
 
             price = {
               highprice: highprice || 0,
@@ -554,8 +568,6 @@ module.exports = {
             getData = getData[0]; //|| { total_count: [0] };
             datacount = getData.total_count[0]?.count || 0;
 
-            var lowprice = 1000000;
-            var highprice = 0;
             if (getData.result != "") {
               let requests = getData.result.map(async (item) => {
                 if (country) {
@@ -563,28 +575,31 @@ module.exports = {
                     currency: country,
                   });
                   if (countryData) {
-                    item.real_price = item.real_price * countryData.price;
-                    item.mrp = item.mrp * countryData.price;
-                    if (lowprice > item.mrp) {
-                      lowprice = item.mrp;
-                    }
-                    if (highprice < item.mrp) {
-                      highprice = item.mrp;
-                    }
-                    let requests2 = item.product_variation.map((item1) => {
-                      item1.real_price = item1.real_price * countryData.price;
-                      item1.mrp = item1.mrp * countryData.price;
-                      if (lowprice > item1.mrp) {
-                        lowprice = item1.mrp;
-                      }
-                      if (highprice < item1.mrp) {
-                        highprice = item1.mrp;
-                      }
-                    });
+                    if (item.product_type == "variation") {
+                      let requests2 = item.product_variation.map((item1) => {
+                        item1.real_price = item1.real_price * countryData.price;
+                        item1.mrp = item1.mrp * countryData.price;
+                        if (lowprice > item1.real_price) {
+                          lowprice = item1.real_price;
+                        }
+                        if (highprice < item1.real_price) {
+                          highprice = item1.real_price;
+                        }
+                      });
 
-                    let xys = await Promise.all(requests2).then((data) => {
-                      return data;
-                    });
+                      let xys = await Promise.all(requests2).then((data) => {
+                        return data;
+                      });
+                    } else {
+                      item.real_price = item.real_price * countryData.price;
+                      item.mrp = item.mrp * countryData.price;
+                      if (lowprice > item.real_price) {
+                        lowprice = item.real_price;
+                      }
+                      if (highprice < item.real_price) {
+                        highprice = item.real_price;
+                      }
+                    }
                   }
                 }
               });
@@ -593,27 +608,27 @@ module.exports = {
               });
             }
 
-            if (getData.result != "") {
-              let requests2 = getData.result.map((item) => {
-                if (lowprice > item.real_price) {
-                  lowprice = item.real_price;
-                }
-                if (highprice < item.real_price) {
-                  highprice = item.real_price;
-                }
-                item.product_variation.map((item1) => {
-                  if (lowprice > item1.real_price) {
-                    lowprice = item1.real_price;
-                  }
-                  if (highprice < item1.real_price) {
-                    highprice = item1.real_price;
-                  }
-                });
-              });
-              let xys = await Promise.all(requests2).then((data) => {
-                return data;
-              });
-            }
+            // if (getData.result != "") {
+            //   let requests2 = getData.result.map((item) => {
+            //     if (lowprice > item.real_price) {
+            //       lowprice = item.real_price;
+            //     }
+            //     if (highprice < item.real_price) {
+            //       highprice = item.real_price;
+            //     }
+            //     item.product_variation.map((item1) => {
+            //       if (lowprice > item1.real_price) {
+            //         lowprice = item1.real_price;
+            //       }
+            //       if (highprice < item1.real_price) {
+            //         highprice = item1.real_price;
+            //       }
+            //     });
+            //   });
+            //   let xys = await Promise.all(requests2).then((data) => {
+            //     return data;
+            //   });
+            // }
 
             price = {
               highprice: highprice || 0,
@@ -690,8 +705,6 @@ module.exports = {
             getData = getData[0]; //|| { total_count: [0] };
             datacount = getData.total_count[0]?.count || 0;
 
-            var lowprice = 1000000;
-            var highprice = 0;
             if (getData.result != "") {
               let requests = getData.result.map(async (item) => {
                 if (country) {
@@ -699,27 +712,30 @@ module.exports = {
                     currency: country,
                   });
                   if (countryData) {
-                    item.real_price = item.real_price * countryData.price;
-                    item.mrp = item.mrp * countryData.price;
-                    if (lowprice > item.mrp) {
-                      lowprice = item.mrp;
-                    }
-                    if (highprice < item.mrp) {
-                      highprice = item.mrp;
-                    }
-                    let requests2 = item.product_variation.map((item1) => {
-                      item1.real_price = item1.real_price * countryData.price;
-                      item1.mrp = item1.mrp * countryData.price;
-                      if (lowprice > item1.mrp) {
-                        lowprice = item1.mrp;
+                    if (item.product_type == "variation") {
+                      let requests2 = item.product_variation.map((item1) => {
+                        item1.real_price = item1.real_price * countryData.price;
+                        item1.mrp = item1.mrp * countryData.price;
+                        if (lowprice > item1.real_price) {
+                          lowprice = item1.real_price;
+                        }
+                        if (highprice < item1.real_price) {
+                          highprice = item1.real_price;
+                        }
+                      });
+                      let xys = await Promise.all(requests2).then((data) => {
+                        return data;
+                      });
+                    } else {
+                      item.real_price = item.real_price * countryData.price;
+                      item.mrp = item.mrp * countryData.price;
+                      if (lowprice > item.real_price) {
+                        lowprice = item.real_price;
                       }
-                      if (highprice < item1.mrp) {
-                        highprice = item1.mrp;
+                      if (highprice < item.real_price) {
+                        highprice = item.real_price;
                       }
-                    });
-                    let xys = await Promise.all(requests2).then((data) => {
-                      return data;
-                    });
+                    }
                   }
                 }
               });
@@ -728,27 +744,27 @@ module.exports = {
               });
             }
 
-            if (getData.result != "") {
-              let requests2 = getData.result.map((item) => {
-                if (lowprice > item.real_price) {
-                  lowprice = item.real_price;
-                }
-                if (highprice < item.real_price) {
-                  highprice = item.real_price;
-                }
-                item.product_variation.map((item1) => {
-                  if (lowprice > item1.real_price) {
-                    lowprice = item1.real_price;
-                  }
-                  if (highprice < item1.real_price) {
-                    highprice = item1.real_price;
-                  }
-                });
-              });
-              let xys = await Promise.all(requests2).then((data) => {
-                return data;
-              });
-            }
+            // if (getData.result != "") {
+            //   let requests2 = getData.result.map((item) => {
+            //     if (lowprice > item.real_price) {
+            //       lowprice = item.real_price;
+            //     }
+            //     if (highprice < item.real_price) {
+            //       highprice = item.real_price;
+            //     }
+            //     item.product_variation.map((item1) => {
+            //       if (lowprice > item1.real_price) {
+            //         lowprice = item1.real_price;
+            //       }
+            //       if (highprice < item1.real_price) {
+            //         highprice = item1.real_price;
+            //       }
+            //     });
+            //   });
+            //   let xys = await Promise.all(requests2).then((data) => {
+            //     return data;
+            //   });
+            // }
 
             price = {
               highprice: highprice || 0,
