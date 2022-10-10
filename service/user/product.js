@@ -402,12 +402,13 @@ module.exports = {
                       },
                     },
                   ],
-                result: [
-                  {
-                    $addFields: {
-                      avgRating: { $avg: "$avgdata.rating" },
-                      watchlist: {
-                        $in: ["$uniqueCode", watchlistOfUser],
+                  result: [
+                    {
+                      $addFields: {
+                        avgRating: { $avg: "$avgdata.rating" },
+                        watchlist: {
+                          $in: ["$avgdata.uniqueCode", watchlistOfUser],
+                        },
                       },
                     },
                     {
@@ -537,12 +538,13 @@ module.exports = {
                       },
                     },
                   ],
-                result: [
-                  {
-                    $addFields: {
-                      avgRating: { $avg: "$avgdata.rating" },
-                      watchlist: {
-                        $in: ["$uniqueCode", watchlistOfUser],
+                  result: [
+                    {
+                      $addFields: {
+                        avgRating: { $avg: "$avgdata.rating" },
+                        watchlist: {
+                          $in: ["$avgdata.uniqueCode", watchlistOfUser],
+                        },
                       },
                     },
                     {
@@ -678,12 +680,13 @@ module.exports = {
                       },
                     },
                   ],
-                result: [
-                  {
-                    $addFields: {
-                      avgRating: { $avg: "$avgdata.rating" },
-                      watchlist: {
-                        $in: ["$uniqueCode", watchlistOfUser],
+                  result: [
+                    {
+                      $addFields: {
+                        avgRating: { $avg: "$avgdata.rating" },
+                        watchlist: {
+                          $in: ["$avgdata.uniqueCode", watchlistOfUser],
+                        },
                       },
                     },
                     {
