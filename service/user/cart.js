@@ -10,66 +10,70 @@ module.exports = {
         let productData = await productModel.findOne({
           uniqueCode: +data.product_id,
         });
-        // console.log("data ........", data);
-        let getData1 = await addtocartModel.findOne({
-          product_id: +data.product_id,
-          price: data.price,
-          metal: data.metal,
-          diamond_type: data.diamond_type,
-          user_id: user_id,
-          ring_size: data.ring_size,
-        });
-        // console.log("getData ........", getData1);
-        if (getData1) {
-          if (data.quantity !== 0) {
-            data["total_price"] = data.quantity * data.price;
-            let getData = await addtocartModel.updateOne(
-              {
-                product_id: +getData1.product_id,
-                price: getData1.price,
-                metal: getData1.metal,
-                diamond_type: getData1.diamond_type,
-                user_id: mongoose.Types.ObjectId(getData1.user_id),
-                ring_size: getData1.ring_size,
-                iso: getData1.iso,
-              },
-              data,
-              {
-                new: true,
+        if (productData) {
+          // console.log("data ........", data);
+          let getData1 = await addtocartModel.findOne({
+            product_id: +data.product_id,
+            price: data.price,
+            metal: data.metal,
+            diamond_type: data.diamond_type,
+            user_id: user_id,
+            ring_size: data.ring_size,
+          });
+          // console.log("getData ........", getData1);
+          if (getData1) {
+            if (data.quantity !== 0) {
+              data["total_price"] = data.quantity * data.price;
+              let getData = await addtocartModel.updateOne(
+                {
+                  product_id: +getData1.product_id,
+                  price: getData1.price,
+                  metal: getData1.metal,
+                  diamond_type: getData1.diamond_type,
+                  user_id: mongoose.Types.ObjectId(getData1.user_id),
+                  ring_size: getData1.ring_size,
+                  iso: getData1.iso,
+                },
+                data,
+                {
+                  new: true,
+                }
+              );
+              // console.log("getData ......", getData);
+              if (getData) {
+                res({ status: 200, data: "Data Updated Successfully!!" });
+              } else {
+                rej({ status: 404, message: "Invalid id!!" });
               }
-            );
-            // console.log("getData ......", getData);
-            if (getData) {
-              res({ status: 200, data: "Data Updated Successfully!!" });
             } else {
-              rej({ status: 404, message: "Invalid id!!" });
+              let deleteData = await addtocartModel.deleteOne({
+                product_id: +data.product_id,
+                price: data.price,
+                metal: data.metal,
+                diamond_type: data.diamond_type,
+                user_id: user_id,
+                ring_size: data.ring_size,
+              });
+              if (deleteData) {
+                res({ status: 200, data: "Data Deleted!!" });
+              } else {
+                rej({ status: 404, message: "Invalid id!!" });
+              }
             }
           } else {
-            let deleteData = await addtocartModel.deleteOne({
-              product_id: +data.product_id,
-              price: data.price,
-              metal: data.metal,
-              diamond_type: data.diamond_type,
-              user_id: user_id,
-              ring_size: data.ring_size,
-            });
-            if (deleteData) {
-              res({ status: 200, data: "Data Deleted!!" });
+            data["user_id"] = user_id;
+            // data["product_amount"] = data.price;
+            data["total_price"] = data.quantity * data.price;
+            let newAddtocartModel = new addtocartModel(data);
+            let saveData = await newAddtocartModel.save();
+            if (saveData) {
+              res({ status: 200, data: "Added to Cart Successfully!!" });
             } else {
-              rej({ status: 404, message: "Invalid id!!" });
+              rej({ status: 404, message: "something went wrong!!" });
             }
           }
         } else {
-          data["user_id"] = user_id;
-          // data["product_amount"] = data.price;
-          data["total_price"] = data.quantity * data.price;
-          let newAddtocartModel = new addtocartModel(data);
-          let saveData = await newAddtocartModel.save();
-          if (saveData) {
-            res({ status: 200, data: "Added to Cart Successfully!!" });
-          } else {
-            rej({ status: 404, message: "something went wrong!!" });
-          }
+          rej({ status: 404, message: "product not found!!" });
         }
       } catch (err) {
         console.log("err ...", err);
