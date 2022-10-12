@@ -362,7 +362,7 @@ module.exports = {
             getData.push(getData1.result);
             getData.push(getData2.result);
 
-            if (getData.length > 0) {
+            if (getData[0].length > 0 || getData[1].length > 0) {
               res({
                 status: 200,
                 data: { count, price, getData },
@@ -499,6 +499,7 @@ module.exports = {
               let abc = [];
               getData.push(abc);
               getData.push(getData1);
+
               res({
                 status: 200,
                 data: { count, price, getData },
