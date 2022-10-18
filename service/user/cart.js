@@ -89,6 +89,7 @@ module.exports = {
   getcart: ({ user_id, country }) => {
     return new Promise(async (res, rej) => {
       try {
+        console.log(user_id);
         let getData = await addtocartModel.aggregate([
           {
             $match: {
@@ -104,10 +105,10 @@ module.exports = {
             },
           },
         ]);
-        if (getData) {
+        if (getData != "") {
           if (country) {
             let countryData = await countryModel.findOne({ currency: country });
-            console.log("cdata", countryData);
+            console.log("cdata", getData);
             if (countryData) {
               getData.map((item2) => {
                 item2.total_price = item2.total_price * countryData.price;
@@ -129,7 +130,7 @@ module.exports = {
           });
           res({ status: 200, data: { total: total, data: getData } });
         } else {
-          rej({ status: 404, message: "Invalid id!!" });
+          rej({ status: 404, message: "Data Not Found!!" });
         }
       } catch (err) {
         console.log("err ...", err);
