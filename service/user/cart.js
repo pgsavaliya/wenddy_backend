@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const addtocartModel = require("../../model/addtocart.model");
 const productModel = require("../../model/product.model");
 const countryModel = require("../../model/country.model");
+const addressModel = require("../../model/address.model");
 
 module.exports = {
   addtocart: (user_id, data) => {
@@ -128,7 +129,16 @@ module.exports = {
           getData.map((item) => {
             total = total + item.total_price;
           });
-          res({ status: 200, data: { total: total, data: getData } });
+          let getData1 = await addressModel.findOne({ user_id: user_id }).lean();
+          res({
+            status: 200, data: {
+              getData,
+              total: total,
+              is_primary: getData1.address.some(
+                (item) => item.is_primary == true
+              ),
+            }
+          });
         } else {
           rej({ status: 404, message: "Data Not Found!!" });
         }

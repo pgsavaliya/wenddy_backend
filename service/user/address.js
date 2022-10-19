@@ -1,6 +1,6 @@
 const addressModel = require("../../model/address.model");
 const userModel = require("../../model/user.model");
-const { default: mongoose } = require("mongoose");
+const { mongoose } = require("mongoose");
 
 
 module.exports = {
