@@ -150,24 +150,16 @@ module.exports = {
   getAll: (user_id) => {
     return new Promise(async (res, rej) => {
       try {
-        // let obj = {};
         let is_default;
-        let getData = await addressModel.findOne({ user_id: user_id });
+        let getData = [await addressModel.findOne({ user_id: user_id })];
         if (getData) {
-          getData.address.map(item => {
+          getData[0].address.map(item => {
             if (item.is_primary == true) {
               is_default = true;
             }
             else is_default = false;
           })
-          console.log("getData .......", typeof getData);
-          console.log("is_default .......", is_default);
-          let obj2 = { is_default: is_default };
-          console.log("obj2 .......", obj2);
-          // obj = { ...obj, ...getData };
-          // // console.log("obj .......", obj._doc);
-          getData = { ...getData, ...obj2 };
-          // console.log("obj .......", obj);
+          getData.push({is_default: is_default});
           res({ status: 200, data: getData });
         } else {
           rej({ status: 404, message: "something went wrong!!" });
