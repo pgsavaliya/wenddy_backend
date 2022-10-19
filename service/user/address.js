@@ -150,17 +150,17 @@ module.exports = {
   getAll: (user_id) => {
     return new Promise(async (res, rej) => {
       try {
-        let is_default;
-        let getData = [await addressModel.findOne({ user_id: user_id })];
+        let getData = await addressModel.findOne({ user_id: user_id }).lean();
         if (getData) {
-          getData[0].address.map(item => {
-            if (item.is_primary == true) {
-              is_default = true;
-            }
-            else is_default = false;
-          })
-          getData.push({is_default: is_default});
-          res({ status: 200, data: getData });
+          res({
+            status: 200,
+            data: {
+              ...getData,
+              is_primary: getData.address.some(
+                (item) => item.is_primary == true
+              ),
+            },
+          });
         } else {
           rej({ status: 404, message: "something went wrong!!" });
         }
