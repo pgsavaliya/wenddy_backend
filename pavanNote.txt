@@ -1,0 +1,54 @@
+ //   qry["minvalue"] = {
+        //     $addFields: {
+        //       minValue: {
+        //         $cond: {
+        //           if: { $eq: ["$product_type", "simple"] },
+        //           then: "$real_price",
+        //           else: { $min: "$product_variation.real_price" },
+        //         },
+        //       },
+        //     },
+        //     $addFields: {
+        //       maxValue: {
+        //         $cond: {
+        //           if: { $eq: ["$product_type", "simple"] },
+        //           then: "$real_price",
+        //           else: { $max: "$product_variation.real_price" },
+        //         },
+        //       },
+        //     },
+        //   };
+        // }
+
+        //   console.log("abc");
+        //   // qry["$or"] = [
+        //   //   {
+        //   //     "product_variation.real_price": {
+        //   //       $gte: parseInt(min),
+        //   //       $lte: parseInt(max),
+        //   //     },
+        //   //   },
+        //   // { real_price: { $gte: parseInt(min), $lte: parseInt(max) } },
+        //   // ];
+        //   qry["product_variation.real_price"] = {
+        //     // $gte: parseInt(min),
+        //     $lte: parseInt(max),
+        //   };
+        //   // qry["product_variation.real_price"] = {
+        //   //   $gte: parseInt(min),
+        //   //   $lte: parseInt(max),
+        //   // };
+        //   // qry["real_price"] = {
+        //   //   $lte: parseInt(max),
+        //   // };
+        //   // qry["product_variation.real_price"] = {
+        //   //   $gte: parseInt(min),
+        //   // };
+        // }
+        // if (max) {
+        //   qry["real_price"] = {
+        //   };
+        //   // qry["product_variation.real_price"] = {
+        //   //   $gte: parseInt(min),
+        //   // };
+        // }
