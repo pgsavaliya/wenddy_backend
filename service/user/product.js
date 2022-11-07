@@ -160,6 +160,9 @@ module.exports = {
             let limit1 = parseInt(limit * 0.4);
             getData1 = await productModel.aggregate([
               { $match: qry },
+              {
+                $match: { is_fav: true },
+              },
               { $addFields: qry5 },
 
               { $lookup: qry3 },
@@ -220,13 +223,14 @@ module.exports = {
 
             let getData2 = await productModel.aggregate([
               { $match: qry },
+              {
+                $match: { is_fav: false },
+              },
               { $addFields: qry5 },
-
               { $lookup: qry3 },
               { $addFields: qry2 },
               { $match: qry1 },
               { $match: { is_public: true } },
-
               {
                 $lookup: {
                   from: "reviewproducts",
@@ -472,7 +476,7 @@ module.exports = {
             //   });
             // }
             // console.log("low price = ", lowprice);
-
+            //add nothinhg
             price = {
               highprice: highprice || 0,
               lowprice: lowprice || 0,
