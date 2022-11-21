@@ -131,7 +131,10 @@ module.exports = {
         }
         // console.log(str);
         if (str) {
-          qry["$or"] = [{ product_title: { $regex: str, $options: "i" } }];
+          qry["$or"] = [
+            { product_title: { $regex: str, $options: "i" } },
+            { uniqueCode: { $regex: str, $options: "i" } }
+          ];
         }
         // if (status) {
         //     qry["status"] = status;
