@@ -133,7 +133,7 @@ module.exports = {
         if (str) {
           qry["$or"] = [
             { product_title: { $regex: str, $options: "i" } },
-            { uniqueCode: { $regex: str, $options: "i" } }
+            { $expr: { $regexMatch: { input: { $toString: { $toLong: "$uniqueCode" } }, regex: str } } }
           ];
         }
         // if (status) {
