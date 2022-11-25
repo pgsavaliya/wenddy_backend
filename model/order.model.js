@@ -10,7 +10,9 @@ const orderSchema = new Schema(
     total: {
       type: Number,
     },
-    address: {},
+    address_id: {
+      type: Schema.Types.ObjectId,
+    },
     product: [
       {
         product_id: {
