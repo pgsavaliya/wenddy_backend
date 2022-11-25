@@ -47,6 +47,12 @@ const orderSchema = new Schema(
         product_image: {
           type: String,
         },
+        metal: {
+          type: String,
+        },
+        diamond_type: {
+          type: String,
+        },
       },
     ],
     payment_data: {
