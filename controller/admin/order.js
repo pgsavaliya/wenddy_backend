@@ -8,7 +8,6 @@ exports.getorder = async (req, res) => {
     } else {
       let resp = await orderService.getorder(req.query.page, req.query.limit);
       if (resp) {
-        console.log(resp);
         return response("SUCESS..!!", resp.data, 200, res);
       } else {
         return response("Something went wrong!!", {}, 500, res);
