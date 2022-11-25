@@ -8,7 +8,7 @@ module.exports = () => {
   try {
     console.log("cron working");
 
-    cron.schedule("0 0 0 * * *", async () => {
+    cron.schedule("0 0 23 * *", async () => {
       let getData = await countryModel.find();
       // let newData = {
       //   countryData: [],
