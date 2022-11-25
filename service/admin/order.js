@@ -1,4 +1,4 @@
-const mongoose= require("mongoose");
+const mongoose = require("mongoose");
 const orderModel = require("../../model/order.model");
 const addressModel = require("../../model/address.model");
 
@@ -148,9 +148,22 @@ module.exports = {
               as: "productData",
             },
           },
+          {
+            $addFields: {
+              address: []
+            }
+          },
         ]);
+        Data = Data[0];
         if (Data) {
-          Data = Data[0];
+          // console.log("Data ................", Data.address_id);
+          // let abcd = await Data.map(async (item, index) => {
+            // let address_id = item.address_id;
+            let addressOrderData = await addressModel.findOne({ "address._id": Data.address_id });
+            // console.log("addressOrderData ................", addressOrderData);
+            Data.address.push(addressOrderData)
+            // return abc
+          // });
           res({
             status: 200,
             data: Data,
