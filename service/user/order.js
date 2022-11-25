@@ -33,7 +33,7 @@ module.exports = {
           let neworderModel = new orderModel(data);
           let saveData = await neworderModel.save();
           if (saveData) {
-            res({ status: 200, message: "Data Added Successfully..." });
+            res({ status: 200, data: saveData._id });
           } else {
             rej({ status: 404, message: "something went wrong!!" });
           }

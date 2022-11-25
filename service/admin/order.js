@@ -1,4 +1,4 @@
-const { mongoose } = require("mongoose");
+const mongoose= require("mongoose");
 const orderModel = require("../../model/order.model");
 const addressModel = require("../../model/address.model");
 
@@ -42,18 +42,20 @@ module.exports = {
             },
           ]);
           getData = getData[0];
-          let abcd =  await Promise.all(getData.result.map(async (item, index) => {
+          let abcd = await Promise.all(getData.result.map(async (item, index) => {
             let address_id = item.address_id;
             let addressOrderData = await addressModel.findOne({ "address._id": address_id }, { address: 1 });
             let abc = item;
             abc.address.push(addressOrderData)
             return abc
           }));
-      if (getData) {
-            res({ status: 200, data: {
-              total_count: getData.total_count[0].count,
-              result: abcd,
-          },});
+          if (getData) {
+            res({
+              status: 200, data: {
+                total_count: getData.total_count[0].count,
+                result: abcd,
+              },
+            });
           } else {
             rej({ status: 404, message: "Data Not found!!" });
           }
