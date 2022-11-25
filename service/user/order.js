@@ -28,7 +28,7 @@ module.exports = {
               }
             });
           }
-          delete data.address_id;
+          // delete data.address_id;
           let neworderModel = new orderModel(data);
           let saveData = await neworderModel.save();
           if (saveData) {
