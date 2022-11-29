@@ -83,18 +83,20 @@ module.exports = {
         ]);
         // getData = getData[0];
         if (getData) {
+          // console.log("getData.....", getData[0].result);
           if (country) {
             let countryData = await countryModel.findOne({
               currency: country,
             });
-            // console.log("getData.....", getData[0].result);
+            // console.log("countryData.....", countryData);
             // res({ status: 200, data: getData });
-
+            
             if (countryData) {
               getData[0].result.map((item) => {
+                // console.log("item.real_price.....", item.product_data.real_price);
                 item.product_data.real_price =
-                  item.real_price * countryData.price;
-                item.product_data.mrp = item.mrp * countryData.price;
+                  item.product_data.real_price * countryData.price;
+                item.product_data.mrp = item.product_data.mrp * countryData.price;
                 item.product_data.product_variation.map((item1) => {
                   item1.real_price = item1.real_price * countryData.price;
                   item1.mrp = item1.mrp * countryData.price;
