@@ -35,6 +35,7 @@ exports.update = async (req, res) => {
     return response(err.message, err?.error, err.status, res);
   }
 };
+
 exports.resetpss = async (req, res) => {
   try {
     let resp = await profileService.resetpss(req.user_id, req.body);
