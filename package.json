@@ -9,7 +9,8 @@
     "dev": "nodemon index"
   },
   "engines": {
-    "node": "16"
+    "node": "14.20.0",
+    "npm": "7.24.2"
   },
   "repository": {
     "type": "git",
