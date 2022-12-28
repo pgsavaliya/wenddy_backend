@@ -14,7 +14,7 @@ module.exports = {
           let key1 = process.env.USER_ENCRYPTION_KEY;
           let encryptUser = encrypt(saveData._id, key1);
           let encryptPass = encrypt(saveData.password, key1);
-          let encryptEmail = encrypt(saveData.email, key1);any
+          let encryptEmail = encrypt(saveData.email, key1);
           console.log(encryptEmail);
           let token = jwt.sign(
             {
