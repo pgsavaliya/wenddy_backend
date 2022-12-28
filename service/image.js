@@ -1,5 +1,5 @@
 const firebaseAdmin = require("firebase-admin");
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 const { initializeApp, cert } = require("firebase-admin/app");
 const { getStorage, deleteObject } = require("firebase-admin/storage");
 const serviceAccount = require("../helper/wenddys-528d3-firebase-adminsdk-xzrdj-8b705f1d5b.json");
@@ -11,9 +11,7 @@ initializeApp({
   credential: cert(serviceAccount),
 });
 
-const bucket = getStorage().bucket(
-  "gs://wenddys-528d3.appspot.com"
-);
+const bucket = getStorage().bucket("gs://wenddys-528d3.appspot.com");
 
 // const { uploadImage, deletedImage } = require("../helper/imageize");
 // const fs = require("fs/promises");
@@ -22,6 +20,7 @@ module.exports = {
   upload: async (image) => {
     return new Promise(async (res, rej) => {
       try {
+        console.log("Pavan");
         //firebase logic to upload the image
         let i;
         let media = [];
@@ -34,23 +33,22 @@ module.exports = {
           },
         });
         let data = await uploaded;
-        data = data[0]
+        data = data[0];
         if (data) {
           // fs.unlinkSync(image.path);
           media.push({
             mediaLink: data.metadata.mediaLink,
-            name: data.metadata.name
-          })
+            name: data.metadata.name,
+          });
           res({
             status: 200,
-            data: media
-          })
-          console.log('image ..........', image)
+            data: media,
+          });
+          console.log("image ..........", image);
           fs.unlink(image.path, (err) => {
-            if (err) console.log("someError: ", err)
-          })
-        }
-        else {
+            if (err) console.log("someError: ", err);
+          });
+        } else {
           rej({ status: 404, message: "something went wrong!!" });
         }
         // console.log("image from service .......", image);
@@ -98,5 +96,4 @@ module.exports = {
       }
     });
   },
-
 };
