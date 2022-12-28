@@ -28,7 +28,7 @@ const addtocartSchema = new Schema(
       type: String,
     },
     ring_size: {
-      type: Number,
+      type: String,
     },
     iso: {
       type: String,

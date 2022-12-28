@@ -2,7 +2,6 @@ const addressModel = require("../../model/address.model");
 const userModel = require("../../model/user.model");
 const { mongoose } = require("mongoose");
 
-
 module.exports = {
   add: (_id, data) => {
     return new Promise(async (res, rej) => {
@@ -16,7 +15,9 @@ module.exports = {
           let existData = await addressModel.find({ user_id: _id });
           console.log("existData.length ...........", existData.length);
           if (existData.length > 0) {
-            let removedData = await addressModel.findOneAndDelete({ user_id: _id });
+            let removedData = await addressModel.findOneAndDelete({
+              user_id: _id,
+            });
             //   let ifNnewAddressModel = new addressModel(data);
             //   let if_saveData = await ifNnewAddressModel.save();
             //   if (if_saveData) {
@@ -51,12 +52,19 @@ module.exports = {
     return new Promise(async (res, rej) => {
       try {
         if (data.address[0].is_primary === true) {
-          let defaultData = await addressModel.updateOne({ user_id: user_id }, { $set: { 'address.$[].is_primary': false } });
+          let defaultData = await addressModel.updateOne(
+            { user_id: user_id },
+            { $set: { "address.$[].is_primary": false } }
+          );
         }
         data["user_id"] = user_id;
-        let updateData = await addressModel.findByIdAndUpdate(_id, { $push: { address: data.address } }, {
-          new: true,
-        });
+        let updateData = await addressModel.findByIdAndUpdate(
+          _id,
+          { $push: { address: data.address } },
+          {
+            new: true,
+          }
+        );
         if (updateData) {
           res({ status: 200, data: "Data Updated Successfully!!" });
         } else {
@@ -79,7 +87,10 @@ module.exports = {
         if (address.is_primary === true) {
           //badha address ne flase karvana
           //pachi addresis _tyue
-          let defaultData = await addressModel.updateOne({ user_id: user_id }, { $set: { 'address.$[].is_primary': false } });
+          let defaultData = await addressModel.updateOne(
+            { user_id: user_id },
+            { $set: { "address.$[].is_primary": false } }
+          );
         }
         let updateData = await addressModel.findOneAndUpdate(
           { user_id: user_id, "address._id": address_id },
@@ -107,7 +118,7 @@ module.exports = {
       try {
         let updateData = await addressModel.findOneAndUpdate(
           { user_id: user_id, "address._id": address_id },
-          { $pull: { "address": { _id: address_id } } },
+          { $pull: { address: { _id: address_id } } },
           { new: true }
         );
         if (updateData) {
@@ -188,8 +199,8 @@ module.exports = {
           {
             $match: {
               "address._id": mongoose.Types.ObjectId(id),
-            }
-          }
+            },
+          },
         ]);
         if (Data) {
           Data = Data[0];

@@ -34,7 +34,7 @@ const orderSchema = new Schema(
           type: Number,
         },
         ring_size: {
-          type: Number,
+          type: String,
         },
         description: {
           type: String,

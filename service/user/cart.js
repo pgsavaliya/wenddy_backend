@@ -129,15 +129,18 @@ module.exports = {
           getData.map((item) => {
             total = total + item.total_price;
           });
-          let getData1 = await addressModel.findOne({ user_id: user_id }).lean();
+          let getData1 = await addressModel
+            .findOne({ user_id: user_id })
+            .lean();
           res({
-            status: 200, data: {
+            status: 200,
+            data: {
               getData,
               total: total,
               is_primary: getData1.address.some(
                 (item) => item.is_primary == true
               ),
-            }
+            },
           });
         } else {
           rej({ status: 404, message: "Data Not Found!!" });

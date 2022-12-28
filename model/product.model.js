@@ -182,7 +182,7 @@ const productSchema = new Schema(
     ],
     ring_size: [
       {
-        type: Number,
+        type: String,
       },
     ],
     offerImage: {
