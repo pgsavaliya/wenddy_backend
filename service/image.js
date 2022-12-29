@@ -21,26 +21,58 @@ module.exports = {
         //firebase logic to upload the image
         let i;
         let media = [];
-        let uploaded = bucket.upload(image.multi.filepath, {
-          public: true,
-          destination: `images/${
-            Math.random() * 10000 + image.multi.originalFilename
-          }`,
-          metadata: {
-            firebaseStorageDownloadTokens: uuidv4(),
-          },
-        });
-        let data = await uploaded;
-        data = data[0];
-        if (data) {
-          media.push({
-            mediaLink: data.metadata.mediaLink,
-            name: data.metadata.name,
+        console.log(image.multi.length);
+        for (i = 0; i < image.multi.length; i++) {
+          let uploaded = await bucket.upload(image.multi[i].filepath, {
+            public: true,
+            destination: `images/${
+              Math.random() * 10000 + image.multi[i].originalFilename
+            }`,
+            metadata: {
+              firebaseStorageDownloadTokens: uuidv4(),
+            },
           });
+          let data = await uploaded;
+          data = data[0];
+          if (data) {
+            media.push({
+              mediaLink: data.metadata.mediaLink,
+              name: data.metadata.name,
+            });
+          }
+
+          // fs.unlink(image[i].path, (err) => {
+          //   if (err) console.log("someError: ", err);
+          // });
+        }
+        if (media) {
+          // fs.unlinkSync(image.path);
+
           res({
             status: 200,
             data: media,
           });
+
+          // let uploaded = bucket.upload(image.multi.filepath, {
+          //   public: true,
+          //   destination: `images/${
+          //     Math.random() * 10000 + image.multi.originalFilename
+          //   }`,
+          //   metadata: {
+          //     firebaseStorageDownloadTokens: uuidv4(),
+          //   },
+          // });
+          // let data = await uploaded;
+          // data = data[0];
+          // if (data) {
+          //   media.push({
+          //     mediaLink: data.metadata.mediaLink,
+          //     name: data.metadata.name,
+          //   });
+          //   res({
+          //     status: 200,
+          //     data: media,
+          //   });
         } else {
           rej({ status: 404, message: "something went wrong!!" });
         }

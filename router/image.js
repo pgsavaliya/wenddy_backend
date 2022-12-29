@@ -25,6 +25,7 @@ imageRouter.post(
   },
   imageController.upload
 );
+// imageRouter.post("/upload", upload.array("file"), uploadController);
 imageRouter.delete("/delete", imageController.delete);
 
 module.exports = imageRouter;
