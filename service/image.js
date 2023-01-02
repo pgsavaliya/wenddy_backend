@@ -21,12 +21,12 @@ module.exports = {
         //firebase logic to upload the image
         let i;
         let media = [];
-        console.log(image.multi.length);
-        for (i = 0; i < image.multi.length; i++) {
-          let uploaded = await bucket.upload(image.multi[i].filepath, {
+
+        if (!image.multi.length) {
+          let uploaded = await bucket.upload(image.multi.filepath, {
             public: true,
             destination: `images/${
-              Math.random() * 10000 + image.multi[i].originalFilename
+              Math.random() * 10000 + image.multi.originalFilename
             }`,
             metadata: {
               firebaseStorageDownloadTokens: uuidv4(),
@@ -40,11 +40,32 @@ module.exports = {
               name: data.metadata.name,
             });
           }
+        } else {
+          for (i = 0; i < image.multi.length; i++) {
+            let uploaded = await bucket.upload(image.multi[i].filepath, {
+              public: true,
+              destination: `images/${
+                Math.random() * 10000 + image.multi[i].originalFilename
+              }`,
+              metadata: {
+                firebaseStorageDownloadTokens: uuidv4(),
+              },
+            });
+            let data = await uploaded;
+            data = data[0];
+            if (data) {
+              media.push({
+                mediaLink: data.metadata.mediaLink,
+                name: data.metadata.name,
+              });
+            }
 
-          // fs.unlink(image[i].path, (err) => {
-          //   if (err) console.log("someError: ", err);
-          // });
+            // fs.unlink(image[i].path, (err) => {
+            //   if (err) console.log("someError: ", err);
+            // });
+          }
         }
+
         if (media) {
           // fs.unlinkSync(image.path);
 

@@ -7,7 +7,7 @@ const imageRoute = require("./image");
 const otpRoute = require("./otp");
 
 v1.get("/", (req, res) => {
-    res.status(200).json({ message: "v1 routes working!!" });
+  res.status(200).json({ message: "v1 routes working!!" });
 });
 
 v1.use("/admin", adminRoute);
