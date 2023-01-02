@@ -180,11 +180,17 @@ const productSchema = new Schema(
         type: String,
       },
     ],
+    type_of_size: {
+      type: String,
+      enum: ["ring", "necklace"],
+      default: "ring",
+    },
     ring_size: [
       {
         type: String,
       },
     ],
+
     offerImage: {
       type: String,
     },
