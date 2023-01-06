@@ -25,11 +25,11 @@ module.exports = {
       try {
         //find data
         let qry = {};
-        qry1 = {};
-        qry2 = {};
-        qry3 = {};
-        qry4 = {};
-        qry5 = {};
+        let qry1 = {};
+        let qry2 = {};
+        let qry3 = {};
+        let qry4 = {};
+        let qry5 = {};
         page = parseInt(page);
         limit = parseInt(limit);
         if (startDate && endDate) {

@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const { encrypt, decrypt } = require("../../helper/encrypt-decrypt");
 const userModel = require("../../model/user.model");
 const { mail } = require("../../helper/mail");
+const addtocartService = require("./cart");
+const wishlistService = require("./wishlist");
 
 module.exports = {
   register: (data) => {
@@ -41,13 +43,13 @@ module.exports = {
     });
   },
 
-  login: (email, password) => {
+  login: (email, password, data1) => {
     return new Promise(async (res, rej) => {
       try {
         let loginData = await userModel.findOne({ email });
         // console.log("loginData ......", loginData);
         if (loginData) {
-          // console.log(loginData.user_status);
+          console.log(loginData._id);
           if (loginData.user_status == true) {
             const isMatch = await bcryptjs.compare(
               password,
@@ -73,6 +75,30 @@ module.exports = {
                 first_name: loginData.first_name,
                 last_name: loginData.last_name,
               };
+              for (i = 0; i < data1.cartData.length; i++) {
+                if (data1.cartData[i]) {
+                  let addCart = await addtocartService.addtocart(
+                    loginData._id,
+                    data1.cartData[i]
+                  );
+                  if (addCart) {
+                    console.log("cartAdded");
+                  }
+                }
+              }
+
+              for (i = 0; i < data1.wishlistData.product_id.length; i++) {
+                if (data1.wishlistData.product_id[i]) {
+                  let addwishlist = await wishlistService.addwishlist(
+                    loginData._id,
+                    { product_id: data1.wishlistData.product_id[i] }
+                  );
+                  if (addwishlist) {
+                    console.log("wishlist Added");
+                  }
+                }
+              }
+
               res({ status: 200, data: data });
             } else {
               rej({

@@ -18,7 +18,11 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    let resp = await authService.login(req.body.email, req.body.password);
+    let resp = await authService.login(
+      req.body.email,
+      req.body.password,
+      req.body
+    );
     if (resp) {
       return response("SUCCESS..!!", resp.data, 200, res);
     } else {
