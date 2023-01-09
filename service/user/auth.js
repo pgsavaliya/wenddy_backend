@@ -75,30 +75,32 @@ module.exports = {
                 first_name: loginData.first_name,
                 last_name: loginData.last_name,
               };
-              for (i = 0; i < data1.cartData.length; i++) {
-                if (data1.cartData[i]) {
-                  let addCart = await addtocartService.addtocart(
-                    loginData._id,
-                    data1.cartData[i]
-                  );
-                  if (addCart) {
-                    console.log("cartAdded");
+              if (data1.cartData) {
+                for (i = 0; i < data1.cartData.length; i++) {
+                  if (data1.cartData[i]) {
+                    let addCart = await addtocartService.addtocart(
+                      loginData._id,
+                      data1.cartData[i]
+                    );
+                    if (addCart) {
+                      console.log("cartAdded");
+                    }
                   }
                 }
               }
-
-              for (i = 0; i < data1.wishlistData.product_id.length; i++) {
-                if (data1.wishlistData.product_id[i]) {
-                  let addwishlist = await wishlistService.addwishlist(
-                    loginData._id,
-                    { product_id: data1.wishlistData.product_id[i] }
-                  );
-                  if (addwishlist) {
-                    console.log("wishlist Added");
+              if (data1.wishlistData) {
+                for (i = 0; i < data1.wishlistData.product_id.length; i++) {
+                  if (data1.wishlistData.product_id[i]) {
+                    let addwishlist = await wishlistService.addwishlist(
+                      loginData._id,
+                      { product_id: data1.wishlistData.product_id[i] }
+                    );
+                    if (addwishlist) {
+                      console.log("wishlist Added");
+                    }
                   }
                 }
               }
-
               res({ status: 200, data: data });
             } else {
               rej({
